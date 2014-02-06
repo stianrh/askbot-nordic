@@ -585,7 +585,7 @@ body.user-messages {
   border-top: none;
   margin: 0;
   position: absolute;
-  bottom: -50px;
+  top: 48px;
   z-index: 10000;
 }
 .search-drop-menu.waiting {
@@ -594,7 +594,7 @@ body.user-messages {
 .search-drop-menu ul {
   list-style: none;
   overflow: auto;
-  padding: 0 0 10px 0;
+  padding: 0;
   margin: 0;
   position: relative;
   width: 100%;
@@ -663,6 +663,10 @@ input[type="submit"].searchBtn {
   color: white;
   height: 0;
   z-index: 0;
+}
+.ask-page .search-drop-menu {
+  margin-top: 10px;
+  position: static;
 }
 .ask-page .search-drop-menu.empty {
   border: none;
@@ -821,10 +825,6 @@ form.ajax-file-upload img.spinner {
 /* line up drop menu the same way as the search bar */
 .search-drop-menu {
   width: 100%;
-}
-.ask-page .search-drop-menu,
-body.anon.ask-page .search-drop-menu {
-  margin: -9px 0 10px;
 }
 #scopeNav {
   height: 54px;
