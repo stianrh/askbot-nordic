@@ -590,6 +590,7 @@ body.user-messages {
   margin: 0;
   outline: 1px solid #dadad4;
   position: absolute;
+  top: 48px;
   z-index: 10000;
 }
 .search-drop-menu.waiting {
@@ -598,7 +599,7 @@ body.user-messages {
 .search-drop-menu ul {
   list-style: none;
   overflow: auto;
-  padding: 0 0 10px 0;
+  padding: 0;
   margin: 0;
   position: relative;
   width: 100%;
@@ -668,6 +669,10 @@ input[type="submit"].searchBtn {
   color: white;
   height: 0;
   z-index: 0;
+}
+.ask-page .search-drop-menu {
+  margin-top: 10px;
+  position: static;
 }
 .ask-page .search-drop-menu.empty {
   border: none;
@@ -825,10 +830,6 @@ form.ajax-file-upload img.spinner {
 }
 .search-drop-menu {
   width: 100%;
-}
-.ask-page .search-drop-menu,
-body.anon.ask-page .search-drop-menu {
-  padding: 5px 10px 6px 0;
 }
 #scopeNav {
   height: 54px;
