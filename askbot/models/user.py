@@ -221,6 +221,8 @@ class Activity(models.Model):
     class Meta:
         app_label = 'askbot'
         db_table = u'activity'
+        verbose_name = 'activity'
+        verbose_name_plural = 'activities'
 
     def add_recipients(self, recipients):
         """have to use a special method, because django does not allow
