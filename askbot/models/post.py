@@ -436,7 +436,8 @@ class Post(models.Model):
         removed_mentions - list of mention <Activity> objects - for removed ones
         """
 
-        if True:
+        text = self.text
+        if askbot_settings.AUTO_TITLE_LOCAL_LINK:
             text = markup.local_link_converter(self.text)
 
         text_converter = self.get_text_converter()
