@@ -1127,7 +1127,7 @@ class AnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
     def save(self, question, user):
         wiki = self.cleaned_data['wiki']
         text = self.cleaned_data['text']
-        is_private = self.cleaned_data['post_privately']        
+        is_private = self.cleaned_data['post_privately']
 
         return user.post_answer(
             question = question,
@@ -1362,10 +1362,31 @@ class EditUserForm(forms.Form):
                         widget=forms.TextInput(attrs={'size': 35})
                     )
 
+    company = forms.CharField(
+                        label=_('Company'),
+                        required=False,
+                        max_length=100,
+                        widget=forms.TextInput(attrs={'size': 35})
+                    )
+
     website = forms.URLField(
                         label=_('Website'),
                         required=False,
                         max_length=255,
+                        widget=forms.TextInput(attrs={'size': 35})
+                    )
+
+    twitter_handle = forms.CharField(
+                        label=_('Twitter handle'),
+                        required=False,
+                        max_length=100,
+                        widget=forms.TextInput(attrs={'size': 35})
+                    )
+
+    linkedin_profile = forms.URLField(
+                        label=_('LinkedIn URL'),
+                        required=False,
+                        max_length=100,
                         widget=forms.TextInput(attrs={'size': 35})
                     )
 
@@ -1413,7 +1434,10 @@ class EditUserForm(forms.Form):
             self.fields['username'].user_instance = user
         self.fields['email'].initial = user.email
         self.fields['realname'].initial = user.real_name
+        self.fields['company'].initial = user.company
         self.fields['website'].initial = user.website
+        self.fields['twitter_handle'].initial = user.twitter_handle
+        self.fields['linkedin_profile'].initial = user.linkedin_profile
         self.fields['city'].initial = user.location
         if user.country is None:
             country = 'unknown'

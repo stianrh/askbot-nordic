@@ -208,7 +208,9 @@ User.add_to_class(
 User.add_to_class('last_seen',
                   models.DateTimeField(default=datetime.datetime.now))
 User.add_to_class('real_name', models.CharField(max_length=100, blank=True))
+User.add_to_class('company', models.CharField(max_length=100, blank=True))
 User.add_to_class('website', models.URLField(max_length=200, blank=True))
+User.add_to_class('linkedin_profile', models.URLField(max_length=100, blank=True))
 #location field is actually city
 User.add_to_class('location', models.CharField(max_length=100, blank=True))
 User.add_to_class('country', CountryField(blank = True))
@@ -2826,6 +2828,18 @@ def user_is_group_member(self, group=None):
                                 user=self, group=group
                             ).count() == 1
 
+def user_get_twitter_handle(self):
+    twitter_handle = self.twitter_handle
+    if twitter_handle and twitter_handle[0] != '@':
+        twitter_handle = '@%s' % twitter_handle
+    return twitter_handle
+
+def user_twitter_url(self):
+    twitter_handle = self.twitter_handle
+    if twitter_handle and twitter_handle[0] == '@':
+        twitter_handle = twitter_handle[1:]
+    return 'https://twitter.com/%s' % twitter_handle
+
 User.add_to_class(
     'add_missing_askbot_subscriptions',
     user_add_missing_askbot_subscriptions
@@ -2952,6 +2966,8 @@ User.add_to_class(
 User.add_to_class('approve_post_revision', user_approve_post_revision)
 User.add_to_class('notify_users', user_notify_users)
 User.add_to_class('is_read_only', user_is_read_only)
+User.add_to_class('get_twitter_handle', user_get_twitter_handle)
+User.add_to_class('twitter_url', user_twitter_url)
 
 #assertions
 User.add_to_class('assert_can_vote_for_post', user_assert_can_vote_for_post)
@@ -3733,7 +3749,7 @@ __all__ = [
         'User',
 
         'ReplyAddress',
-        
+
         'ImportRun',
         'ImportedObjectInfo',
 

@@ -65,8 +65,20 @@
                     <td>{{ form.realname }} <span class="form-error"> {{ form.realname.errors }} </span></td>
                 </tr>
                 <tr>
+                    <td>{{ form.company.label_tag() }}:</td>
+                    <td>{{ form.company }} <span class="form-error"> {{ form.company.errors }} </span></td>
+                </tr>
+                <tr>
                     <td>{{ form.website.label_tag() }}:</td>
                     <td>{{ form.website }} <span class="form-error"> {{ form.website.errors }} </span></td>
+                </tr>
+                <tr>
+                    <td>{{ form.twitter_handle.label_tag() }}:</td>
+                    <td>{{ form.twitter_handle }} <span class="form-error"> {{ form.twitter_handle.errors }} </span></td>
+                </tr>
+                <tr>
+                    <td>{{ form.linkedin_profile.label_tag() }}:</td>
+                    <td>{{ form.linkedin_profile }} <span class="form-error"> {{ form.linkedin_profile.errors }} </span></td>
                 </tr>
                 <tr>
                     <td>{{ form.city.label_tag() }}:</td>
@@ -118,7 +130,7 @@
             $().ready(function(){
                 $("#nav_profile").attr('className',"on");
                 $("#cancel").bind('click', function(){history.go(-1);})
-            });     
+            });
         </script>
         {% block userjs %}
         {% endblock %}

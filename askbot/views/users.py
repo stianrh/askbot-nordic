@@ -353,7 +353,10 @@ def edit_user(request, id):
                     thread.invalidate_cached_data(lazy=True)
 
             user.real_name = strip_all_tags(form.cleaned_data['realname'])
+            user.company = sanitize_html(form.cleaned_data['company'])
             user.website = sanitize_html(form.cleaned_data['website'])
+            user.twitter_handle = sanitize_html(form.cleaned_data['twitter_handle'])
+            user.linkedin_profile = sanitize_html(form.cleaned_data['linkedin_profile'])
             user.location = sanitize_html(form.cleaned_data['city'])
             user.date_of_birth = form.cleaned_data.get('birthday', None)
             user.about = sanitize_html(form.cleaned_data['about'])
@@ -615,7 +618,7 @@ def user_recent(request, user, context):
     # the return value is dictionary where activity id's are keys
     content_objects_by_activity = activity_objects.fetch_content_objects_dict()
 
-        
+
     #a list of digest objects, suitable for display
     #the number of activities to show is not guaranteed to be
     #const.USER_VIEW_DATA_TYPE, because we don't show activity

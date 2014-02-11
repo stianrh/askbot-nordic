@@ -5,7 +5,7 @@
         <div class='avatar'>
             {{ macros.gravatar(view_user, 128) }}
             {% if request.user == view_user %}
-                <p><a 
+                <p><a
                     {% if support_custom_avatars %}
                         href="{% url avatar_change %}"
                     {% else %}
@@ -13,7 +13,7 @@
                     {% endif %}
                 >{% trans %}change picture{% endtrans %}</a></p>
                 {% if support_custom_avatars %}
-                <p><a 
+                <p><a
                     href="{% url avatar_delete %}"
                     >{% trans %}remove{% endtrans %}</a>
                 </p>
@@ -42,7 +42,7 @@
                         </a>
                     {% endif %}
                 </td>
-            </tr>  
+            </tr>
             {% endif %}
             <tr>
                 <th colspan="2" align="left">
@@ -83,16 +83,34 @@
                 <td><strong title="{{ view_user.last_seen }}">{{ macros.timeago(view_user.last_seen) }}</strong></td>
             </tr>
             {% endif %}
+            {% if view_user.company and (not view_user.is_blocked()) %}
+            <tr>
+                <td>{% trans %}company{% endtrans %}</td>
+                <td>{{ view_user.company }}</td>
+            </tr>
+            {% endif  %}
             {% if view_user.website and (not view_user.is_blocked()) %}
             <tr>
                 <td>{% trans %}website{% endtrans %}</td>
                 <td>{{ macros.user_website_link(view_user, max_display_length = 30) }}</td>
             </tr>
             {% endif  %}
-            {% if request.user == view_user and 
-                settings.TWITTER_SECRET and 
-                settings.TWITTER_KEY and 
-                settings.ENABLE_SHARING_TWITTER 
+            {% if view_user.twitter_handle and (not view_user.is_blocked()) %}
+            <tr>
+                <td>{% trans %}twitter handle{% endtrans %}</td>
+                <td><a href="{{ view_user.twitter_url() }}">{{ view_user.get_twitter_handle() }}</a></td>
+            </tr>
+            {% endif  %}
+            {% if view_user.linkedin_profile and (not view_user.is_blocked()) %}
+            <tr>
+                <td>{% trans %}linkedin profile{% endtrans %}</td>
+                <td><a href="{{ view_user.linkedin_profile }}">{{ view_user.linkedin_profile }}</a></td>
+            </tr>
+            {% endif  %}
+            {% if request.user == view_user and
+                settings.TWITTER_SECRET and
+                settings.TWITTER_KEY and
+                settings.ENABLE_SHARING_TWITTER
             %}
                 {% include "user_profile/twitter_sharing_controls.html" %}
             {% endif %}
