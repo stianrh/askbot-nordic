@@ -436,8 +436,11 @@ class Post(models.Model):
         removed_mentions - list of mention <Activity> objects - for removed ones
         """
 
+        if True:
+            text = markup.local_link_converter(self.text)
+
         text_converter = self.get_text_converter()
-        text = text_converter(self.text)
+        text = text_converter(text)
 
         #todo, add markdown parser call conditional on
         #self.use_markdown flag
@@ -616,7 +619,7 @@ class Post(models.Model):
 
     def get_text_converter(self):
         have_simple_comment = (
-            self.is_comment() and 
+            self.is_comment() and
             askbot_settings.COMMENTS_EDITOR_TYPE == 'plain-text'
         )
         if have_simple_comment:
