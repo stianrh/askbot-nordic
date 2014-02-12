@@ -352,7 +352,7 @@ class ThreadManager(BaseQuerySetManager):
 
         if search_state.scope == 'unanswered':
             qs = qs.filter(closed = False) # Do not show closed questions in unanswered section
-            if askbot_settings.UNANSWERED_QUESTION_MEANING == 'NO_ANSWERS':
+            if askbot_settings.UNANSWERED_QUESTION_MEANING == 'NO_ANSWERS' and askbot_settings.SEPARATE_UNANSWERED_UNRESOLVED:
                 # todo: this will introduce a problem if there are private answers
                 # which are counted here
                 qs = qs.filter(answer_count=0) # TODO: expand for different meanings of this
@@ -362,6 +362,9 @@ class ThreadManager(BaseQuerySetManager):
                 raise NotImplementedError()
             else:
                 raise Exception('UNANSWERED_QUESTION_MEANING setting is wrong')
+
+        if search_state.scope == 'unresolved' and askbot_settings.SEPARATE_UNANSWERED_UNRESOLVED:
+            qs = qs.filter(closed = False, accepted_answer__isnull=True)
 
         elif search_state.scope == 'followed':
             followed_filter = models.Q(favorited_by=request_user)

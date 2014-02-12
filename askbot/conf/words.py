@@ -896,6 +896,15 @@ settings.register(
 settings.register(
     values.StringValue(
         WORDS,
+        'WORDS_UNRESOLVED',
+        default = _('UNRESOLVED'),
+        description = _('UNRESOLVED'),
+    )
+)
+
+settings.register(
+    values.StringValue(
+        WORDS,
         'WORDS_EDIT_ANSWER',
         default=_('Edit Answer'),
         description=_('Edit Answer'),

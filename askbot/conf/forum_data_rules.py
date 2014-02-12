@@ -468,3 +468,20 @@ settings.register(
         description=_('What should "unanswered question" mean?')
     )
 )
+
+settings.register(
+    livesettings.BooleanValue(
+        FORUM_DATA_RULES,
+        'SEPARATE_UNANSWERED_UNRESOLVED',
+        default=False,
+        description=_(
+            'Separate unanswered and unresolved questions?'
+        ),
+        help_text=_(
+            'Show both unanswered questions (no replies) '
+            'and unresolved questions (no accepted replies)? '
+            'With this setting activated, unanswered question '
+            'should actually mean "no answers".'
+        )
+    )
+)
