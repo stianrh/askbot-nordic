@@ -94,16 +94,6 @@ class Command(BaseCommand):
                         user=ab_user, group=nordic_group, level=user.GroupMembership.FULL
                     )
 
-        ed_tags = EfsqtDiscussTags.objects.using('devzone').all()
-        count = ed_tags.count()
-        message = 'Importing %i tags' % count
-        for ed_tag in ProgressBar(ed_tags.iterator(), count, message):
-            ab_tag = tag.Tag()
-            ab_tag.id = ed_tag.id
-            ab_tag.name = ed_tag.title.lower()
-            ab_tag.created_by_id = ed_tag.user_id
-            ab_tag.save()
-
         ed_post_tags = EfsqtDiscussPostsTags.objects.using('devzone').all()
         count = ed_post_tags.count()
         message = 'Importing %i post-tag relationships' % count
@@ -115,6 +105,17 @@ class Command(BaseCommand):
                 ab_post_tag.save()
             except:
                 pass
+
+        ed_tags = EfsqtDiscussTags.objects.using('devzone').all()
+        count = ed_tags.count()
+        message = 'Importing %i tags' % count
+        for ed_tag in ProgressBar(ed_tags.iterator(), count, message):
+            ab_tag = tag.Tag()
+            ab_tag.id = ed_tag.id
+            ab_tag.name = ed_tag.title.lower()
+            ab_tag.created_by_id = ed_tag.user_id
+            ab_tag.used_count = question.Thread.tags.through.objects.filter(tag_id=ab_tag.id).count()
+            ab_tag.save()
 
         everyone = user.Group.objects.get_global_group()
 
@@ -139,7 +140,7 @@ class Command(BaseCommand):
             #ab_thread.favourited_by =
             #ab_thread.accepted_answer =
             #ab_thread.answer_accepted_at =
-            ab_thread.tagnames = ', '.join()
+            #ab_thread.tagnames = ', '.join()
             ab_thread.save()
             ab_thread.add_to_groups([everyone])
             post_tags = EfsqtDiscussPostsTags.objects.using('devzone').filter(post_id=ab_thread.id).values_list('tag_id', flat=True)
@@ -177,6 +178,8 @@ class Command(BaseCommand):
             ab_post.is_anonymous = (ed_post.user_id == 0)
             ab_post.save()
             ab_post.add_to_groups([everyone])
+            revision = post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+            revision.save()
 
         ed_posts = EfsqtDiscussPosts.objects.using('devzone').exclude(parent_id=0)
         count = ed_posts.count()
@@ -206,6 +209,8 @@ class Command(BaseCommand):
             ab_post.is_anonymous = (ed_post.user_id == 0)
             ab_post.save()
             ab_post.add_to_groups([everyone])
+            revision = post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+            revision.save()
 
         ed_comments = EfsqtDiscussComments.objects.using('devzone').all()
         count = ed_comments.count()
@@ -231,3 +236,6 @@ class Command(BaseCommand):
             ab_post.is_anonymous = (ed_comment.user_id == 0)
             ab_post.save()
             ab_post.add_to_groups([everyone])
+            revision = post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+            revision.save()
+
