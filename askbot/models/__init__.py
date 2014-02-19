@@ -2761,9 +2761,9 @@ def user_update_wildcard_tag_selections(
         if reason in ('good', 'bad'):
             other_set.difference_update(new_tags)
 
-    self.interesting_tags = ' '.join(interesting)
-    self.ignored_tags = ' '.join(ignored)
-    self.subscribed_tags = ' '.join(subscribed)
+    self.interesting_tags = ', '.join(interesting)
+    self.ignored_tags = ', '.join(ignored)
+    self.subscribed_tags = ', '.join(subscribed)
     self.save()
     return new_tags
 

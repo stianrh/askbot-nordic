@@ -43,12 +43,12 @@ def clean_tagnames(tagnames):
     tagnames = tagnames.strip().split()
     #see if the tagnames field fits into 125 bytes
     while True:
-        encoded_tagnames = ' '.join(tagnames).encode('utf-8')
+        encoded_tagnames = ', '.join(tagnames).encode('utf-8')
         length = len(encoded_tagnames)
         if length == 0:
             return ''
         elif length <= 125:
-            return ' '.join(tagnames)
+            return ', '.join(tagnames)
         else:
             tagnames.pop()
 
@@ -684,7 +684,7 @@ class Thread(models.Model):
         add_tags = sorted_words[0:need_tags]
         add_tags = map(lambda h: orig_hints[h], add_tags)
 
-        tagnames = ' '.join(existing_tags + add_tags)
+        tagnames = ', '.join(existing_tags + add_tags)
 
         if askbot_settings.FORCE_LOWERCASE_TAGS:
             tagnames = tagnames.lower()
@@ -692,7 +692,7 @@ class Thread(models.Model):
         self.retag(
             retagged_by=user,
             retagged_at=timestamp or datetime.datetime.now(),
-            tagnames =' '.join(existing_tags + add_tags),
+            tagnames =', '.join(existing_tags + add_tags),
             silent=silent
         )
 
@@ -840,7 +840,7 @@ class Thread(models.Model):
         if self.tagnames.strip() == '':
             return list()
         else:
-            return self.tagnames.split(u' ')
+            return self.tagnames.split(u', ')
 
     def get_title(self, question=None):
         if not question:
@@ -1324,7 +1324,7 @@ class Thread(models.Model):
 
         previous_tags = list(self.tags.filter(status = Tag.STATUS_ACCEPTED))
 
-        ordered_updated_tagnames = [t for t in tagnames.strip().split(' ')]
+        ordered_updated_tagnames = [t for t in tagnames.strip().split(', ')]
         updated_tagnames_tmp = set(ordered_updated_tagnames)
 
         #apply TagSynonym
@@ -1381,7 +1381,7 @@ class Thread(models.Model):
             if tagname in final_tagnames:
                 ordered_final_tagnames.append(tagname)
 
-        self.tagnames = ' '.join(ordered_final_tagnames)
+        self.tagnames = ', '.join(ordered_final_tagnames)
         self.save()#need to save here?
 
         #todo: factor out - tell author about suggested tags
@@ -1431,7 +1431,7 @@ class Thread(models.Model):
         self.retag(
             retagged_by=user,
             retagged_at=timestamp,
-            tagnames=' '.join(tag_names),
+            tagnames=', '.join(tag_names),
             silent=silent
         )
 

@@ -27,7 +27,7 @@ def force_space(value, chars=40):
             out.append(value[start:end])
             looping = end < len(value)
 
-    return ' '.join(out)
+    return ', '.join(out)
 
 def break_at(value,  chars=40):
     """Force spaces into long lines which don't have spaces"""
@@ -40,14 +40,14 @@ def break_at(value,  chars=40):
         return value
     else:
         out = []
-        line = value.split(' ')
+        line = value.split(', ')
         for word in line:
             if len(word) > chars:
                 out.append(force_space(word, chars))
             else:
                 out.append(word)
 
-    return " ".join(out)
+    return ", ".join(out)
 
 register.filter('break_at', break_at)
 

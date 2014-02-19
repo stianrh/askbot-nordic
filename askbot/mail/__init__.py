@@ -422,7 +422,7 @@ def process_emailed_question(
                 user.email_signature == '' or
                 signature_changed
             )
-            
+
             #ask for signature response if user's email has not been
             #validated yet or if email signature could not be found
             if need_new_signature:
@@ -439,7 +439,7 @@ def process_emailed_question(
 
             #defect - here we might get "too many tags" issue
             if tags:
-                tagnames += ' ' + ' '.join(tags)
+                tagnames += ', ' + ', '.join(tags)
 
 
             user.post_question(
