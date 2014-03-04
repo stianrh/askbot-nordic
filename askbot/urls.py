@@ -36,7 +36,7 @@ sitemaps = {
 PREFIX = getattr(settings, 'ASKBOT_SERVICE_URL_PREFIX', '')
 
 MAIN_PAGE_BASE_URL = getattr(
-                        settings, 
+                        settings,
                         'ASKBOT_MAIN_PAGE_BASE_URL',
                         _('questions')
                     ).strip('/') + '/'
@@ -55,7 +55,7 @@ urlpatterns = patterns('',
         (r'^%s' % MAIN_PAGE_BASE_URL.strip('/') +
             r'(%s)?' % r'/scope:(?P<scope>\w+)' +
             r'(%s)?' % r'/sort:(?P<sort>[\w\-]+)' +
-            r'(%s)?' % r'/tags:(?P<tags>[\w+.#,-]+)' + # Should match: const.TAG_CHARS + ','; TODO: Is `#` char decoded by the time URLs are processed ??
+            r'(%s)?' % r'/tags:(?P<tags>[\w\s+.#,-]+)' + # Should match: const.TAG_CHARS + ','; TODO: Is `#` char decoded by the time URLs are processed ??
             r'(%s)?' % r'/author:(?P<author>\d+)' +
             r'(%s)?' % r'/page:(?P<page>\d+)' +
             r'(%s)?' % r'/page-size:(?P<page_size>\d+)' +
