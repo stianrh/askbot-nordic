@@ -17,8 +17,9 @@ def convert(bbcode):
     bb_codes = re.findall(r'\[code.*?\].*?\[/code\]', markdown, flags=re.DOTALL)
     for bb_code in bb_codes:
         lines = bb_code.split('\n')
-        lines = ['    %s' % line for line in lines[1:-1]]
-        markdown = markdown.replace(bb_code, '\n'.join(lines))
+        if len(lines) > 1:
+            lines = ['    %s' % line for line in lines[1:-1]]
+            markdown = markdown.replace(bb_code, '\n'.join(lines))
 
     bb_lists = re.findall(r'\[list\].*?\[/list\]', markdown, flags=re.DOTALL)
     for bb_list in bb_lists:
@@ -39,17 +40,24 @@ def test():
 [url]http://example.org[/url]
 [url=http://example.com]Example[/url]
 [img]http://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Go-home.svg/100px-Go-home.svg.png[/img]
+
 [quote]quoted text[/quote]
+
 [quote]
 quoted text
 [/quote]
+
 [quote="author"]quoted text[/quote]
+
 [code]monospaced text[/code]
+
 [code type="something"]monospaced text[/code]
+
 [code]
 monospaced text
 over several lines
 [/code]
+
 [list] [*]Entry 1 [/list]
 
 [list]
