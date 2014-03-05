@@ -268,7 +268,7 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_comment.email:
-                        ed_comment.email = 'anonymous@example.com'
+                        ed_comment.email = 'anonymous@askbot.org'
                     ab_post.author = admin.get_or_create_fake_user(ed_comment.name, ed_comment.email)
 
                 ab_post.added_at = ed_comment.created

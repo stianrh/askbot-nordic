@@ -248,7 +248,7 @@ def ask(request):#view used to ask a new question
 
                 if not request.user.is_authenticated():
                     ask_anonymously = True
-                    user = User.objects.filter(is_staff=True)[0].get_or_create_fake_user("anonymous", "anonymous@example.com")
+                    user = User.objects.filter(is_staff=True)[0].get_or_create_fake_user('Anonymous', 'anonymous@askbot.org')
                 else:
                     user = form.get_post_user(request.user)
                 try:
