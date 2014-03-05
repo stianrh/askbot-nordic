@@ -145,7 +145,7 @@ class Command(BaseCommand):
                     ab_thread.last_activity_by_id = author.id
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@anonymous.com'
+                        ed_post.poster_email = 'anonymous@askbot.org'
                     ab_thread.last_activity_by_id = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email).id
 
                 ab_thread.language_code = LANGUAGE
@@ -180,7 +180,7 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@anonymous.com'
+                        ed_post.poster_email = 'anonymous@askbot.org'
                     ab_post.author = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email)
 
                 ab_post.added_at = ed_post.created
@@ -204,7 +204,7 @@ class Command(BaseCommand):
                 post_tags = EfsqtDiscussPostsTags.objects.using('devzone').filter(post_id=ab_post.id).values_list('tag_id', flat=True)
                 tags = EfsqtDiscussTags.objects.using('devzone').filter(id__in=post_tags).values_list('title', flat=True)
                 tagnames = ', '.join(tags)
-                ab_post.thread.update_tags(tagnames, admin)
+                ab_post.thread.update_tags(tagnames.lower(), admin)
 
             transaction.commit()
 
@@ -223,7 +223,7 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@anonymous.com'
+                        ed_post.poster_email = 'anonymous@askbot.org'
                     ab_post.author = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email)
 
                 ab_post.added_at = ed_post.created
