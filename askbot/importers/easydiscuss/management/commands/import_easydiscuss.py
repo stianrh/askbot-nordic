@@ -139,12 +139,15 @@ class Command(BaseCommand):
                 ab_thread.title = ed_post.title
                 ab_thread.view_count = ed_post.hits
                 ab_thread.last_activity_at = ed_post.modified
-                if ed_post.user_id == 0:
+
+                try:
+                    author = User.objects.get(id=ed_post.user_id)
+                    ab_thread.last_activity_by_id = author.id
+                except:
                     if not '@' in ed_post.poster_email:
                         ed_post.poster_email = 'anonymous@anonymous.com'
                     ab_thread.last_activity_by_id = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email).id
-                else:
-                    ab_thread.last_activity_by_id = ed_post.user_id
+
                 ab_thread.language_code = LANGUAGE
                 ab_thread.closed = ed_post.islock
                 ab_thread.closed_at = ed_post.lockdate
@@ -171,12 +174,15 @@ class Command(BaseCommand):
                 ab_post.post_type = 'question'
                 ab_post.parent_id = ed_post.parent_id
                 ab_post.thread_id = ed_post.id
-                if ed_post.user_id == 0:
+
+                try:
+                    author = User.objects.get(id=ed_post.user_id)
+                    ab_post.author = author
+                except:
                     if not '@' in ed_post.poster_email:
                         ed_post.poster_email = 'anonymous@anonymous.com'
                     ab_post.author = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email)
-                else:
-                    ab_post.author_id = ed_post.user_id
+
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
                 ab_post.locked_at = ed_post.lockdate
@@ -211,12 +217,15 @@ class Command(BaseCommand):
                 ab_post.post_type = 'answer'
                 ab_post.parent_id = ed_post.parent_id
                 ab_post.thread_id = ed_post.parent_id
-                if ed_post.user_id == 0:
+
+                try:
+                    author = User.objects.get(id=ed_post.user_id)
+                    ab_post.author = author
+                except:
                     if not '@' in ed_post.poster_email:
                         ed_post.poster_email = 'anonymous@anonymous.com'
                     ab_post.author = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email)
-                else:
-                    ab_post.author_id = ed_post.user_id
+
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
                 ab_post.locked_at = ed_post.lockdate
@@ -232,6 +241,10 @@ class Command(BaseCommand):
                 ab_post.is_anonymous = (ed_post.user_id == 0)
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
+                if ed_post.answered:
+                    ab_post.thread.accepted_answer_id = ab_post.id
+                    ab_post.thread.save()
+
                 revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
                 revision.save()
 
@@ -244,16 +257,20 @@ class Command(BaseCommand):
                 ab_post = post.Post()
                 ab_post.post_type = 'comment'
                 ab_post.parent_id = ed_comment.post_id
+
                 try:
                     ab_post.thread = post.Post.objects.get(id=ed_comment.post_id).thread
                 except:
                     pass
-                if ed_comment.user_id == 0:
+
+                try:
+                    author = User.objects.get(id=ed_comment.user_id)
+                    ab_post.author = author
+                except:
                     if not '@' in ed_comment.email:
-                        ed_comment.email = 'anonymous@anonymous.com'
+                        ed_comment.email = 'anonymous@example.com'
                     ab_post.author = admin.get_or_create_fake_user(ed_comment.name, ed_comment.email)
-                else:
-                    ab_post.author_id = ed_comment.user_id
+
                 ab_post.added_at = ed_comment.created
                 ab_post.last_edited_at = ed_comment.modified
                 ab_post.text = ed_comment.comment
@@ -268,7 +285,7 @@ class Command(BaseCommand):
 
             transaction.commit()
 
-        except Exception, e:
+        except:
             print
             print traceback.format_exc()
             transaction.rollback()
