@@ -10,31 +10,55 @@ exactly match name of the model used in the project
 from django.contrib import admin
 from askbot import models
 
-class AnonymousQuestionAdmin(admin.ModelAdmin):
-    """AnonymousQuestion admin class"""
+class PostAdmin(admin.ModelAdmin):
+    """Post admin class"""
+    list_display = [
+        'post_type',
+        'author',
+        'added_at',
+        'excerpt',
+        'parent_excerpt',
+        'points',
+        'approved',
+        'deleted',
+        'locked',
+        'comment_count',
+        'offensive_flag_count',
+        'last_edited_at',
+        'last_edited_by',
+    ]
+    search_fields = ['author__username', 'text', 'parent__text']
+
+    def excerpt(self, obj):
+        return obj.text[:50] + '...'
+
+    def parent_excerpt(self, obj):
+        if obj.parent:
+            return obj.parent.text[:50] + '...'
+        return None
 
 class TagAdmin(admin.ModelAdmin):
     """Tag admin class"""
 
 class VoteAdmin(admin.ModelAdmin):
-    """  admin class"""
+    """Vote admin class"""
 
 class FavoriteQuestionAdmin(admin.ModelAdmin):
-    """  admin class"""
+    """FavoriteQuestion admin class"""
 
 class PostRevisionAdmin(admin.ModelAdmin):
-    """  admin class"""
+    """PostRevision admin class"""
 
 class AwardAdmin(admin.ModelAdmin):
-    """  admin class"""
+    """AwardAdmin admin class"""
 
 class ReputeAdmin(admin.ModelAdmin):
-    """  admin class"""
+    """ReputeAdmin admin class"""
 
 class ActivityAdmin(admin.ModelAdmin):
-    """  admin class"""
+    """ActivityAdmin admin class"""
 
-admin.site.register(models.Post)
+admin.site.register(models.Post, PostAdmin)
 admin.site.register(models.Tag, TagAdmin)
 admin.site.register(models.Vote, VoteAdmin)
 admin.site.register(models.FavoriteQuestion, FavoriteQuestionAdmin)
