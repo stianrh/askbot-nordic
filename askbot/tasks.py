@@ -21,6 +21,7 @@ import sys
 import traceback
 import logging
 import uuid
+import datetime
 
 from django.contrib.contenttypes.models import ContentType
 from django.template import Context
@@ -67,7 +68,7 @@ def tweet_new_post_task(post_id):
     if post.author.social_sharing_mode != const.SHARE_NOTHING:
         token = simplejson.loads(post.author.twitter_access_token)
         twitter.tweet(tweet_text, access_token=token)
-        
+
 
 @task(ignore_result = True)
 def notify_author_of_published_revision_celery_task(revision):
@@ -275,3 +276,39 @@ def send_instant_notifications_about_activity_in_post(
             )
         else:
             logger.debug('success %s, logId=%s' % (user.email, log_id))
+
+@task()
+def delete_unanswered_questions(age_in_days=None):
+    if not age_in_days:
+        return
+
+    limit_date = datetime.datetime.now() + datetime.timedelta(days=-age_in_days)
+
+    unanswered_posts = Post.objects.filter(
+        thread__last_activity_at__lte=limit_date
+    ).filter(
+        thread__answer_count=0
+    )
+
+    while unanswered_posts.count():
+        ids = unanswered_posts.values_list('pk', flat=True)[:100]
+        unanswered_posts.filter(pk__in = ids).delete()
+
+    return 'Posts deleted.'
+
+@task()
+def delete_dead_threads(age_in_days=None):
+    if not age_in_days:
+        return
+
+    limit_date = datetime.datetime.now() + datetime.timedelta(days=-age_in_days)
+
+    dead_threads = Post.objects.filter(
+        thread__last_activity_at__lte=limit_date
+    )
+
+    while dead_threads.count():
+        ids = dead_threads.values_list('pk', flat=True)[:100]
+        dead_threads.filter(pk__in = ids).delete()
+
+    return 'Posts deleted.'
