@@ -454,12 +454,12 @@ class TagNamesField(forms.CharField):
             if cleaned_tag not in cleaned_entered_tags:
                 cleaned_entered_tags.append(clean_tag(tag))
 
-        result = u' '.join(cleaned_entered_tags)
+        result = u', '.join(cleaned_entered_tags)
 
         if len(result) > 125:#magic number!, the same as max_length in db
             raise forms.ValidationError(self.error_messages['max_length'])
 
-        return u' '.join(cleaned_entered_tags)
+        return u', '.join(cleaned_entered_tags)
 
 
 class WikiField(forms.BooleanField):
@@ -1095,7 +1095,7 @@ class AskByEmailForm(forms.Form):
                 if askbot_settings.REPLACE_SPACE_WITH_DASH_IN_EMAILED_TAGS:
                     tag_list = [tag.replace(' ', '-') for tag in tag_list]
                 #todo: use tag separator char here
-                tagnames = ' '.join(tag_list)
+                tagnames = ', '.join(tag_list)
 
                 #clean tags - may raise ValidationError
                 self.cleaned_data['tagnames'] = TagNamesField().clean(tagnames)

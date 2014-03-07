@@ -885,8 +885,8 @@ class Post(models.Model):
             return self.html
 
     def save(self, *args, **kwargs):
-        if self.is_answer() and self.is_anonymous:
-            raise ValueError('Answer cannot be anonymous!')
+        #if self.is_answer() and self.is_anonymous:
+        #    raise ValueError('Answer cannot be anonymous!')
         super(Post, self).save(*args, **kwargs)
         if self.is_answer() and 'postgres' in askbot.get_database_engine_name():
             #hit the database to trigger update of full text search vector

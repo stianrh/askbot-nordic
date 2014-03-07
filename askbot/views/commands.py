@@ -795,7 +795,7 @@ def edit_bulk_tag_subscription(request, pk):
         form_initial = {
                         'users': bulk_subscription.users.all(),
                         'groups': bulk_subscription.groups.all(),
-                        'tags': ' '.join([tag.name for tag in bulk_subscription.tags.all()]),
+                        'tags': ', '.join([tag.name for tag in bulk_subscription.tags.all()]),
                        }
         data.update({
                     'bulk_subscription': bulk_subscription,

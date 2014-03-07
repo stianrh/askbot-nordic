@@ -2289,13 +2289,16 @@ def delete_messages(self):
 #todo: find where this is used and replace with get_absolute_url
 def user_get_profile_url(self, profile_section=None):
     """Returns the URL for this User's profile."""
-    url = reverse(
-            'user_profile',
-            kwargs={'id':self.id, 'slug':slugify(self.username)}
-        )
-    if profile_section:
-        url += "?sort=" + profile_section
-    return url
+    if self.id:
+        url = reverse(
+                'user_profile',
+                kwargs={'id':self.id, 'slug':slugify(self.username)}
+            )
+        if profile_section:
+            url += "?sort=" + profile_section
+        return url
+    else:
+        return ''
 
 def user_get_absolute_url(self):
     return self.get_profile_url()
@@ -2758,9 +2761,9 @@ def user_update_wildcard_tag_selections(
         if reason in ('good', 'bad'):
             other_set.difference_update(new_tags)
 
-    self.interesting_tags = ' '.join(interesting)
-    self.ignored_tags = ' '.join(ignored)
-    self.subscribed_tags = ' '.join(subscribed)
+    self.interesting_tags = ', '.join(interesting)
+    self.ignored_tags = ', '.join(ignored)
+    self.subscribed_tags = ', '.join(subscribed)
     self.save()
     return new_tags
 
