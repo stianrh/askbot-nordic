@@ -1,3 +1,4 @@
+{# META {"language": "coffin.template.Template"} #}
 {% trans %}Thank you for registering at our Q&A forum!{% endtrans %}
 
 {% trans %}Your account details are:{% endtrans %}

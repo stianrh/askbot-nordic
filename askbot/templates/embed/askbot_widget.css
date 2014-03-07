@@ -1,3 +1,4 @@
+{# META {"language": "coffin.template.Template"} #}
 #{{variable_name}} {
      visibility: hidden;
      position: absolute;

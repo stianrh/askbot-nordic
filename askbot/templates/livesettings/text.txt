@@ -1,1 +1,2 @@
+{# META {"language": "coffin.template.Template"} #}
 {{ text|safe }}
