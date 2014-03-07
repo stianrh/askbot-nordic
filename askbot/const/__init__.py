@@ -358,6 +358,7 @@ USERS_PAGE_SIZE = 28#todo: move it to settings?
 USERNAME_REGEX_STRING = r'^[\w \-.@+\']+$'
 
 GRAVATAR_TYPE_CHOICES = (
+                            ('site default',_('site default')),
                             ('identicon',_('identicon')),
                             ('mm',_('mystery-man')),
                             ('monsterid',_('monsterid')),

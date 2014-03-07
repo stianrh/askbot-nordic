@@ -273,9 +273,13 @@ GRAVATAR_TEMPLATE = "//www.gravatar.com/avatar/%(gravatar)s?" + \
 def user_get_gravatar_url(self, size):
     """returns gravatar url
     """
+    gravatar_type = askbot_settings.GRAVATAR_TYPE
+    if gravatar_type == 'site default':
+        gravatar_type = site_url(self.get_default_avatar_url(size))
+
     return GRAVATAR_TEMPLATE % {
                 'gravatar': self.gravatar,
-                'type': askbot_settings.GRAVATAR_TYPE,
+                'type': gravatar_type,
                 'size': size,
             }
 
