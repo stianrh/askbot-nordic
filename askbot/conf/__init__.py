@@ -38,7 +38,10 @@ def should_show_sort_by_relevance():
     """True if configuration support sorting
     questions by search relevance
     """
-    return ('postgresql_psycopg2' in askbot.get_database_engine_name())
+    return (
+        ('postgresql_psycopg2' in askbot.get_database_engine_name()) or
+        django_settings.ENABLE_HAYSTACK_SEARCH
+    )
 
 def get_tag_display_filter_strategy_choices():
     from askbot.conf import settings as askbot_settings
