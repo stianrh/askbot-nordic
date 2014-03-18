@@ -4,16 +4,13 @@ askbot askbot url configuraion file
 import os.path
 import django
 from django.conf import settings
-from django.conf.urls.defaults import url, patterns, include
-from django.conf.urls.defaults import handler500, handler404
-from django.contrib import admin
+from django.conf.urls import url, patterns, include, handler500, handler404
 from askbot import views
 from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed
 from askbot.sitemap import QuestionsSitemap
 from askbot.skins.utils import update_media_revision
 from askbot.utils.url_utils import service_url
 
-admin.autodiscover()
 #update_media_revision()#needs to be run once, so put it here
 
 if getattr(settings, "ASKBOT_TRANSLATE_URL", False):
@@ -592,8 +589,8 @@ urlpatterns = patterns('',
         {'domain': 'djangojs','packages': ('askbot',)},
         name = 'askbot_jsi18n'
     ),
-    service_url('^messages/', include('group_messaging.urls')),
-    service_url('^settings/', include('livesettings.urls')),
+    #service_url('^messages/', include('group_messaging.urls')),
+    #service_url('^settings/', include('livesettings.urls')),
 
     service_url('^api/v1/info/$', views.api_v1.info, name='api_v1_info'),
     service_url('^api/v1/users/$', views.api_v1.users, name='api_v1_users'),
