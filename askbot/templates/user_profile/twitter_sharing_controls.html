@@ -1,4 +1,3 @@
-{# META {"language": "coffin.template.Template"} #}
 {% set auto_tweeting_status = view_user.get_social_sharing_status('twitter') %}
 {% set handle = view_user.twitter_handle|escape %}
 <tr class="auto-tweeting {{ auto_tweeting_status }}"

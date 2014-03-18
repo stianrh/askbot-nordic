@@ -1,4 +1,3 @@
-{# META {"language": "coffin.template.Template"} #}
 {% trans %}Greetings from the Q&A forum{% endtrans %},
 
 {% trans %}To make use of the Forum, please follow the link below:{% endtrans %}

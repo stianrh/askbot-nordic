@@ -1,4 +1,3 @@
-{# META {"language": "coffin.template.Template"} #}
 {% spaceless %}
 {% trans site_title = settings.APP_SHORT_NAME|safe %}
 Hello, this is a {{site_title}} forum feedback message.

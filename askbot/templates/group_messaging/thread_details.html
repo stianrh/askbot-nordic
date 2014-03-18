@@ -1,4 +1,3 @@
-{# META {"language": "coffin.template.Template"} #}
 {% from "group_messaging/macros.html" import message %}
 <ul class="thread" data-thread-id="{{ root_message.id }}">
     <li>{{ message(root_message, request.user) }}</li>
