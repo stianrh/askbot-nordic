@@ -1,4 +1,3 @@
-{# META {"language": "coffin.template.Template"} #}
 var {{variable_name}} = {
   element_id: "{{variable_name}}",
   widgetToggle: function() {

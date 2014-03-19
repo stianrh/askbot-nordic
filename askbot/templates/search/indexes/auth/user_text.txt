@@ -1,4 +1,3 @@
-{# META {"language": "coffin.template.Template"} #}
 {{ object.username }}
 {{ object.first_name }}
 {{ object.last_name }}

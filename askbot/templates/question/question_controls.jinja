@@ -1,4 +1,3 @@
-{# META {"language": "coffin.template.Template"} #}
 <a id="post-{{question.id}}-edit" class="question-edit" href="{% url edit_question question.id %}">{% trans %}edit{% endtrans %}</a>
 <script type="text/javascript">
     var retagUrl = "{% url retag_question question.id %}";
