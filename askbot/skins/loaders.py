@@ -114,6 +114,24 @@ def get_skin():
         msg_fmt = 'skin "%s" not found, check value of "ASKBOT_EXTRA_SKINS_DIR"'
         raise ImproperlyConfigured(msg_fmt % skin_name)
 
+filemeta_cache = {}
+def get_meta_from_file(filename):
+    if filename in filemeta_cache: return filemeta_cache[filename]
+
+    meta = {"language": "django.template.Template"}
+    with open(filename) as f:
+        firstline = f.next().strip()
+    if firstline.startswith('{# META ') and firstline.endswith(' #}'):
+        meta = eval(firstline[len('{# META '):-len(' #}')])
+
+    mod, clsname = meta["language"].rsplit(".", 1)
+    exec("import " + mod)
+    meta["languageclass"] = eval(meta["language"])
+
+    filemeta_cache[filename] = meta
+
+    return meta
+
 def get_askbot_template(template):
     """
     retreives template for the skin
@@ -123,7 +141,15 @@ def get_askbot_template(template):
     request variable is used to localize the skin if possible
     """
     skin = get_skin()
-    return skin.get_template(template)
+    template = skin.get_template(template)
+
+    meta = get_meta_from_file(template.filename)
+    if meta['language'] == 'coffin.template.Template':
+        return template
+    else:
+        with open(template.filename) as f:
+            content = f.read()
+        return meta["languageclass"](content)
 
 def render_into_skin_as_string(template, data, request):
     context = RequestContext(request, data)

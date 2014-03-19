@@ -1,3 +1,4 @@
+{# META {"language": "coffin.template.Template"} #}
 {% set have_badges = user.gold or user.silver or user.bronze %}
 {%- if user.is_read_only() -%}
     {% trans %}read only access{% endtrans %}
