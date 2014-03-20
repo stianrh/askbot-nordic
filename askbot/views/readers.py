@@ -159,7 +159,7 @@ def questions(request, **kwargs):
         question_counter = question_counter % {'q_num': humanize.intcomma(q_count),}
 
         if q_count > search_state.page_size:
-            paginator_tpl = get_template('main_page/paginator.jinja')
+            paginator_tpl = get_template('main_page/paginator.html')
             paginator_html = paginator_tpl.render(
                 RequestContext(
                     request, {
@@ -173,7 +173,7 @@ def questions(request, **kwargs):
         else:
             paginator_html = ''
 
-        questions_tpl = get_template('main_page/questions_loop.jinja')
+        questions_tpl = get_template('main_page/questions_loop.html')
         questions_html = questions_tpl.render(
             RequestContext(
                 request, {
@@ -282,7 +282,7 @@ def questions(request, **kwargs):
                 ) % url
                 request.user.message_set.create(message=msg)
 
-        return render(request, 'main_page.jinja', template_data)
+        return render(request, 'main_page.html', template_data)
 
 
 def get_top_answers(request):
@@ -292,7 +292,7 @@ def get_top_answers(request):
         owner = models.User.objects.get(id=form.cleaned_data['user_id'])
         paginator = owner.get_top_answers_paginator(visitor=request.user)
         answers = paginator.page(form.cleaned_data['page_number']).object_list
-        template = get_template('user_profile/user_answers_list.jinja')
+        template = get_template('user_profile/user_answers_list.html')
         answers_html = template.render({'top_answers': answers})
         json_string = simplejson.dumps({
                             'html': answers_html,
@@ -367,13 +367,13 @@ def tags(request):#view showing a listing of available tags - plain list
     data.update(context.get_extra('ASKBOT_TAGS_PAGE_EXTRA_CONTEXT', request, data))
 
     if request.is_ajax():
-        template = get_template('tags/content.jinja')
+        template = get_template('tags/content.html')
         template_context = RequestContext(request, data)
         json_data = {'success': True, 'html': template.render(template_context)}
         json_string = simplejson.dumps(json_data)
         return HttpResponse(json_string, mimetype='application/json')
     else:
-        return render(request, 'tags.jinja', data)
+        return render(request, 'tags.html', data)
 
 @csrf.csrf_protect
 def question(request, id):#refactor - long subroutine. display question body, answers and comments
@@ -669,7 +669,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
     extra = context.get_extra('ASKBOT_QUESTION_PAGE_EXTRA_CONTEXT', request, data)
     data.update(extra)
 
-    return render(request, 'question.jinja', data)
+    return render(request, 'question.html', data)
 
 def revisions(request, id, post_type = None):
     assert post_type in ('question', 'answer')
@@ -692,7 +692,7 @@ def revisions(request, id, post_type = None):
         'post': post,
         'revisions': revisions,
     }
-    return render(request, 'revisions.jinja', data)
+    return render(request, 'revisions.html', data)
 
 @csrf.csrf_exempt
 @ajax_only
@@ -760,7 +760,7 @@ def get_perms_data(request):
         )
         data.append(setting)
 
-    template = get_template('widgets/user_perms.jinja')
+    template = get_template('widgets/user_perms.html')
     html = template.render({
         'user': request.user,
         'perms_data': data
