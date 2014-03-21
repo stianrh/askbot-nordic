@@ -106,11 +106,11 @@ a {
 }
 h2 {
   font-size: 21px;
-  padding: 3px 0 3px 5px;
+  /* padding: 3px 0 3px 5px; */
 }
 h3 {
   font-size: 19px;
-  padding: 3px 0 3px 5px;
+  /* padding: 3px 0 3px 5px; */
 }
 ul {
   list-style: disc;
@@ -216,6 +216,54 @@ body.user-messages {
 .center {
   margin: 0 auto;
   padding: 0;
+}
+/* ----- Custom positions ----- */
+#cmsheader {
+  background: #626366;
+}
+.cmsmenu {
+  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  padding: .5rem 0;
+}
+.cmsmenu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cmsmenu li {
+  display: inline-block;
+  font-size: 1.25rem;
+  margin-right: 1rem
+}
+.cmsmenu a {
+  color: white;
+}
+.cmsmenu a:hover {
+  color: white;
+}
+.pagedown-content {
+  padding: 1.4rem 0;
+}
+.pagedown-content h1,
+.pagedown-content h2,
+.pagedown-content h3,
+.pagedown-content h4,
+.pagedown-content h5,
+.pagedown-content h6 {
+  margin: 0 0 .75rem;
+}
+.pagedown-content p,
+.pagedown-content ul,
+.pagedown-content ol {
+  font-size: 16px;
+  line-height: 1.4;
+}
+.pagedown-content p {
+  margin: 0 0 1.4rem;
+}
+.pagedown-content ul,
+.pagedown-content ol {
+  margin: 0 0 1.4rem 1.4rem;
 }
 /* ----- Notify message bar , check blocks/system_messages.html ----- */
 .notify {

@@ -29,9 +29,7 @@ from askbot.shims.django_shims import ResolverMatch
 from django_countries import countries
 from django_countries import settings as countries_settings
 
-from django_jinja.library import Library
-register = Library()
-#register = coffin_template.Library()
+register = coffin_template.Library()
 
 absolutize_urls = register.filter(absolutize_urls)
 
