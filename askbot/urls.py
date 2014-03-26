@@ -136,6 +136,8 @@ urlpatterns = patterns('',
         {'sitemaps': sitemaps},
         name='sitemap'
     ),
+    url(r'^settings/', include('askbot.deps.livesettings.urls')),
+    url(r'^followit/', include('followit.urls')),
     #feeds
     url(r'^feeds/rss/$', RssLastestQuestionsFeed(), name="latest_questions_feed"),
     url(r'^feeds/question/(?P<pk>\d+)/$', RssIndividualQuestionFeed(), name="individual_question_feed"),

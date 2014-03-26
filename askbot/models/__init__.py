@@ -27,6 +27,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.utils.safestring import mark_safe
 from django.utils.html import escape
+from django.utils.http import urlquote
 from django.db import models
 from django.conf import settings as django_settings
 from django.contrib.contenttypes.models import ContentType
@@ -267,8 +268,7 @@ User.add_to_class(
     )
 )
 
-GRAVATAR_TEMPLATE = "//www.gravatar.com/avatar/%(gravatar)s?" + \
-    "s=%(size)d&amp;d=%(type)s&amp;r=PG"
+GRAVATAR_TEMPLATE = "//www.gravatar.com/avatar/%(gravatar)s?s=%(size)d&d=%(type)s"
 
 def user_get_gravatar_url(self, size):
     """returns gravatar url
@@ -279,7 +279,7 @@ def user_get_gravatar_url(self, size):
 
     return GRAVATAR_TEMPLATE % {
                 'gravatar': self.gravatar,
-                'type': gravatar_type,
+                'type': urlquote(gravatar_type),
                 'size': size,
             }
 
