@@ -39,6 +39,12 @@ class PostAdmin(admin.ModelAdmin):
 
 class TagAdmin(admin.ModelAdmin):
     """Tag admin class"""
+    list_display = [
+        'name',
+        'created_by',
+        'status',
+        'used_count'
+    ]
 
 class VoteAdmin(admin.ModelAdmin):
     """Vote admin class"""
