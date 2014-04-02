@@ -257,7 +257,7 @@ class EfsqtUserProfiles(models.Model):
         db_table = 'efsqt_user_profiles'
 
 class EfsqtUserUsergroupMap(models.Model):
-    user_id = models.IntegerField()
+    user_id = models.IntegerField(primary_key=True)
     group_id = models.IntegerField()
     class Meta:
         db_table = 'efsqt_user_usergroup_map'
