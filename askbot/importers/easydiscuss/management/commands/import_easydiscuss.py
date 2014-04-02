@@ -145,7 +145,7 @@ class Command(BaseCommand):
                     ab_thread.last_activity_by_id = author.id
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@askbot.org'
+                        ed_post.poster_email = 'noreply@nordicsemi.no'
                     ab_thread.last_activity_by_id = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email).id
 
                 ab_thread.language_code = LANGUAGE
