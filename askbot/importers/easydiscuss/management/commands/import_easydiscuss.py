@@ -172,7 +172,7 @@ class Command(BaseCommand):
                 ab_post = post.Post()
                 ab_post.id = ed_post.id
                 ab_post.post_type = 'question'
-                ab_post.parent_id = ed_post.parent_id
+                ab_post.parent_id = None 
                 ab_post.thread_id = ed_post.id
 
                 try:
