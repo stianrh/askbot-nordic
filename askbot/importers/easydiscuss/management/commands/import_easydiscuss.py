@@ -190,7 +190,7 @@ class Command(BaseCommand):
                 ab_post.vote_up_count = ed_post.num_likes
                 ab_post.vote_down_count = ed_post.num_negvote
                 ab_post.last_edited_at = ed_post.modified
-                ab_post.last_edited_by_id = ed_post.user_id
+                ab_post.last_edited_by_id = ed_post.user_id or None
                 ab_post.text = bbcode2markdown.convert(ed_post.content)
                 ab_post.html = ab_post.parse_post_text()['html']
                 ab_post.summary = ab_post.get_snippet()
