@@ -12,6 +12,12 @@ from askbot.models import User, tag, post, question, user
 from askbot.importers.easydiscuss.models import *
 from askbot.importers.easydiscuss import bbcode2markdown
 
+def get_or_create_anonymous_user(admin, username, email):
+    user = admin.get_or_create_fake_user(username, email)
+    user.real_name = username
+    user.save()
+    return user
+
 class Command(BaseCommand):
 
     @transaction.commit_manually
@@ -146,7 +152,7 @@ class Command(BaseCommand):
                 except:
                     if not '@' in ed_post.poster_email:
                         ed_post.poster_email = 'noreply@nordicsemi.no'
-                    ab_thread.last_activity_by_id = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email).id
+                    ab_thread.last_activity_by_id = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email).id
 
                 ab_thread.language_code = LANGUAGE
                 ab_thread.closed = ed_post.islock
@@ -181,7 +187,7 @@ class Command(BaseCommand):
                 except:
                     if not '@' in ed_post.poster_email:
                         ed_post.poster_email = 'anonymous@askbot.org'
-                    ab_post.author = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email)
+                    ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
@@ -224,7 +230,7 @@ class Command(BaseCommand):
                 except:
                     if not '@' in ed_post.poster_email:
                         ed_post.poster_email = 'anonymous@askbot.org'
-                    ab_post.author = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email)
+                    ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
@@ -269,7 +275,7 @@ class Command(BaseCommand):
                 except:
                     if not '@' in ed_comment.email:
                         ed_comment.email = 'anonymous@askbot.org'
-                    ab_post.author = admin.get_or_create_fake_user(ed_comment.name, ed_comment.email)
+                    ab_post.author = get_or_create_anonymous_user(admin, ed_comment.name, ed_comment.email)
 
                 ab_post.added_at = ed_comment.created
                 ab_post.last_edited_at = ed_comment.modified
