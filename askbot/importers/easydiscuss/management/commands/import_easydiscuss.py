@@ -51,7 +51,7 @@ class Command(BaseCommand):
                         ab_user.website = params['website']
 
                 ab_user.username = jm_user.username
-                ab_user.real_name = jm_user.name
+                ab_user.real_name = jm_user.name or jm_user.username
                 ab_user.email = jm_user.email
                 ab_user.password = jm_user.password
                 ab_user.about = ed_user.description
