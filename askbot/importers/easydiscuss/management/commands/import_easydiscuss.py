@@ -186,7 +186,7 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@askbot.org'
+                        ed_post.poster_email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
                 ab_post.added_at = ed_post.created
@@ -229,7 +229,7 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@askbot.org'
+                        ed_post.poster_email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
                 ab_post.added_at = ed_post.created
@@ -274,7 +274,7 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_comment.email:
-                        ed_comment.email = 'anonymous@askbot.org'
+                        ed_comment.email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_comment.name, ed_comment.email)
 
                 ab_post.added_at = ed_comment.created
