@@ -277,7 +277,7 @@ settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
         'FORCE_LOWERCASE_TAGS',
-        default = False,
+        default = True,
         description = _('Force lowercase the tags'),
         help_text = _(
             'Attention: after checking this, please back up the database, '
@@ -381,7 +381,7 @@ settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
         'USE_TIME_LIMIT_TO_EDIT_COMMENT',
-        default = True,
+        default = False,
         description = _('Limit time to edit comments'),
         help_text = _(
                         'If unchecked, there will be no time '
@@ -464,7 +464,7 @@ settings.register(
         FORUM_DATA_RULES,
         'UNANSWERED_QUESTION_MEANING',
         choices=const.UNANSWERED_QUESTION_MEANING_CHOICES,
-        default='NO_ACCEPTED_ANSWERS',
+        default='NO_ANSWERS',
         description=_('What should "unanswered question" mean?')
     )
 )
@@ -473,7 +473,7 @@ settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
         'SEPARATE_UNANSWERED_UNRESOLVED',
-        default=False,
+        default=True,
         description=_(
             'Separate unanswered and unresolved questions?'
         ),
