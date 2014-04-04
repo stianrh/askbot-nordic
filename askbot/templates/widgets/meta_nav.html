@@ -20,10 +20,3 @@
   {% if active_tab == 'users' %}class="on"{% endif %}
 >{% trans %}users{% endtrans %}</a>
 {% endif %}
-{% if settings.BADGES_MODE == 'public' %}
-<a 
-  id="navBadges"
-  href="{% url badges %}"
-  {% if active_tab == 'badges' %}class="on"{% endif %}
->{% trans %}badges{% endtrans %}</a>
-{% endif %}
