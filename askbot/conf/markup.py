@@ -93,7 +93,7 @@ settings.register(
             'If you enable this feature, urls to local questions '
             'will be changed to links with the thread title as title.'
         ),
-        default = False
+        default = True
     )
 )
 
