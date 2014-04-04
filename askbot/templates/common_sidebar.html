@@ -1,0 +1,28 @@
+{% import "macros.html" as macros %}
+<div id="userSidebar" class="box">
+    <h2>User</h2>
+{%- if request.user.is_authenticated() -%}
+    <ul class="user-info">
+        <li><a href="{{ request.user.get_absolute_url() }}">{{ request.user.username|escape }}</a></li>
+        <li>{{ macros.inbox_link(request.user) }}</li>
+        <li>{{ macros.moderation_items_link(request.user, moderation_items) }}</li>
+    {%-
+        if settings.KARMA_MODE != 'hidden' or settings.BADGES_MODE != 'hidden' 
+    -%}
+        <li>({{ macros.user_long_score_and_badge_summary(
+                                        user,
+                                        karma_mode=settings.KARMA_MODE,
+                                        badges_mode=settings.BADGES_MODE
+                                    )
+        }})</li>
+    {%- endif -%}
+        <li><a href="{% url groups %}" data-target="#" >{% trans %}people & groups{% endtrans %}</a></li>
+        <li><a href="{% url users %}">{% trans %}users{% endtrans %}</a></li>
+    {% if settings.USE_ASKBOT_LOGIN_SYSTEM %}
+        <li><a href="{{ settings.LOGOUT_URL }}?next={{ settings.LOGOUT_REDIRECT_URL }}">{% trans %}sign out{% endtrans %}</a></li>
+    {% endif %}
+    </ul>
+{% elif settings.USE_ASKBOT_LOGIN_SYSTEM %}
+    <a href="{{ settings.LOGIN_URL }}?next={{request.path|clean_login_url|escape}}">{% trans %}Hi there! Please sign in{% endtrans %}</a>
+{% endif %}
+</div>
