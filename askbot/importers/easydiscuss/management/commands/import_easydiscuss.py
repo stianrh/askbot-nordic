@@ -284,6 +284,10 @@ class Command(BaseCommand):
                 ab_post.summary = ab_post.get_snippet()
                 ab_post.language_code = LANGUAGE
                 ab_post.is_anonymous = (ed_comment.user_id == 0)
+                # skip already added comments
+                if post.Post.objects.filter(author=ab_post.author, added_at=ed_comment.created).count() > 0:
+                    continue
+
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
                 revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
