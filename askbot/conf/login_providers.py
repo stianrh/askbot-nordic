@@ -18,7 +18,7 @@ settings.register(
     livesettings.BooleanValue(
         LOGIN_PROVIDERS,
         'PASSWORD_REGISTER_SHOW_PROVIDER_BUTTONS',
-        default = True,
+        default = False,
         description=_('Show alternative login provider buttons on the password "Sign Up" page'),
     )
 )
@@ -84,7 +84,28 @@ providers = (
     'LaunchPad'
 )
 
-DISABLED_BY_DEFAULT = ('LaunchPad',)
+disabled = (
+    'AOL',
+    'Blogger',
+    'ClaimID',
+    'Facebook',
+    'Flickr',
+    'Google',
+    'Twitter',
+    'LinkedIn',
+    'LiveJournal',
+    #'myOpenID',
+    'OpenID',
+    'Technorati',
+    'Wordpress',
+    'Vidoop',
+    'Verisign',
+    'Yahoo',
+    'identi.ca',
+    'LaunchPad'
+)
+
+DISABLED_BY_DEFAULT = disabled
 
 NEED_EXTRA_SETUP = ('Twitter', 'Facebook', 'LinkedIn', 'identi.ca',)
 
