@@ -898,7 +898,7 @@ class Post(models.Model):
         return slugify(self.thread.title)
     slug = property(_get_slug)
 
-    def get_snippet(self, max_length=None):
+    def get_snippet(self, max_length=None, link_expander=True):
         """returns an abbreviated HTML snippet of the content
         or full content, depending on how long it is
         todo: remove the max_length parameter
@@ -919,7 +919,10 @@ class Post(models.Model):
         new_count = get_word_count(truncated)
         orig_count = get_word_count(self.html)
         if new_count + 1 < orig_count:
-            expander = '<span class="expander"> <a>(' + _('more') + ')</a></span>'
+            if link_expander:
+                expander = '<span class="expander"> <a>(' + _('more') + ')</a></span>'
+            else:
+                expander = '<span class="expander"> (' + _('more') + ')</span>'
             if truncated.endswith('</p>'):
                 #better put expander inside the paragraph
                 snippet = truncated[:-4] + expander + '</p>'
