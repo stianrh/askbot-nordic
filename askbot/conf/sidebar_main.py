@@ -47,7 +47,7 @@ settings.register(
                     'Uncheck this if you want to hide the avatar '
                     'block from the sidebar ' 
                     ),
-        default = True
+        default = False
     )
 )
 
