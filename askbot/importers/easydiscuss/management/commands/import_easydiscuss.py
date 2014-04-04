@@ -12,6 +12,12 @@ from askbot.models import User, tag, post, question, user
 from askbot.importers.easydiscuss.models import *
 from askbot.importers.easydiscuss import bbcode2markdown
 
+def get_or_create_anonymous_user(admin, username, email):
+    user = admin.get_or_create_fake_user(username, email)
+    user.real_name = username
+    user.save()
+    return user
+
 class Command(BaseCommand):
 
     @transaction.commit_manually
@@ -51,7 +57,7 @@ class Command(BaseCommand):
                         ab_user.website = params['website']
 
                 ab_user.username = jm_user.username
-                ab_user.real_name = jm_user.name
+                ab_user.real_name = jm_user.name or jm_user.username
                 ab_user.email = jm_user.email
                 ab_user.password = jm_user.password
                 ab_user.about = ed_user.description
@@ -145,8 +151,8 @@ class Command(BaseCommand):
                     ab_thread.last_activity_by_id = author.id
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@askbot.org'
-                    ab_thread.last_activity_by_id = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email).id
+                        ed_post.poster_email = 'noreply@nordicsemi.no'
+                    ab_thread.last_activity_by_id = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email).id
 
                 ab_thread.language_code = LANGUAGE
                 ab_thread.closed = ed_post.islock
@@ -172,7 +178,7 @@ class Command(BaseCommand):
                 ab_post = post.Post()
                 ab_post.id = ed_post.id
                 ab_post.post_type = 'question'
-                ab_post.parent_id = ed_post.parent_id
+                ab_post.parent_id = None 
                 ab_post.thread_id = ed_post.id
 
                 try:
@@ -180,8 +186,8 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@askbot.org'
-                    ab_post.author = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email)
+                        ed_post.poster_email = 'noreply@nordicsemi.no'
+                    ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
@@ -190,7 +196,7 @@ class Command(BaseCommand):
                 ab_post.vote_up_count = ed_post.num_likes
                 ab_post.vote_down_count = ed_post.num_negvote
                 ab_post.last_edited_at = ed_post.modified
-                ab_post.last_edited_by_id = ed_post.user_id
+                ab_post.last_edited_by_id = ed_post.user_id or None
                 ab_post.text = bbcode2markdown.convert(ed_post.content)
                 ab_post.html = ab_post.parse_post_text()['html']
                 ab_post.summary = ab_post.get_snippet()
@@ -223,8 +229,8 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_post.poster_email:
-                        ed_post.poster_email = 'anonymous@askbot.org'
-                    ab_post.author = admin.get_or_create_fake_user(ed_post.poster_name, ed_post.poster_email)
+                        ed_post.poster_email = 'noreply@nordicsemi.no'
+                    ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
@@ -233,7 +239,7 @@ class Command(BaseCommand):
                 ab_post.vote_up_count = ed_post.num_likes
                 ab_post.vote_down_count = ed_post.num_negvote
                 ab_post.last_edited_at = ed_post.modified
-                ab_post.last_edited_by_id = ed_post.user_id
+                ab_post.last_edited_by_id = ed_post.user_id or ab_post.author.id
                 ab_post.text = bbcode2markdown.convert(ed_post.content)
                 ab_post.html = ab_post.parse_post_text()['html']
                 ab_post.summary = ab_post.get_snippet()
@@ -268,8 +274,8 @@ class Command(BaseCommand):
                     ab_post.author = author
                 except:
                     if not '@' in ed_comment.email:
-                        ed_comment.email = 'anonymous@askbot.org'
-                    ab_post.author = admin.get_or_create_fake_user(ed_comment.name, ed_comment.email)
+                        ed_comment.email = 'noreply@nordicsemi.no'
+                    ab_post.author = get_or_create_anonymous_user(admin, ed_comment.name, ed_comment.email)
 
                 ab_post.added_at = ed_comment.created
                 ab_post.last_edited_at = ed_comment.modified
@@ -278,6 +284,10 @@ class Command(BaseCommand):
                 ab_post.summary = ab_post.get_snippet()
                 ab_post.language_code = LANGUAGE
                 ab_post.is_anonymous = (ed_comment.user_id == 0)
+                # skip already added comments
+                if post.Post.objects.filter(author=ab_post.author, added_at=ed_comment.created).count() > 0:
+                    continue
+
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
                 revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
