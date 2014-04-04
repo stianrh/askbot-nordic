@@ -40,7 +40,7 @@ settings.register(
     livesettings.StringValue(
         GROUP_SETTINGS,
         'GLOBAL_GROUP_NAME',
-        default = _('everyone'),
+        default = _('All users'),
         description = _('Global user group name'),
         help_text = _('All users belong to this group automatically'),
         #update_callback=group_name_update_callback
