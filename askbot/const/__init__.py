@@ -122,7 +122,7 @@ DEFAULT_ANSWER_SORT_METHOD = 'votes'
 #because they are keys to the hash used in implementations
 #of Q.run_advanced_search
 
-DEFAULT_POST_SORT_METHOD = 'relevance-desc'
+DEFAULT_POST_SORT_METHOD = 'activity-desc'
 #todo: customize words
 POST_SCOPE_LIST = (
     ('all', _('all')),
