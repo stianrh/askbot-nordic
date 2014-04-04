@@ -60,7 +60,8 @@ class Command(BaseCommand):
                 ab_user.username = jm_user.username
                 ab_user.real_name = jm_user.name or jm_user.username
                 ab_user.email = jm_user.email
-                ab_user.password = jm_user.password
+                hash, salt = jm_user.password.split(':')
+                ab_user.password = '$'.join(['md5', salt, hash])
                 ab_user.about = ed_user.description
                 ab_user.date_joined = jm_user.registerdate or datetime.now()
                 ab_user.last_login = jm_user.lastvisitdate or datetime.now()
