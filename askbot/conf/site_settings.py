@@ -19,7 +19,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_TITLE',
-        default=u'Askbot: Open Source Q&A Forum',
+        default=u'Nordic Developer Zone',
         description=_('Site title for the Q&A forum')
     )
 )
@@ -28,7 +28,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_KEYWORDS',
-        default=u'Askbot,forum,community',
+        default=u'Nordic, nRF51822, nRF51422, nRF51, nRF8001, nRF8002, nRF24LE1, nRF24LU1+, questions, answers, help, discussion',
         description=_('Comma separated list of Q&A site keywords')
     )
 )
@@ -37,7 +37,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_COPYRIGHT',
-        default='Copyright Askbot, 2010-2011.',
+        default='Copyright Nordic Semiconductor 2014',
         description=_('Copyright message to show in the footer')
     )
 )
@@ -46,8 +46,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_DESCRIPTION',
-        default='Open source question and answer forum written in ' +\
-                'Python and Django',
+        default='Ask any Nordic related question and get help!',
         description=_('Site description for the search engines')
     )
 )
@@ -56,7 +55,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_SHORT_NAME',
-        default='Askbot',
+        default='Devzone',
         description=_('Short name for your Q&A forum')
     )
 )
