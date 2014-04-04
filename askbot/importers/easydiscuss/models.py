@@ -74,11 +74,22 @@ class EfsqtDiscussConversations(models.Model):
     class Meta:
         db_table = 'efsqt_discuss_conversations'
 
-class EfsqtDiscussConversationsParticipants(models.Model):
+class EfsqtDiscussConversationsMessage(models.Model):
     conversation_id = models.BigIntegerField()
-    user_id = models.BigIntegerField()
+    message = models.TextField(blank=True)
+    created = models.DateTimeField()
+    created_by = models.BigIntegerField()
     class Meta:
-        db_table = 'efsqt_discuss_conversations_participants'
+        db_table = 'efsqt_discuss_conversations_message'
+
+class EfsqtDiscussConversationsMessageMaps(models.Model):
+    user_id = models.BigIntegerField()
+    conversation_id = models.BigIntegerField()
+    message_id = models.BigIntegerField()
+    isread = models.IntegerField()
+    state = models.IntegerField()
+    class Meta:
+        db_table = 'efsqt_discuss_conversations_message_maps'
 
 class EfsqtDiscussFavourites(models.Model):
     created_by = models.BigIntegerField()
