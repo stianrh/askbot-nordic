@@ -91,6 +91,7 @@ settings.register(
                 'Base URL for your Q&A forum, must start with '
                 'http or https'
             ),
+        default='https://devzone.nordicsemi.com',
         update_callback=app_url_callback
     )
 )
