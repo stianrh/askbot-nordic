@@ -1403,7 +1403,7 @@ class Thread(models.Model):
             #2) todo: notify moderators about newly suggested tags
 
         ####################################################################
-        self.update_summary_html() # regenerate question/thread summary html
+        #self.update_summary_html() # regenerate question/thread summary html
         ####################################################################
         #if there are any modified tags, update their use counts
         modified_tags = set(modified_tags)
