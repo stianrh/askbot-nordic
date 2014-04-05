@@ -31,12 +31,12 @@ class Command(BaseCommand):
                 openness=user.Group.CLOSED,
             )
 
-            ed_users = EfsqtDiscussUsers.objects.using('devzone').all()
+            ed_users = EfsqtDiscussUsers.objects.using('old-devzone').all()
             count = ed_users.count()
             message = 'Importing %i users' % count
             for ed_user in ProgressBar(ed_users.iterator(), count, message):
-                jm_user = EfsqtUsers.objects.using('devzone').get(id=ed_user.id)
-                jm_usergroups = EfsqtUserUsergroupMap.objects.using('devzone').filter(user_id=ed_user.id)
+                jm_user = EfsqtUsers.objects.using('old-devzone').get(id=ed_user.id)
+                jm_usergroups = EfsqtUserUsergroupMap.objects.using('old-devzone').filter(user_id=ed_user.id)
 
                 ab_user = User()
                 ab_user.id = ed_user.id
@@ -111,7 +111,7 @@ class Command(BaseCommand):
             everyone = user.Group.objects.get_global_group()
             admin = User.objects.filter(is_staff=True)[0]
 
-            ed_posts = EfsqtDiscussPosts.objects.using('devzone').filter(parent_id=0)
+            ed_posts = EfsqtDiscussPosts.objects.using('old-devzone').filter(parent_id=0)
             count = ed_posts.count()
             message = 'Importing %i threads' % count
             for ed_post in ProgressBar(ed_posts.iterator(), count, message):
@@ -146,7 +146,7 @@ class Command(BaseCommand):
 
             transaction.commit()
 
-            ed_posts = EfsqtDiscussPosts.objects.using('devzone').filter(parent_id=0)
+            ed_posts = EfsqtDiscussPosts.objects.using('old-devzone').filter(parent_id=0)
             count = ed_posts.count()
             message = 'Importing %i questions' % count
             for ed_post in ProgressBar(ed_posts.iterator(), count, message):
@@ -182,14 +182,14 @@ class Command(BaseCommand):
                 revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
                 revision.save()
 
-                post_tags = EfsqtDiscussPostsTags.objects.using('devzone').filter(post_id=ab_post.id).values_list('tag_id', flat=True)
-                tags = EfsqtDiscussTags.objects.using('devzone').filter(id__in=post_tags).values_list('title', flat=True)
+                post_tags = EfsqtDiscussPostsTags.objects.using('old-devzone').filter(post_id=ab_post.id).values_list('tag_id', flat=True)
+                tags = EfsqtDiscussTags.objects.using('old-devzone').filter(id__in=post_tags).values_list('title', flat=True)
                 tagnames = ', '.join(tags)
                 ab_post.thread.update_tags(tagnames.lower(), admin)
 
             transaction.commit()
 
-            ed_posts = EfsqtDiscussPosts.objects.using('devzone').exclude(parent_id=0)
+            ed_posts = EfsqtDiscussPosts.objects.using('old-devzone').exclude(parent_id=0)
             count = ed_posts.count()
             message = 'Importing %i answers' % count
             for ed_post in ProgressBar(ed_posts.iterator(), count, message):
@@ -231,7 +231,7 @@ class Command(BaseCommand):
 
             transaction.commit()
 
-            ed_comments = EfsqtDiscussComments.objects.using('devzone').all()
+            ed_comments = EfsqtDiscussComments.objects.using('old-devzone').all()
             count = ed_comments.count()
             message = 'Importing %i comments' % count
             for ed_comment in ProgressBar(ed_comments.iterator(), count, message):
@@ -270,7 +270,7 @@ class Command(BaseCommand):
 
             transaction.commit()
 
-            ed_conversations = EfsqtDiscussConversations.objects.using('devzone').all()
+            ed_conversations = EfsqtDiscussConversations.objects.using('old-devzone').all()
             count = ed_conversations.count()
             message = 'Importing %i message threads' % count
             for ed_conversation in ProgressBar(ed_conversations.iterator(), count, message):
@@ -280,7 +280,7 @@ class Command(BaseCommand):
 
             transaction.commit()
 
-            ed_messages = EfsqtDiscussConversationsMessage.objects.using('devzone').all()
+            ed_messages = EfsqtDiscussConversationsMessage.objects.using('old-devzone').all()
             count = ed_messages.count()
             message = 'Importing %i messages' % count
             for ed_message in ProgressBar(ed_messages.iterator(), count, message):
@@ -293,7 +293,7 @@ class Command(BaseCommand):
 
             transaction.commit()
 
-            ed_messagemaps = EfsqtDiscussConversationsMessageMaps.objects.using('devzone').all()
+            ed_messagemaps = EfsqtDiscussConversationsMessageMaps.objects.using('old-devzone').all()
             count = ed_messagemaps.count()
             message = 'Importing %i message indices' % count
             for ed_messagemap in ProgressBar(ed_messagemaps.iterator(), count, message):
