@@ -1303,7 +1303,7 @@ class Thread(models.Model):
 
 
     def update_tags(
-        self, tagnames = None, user = None, timestamp = None
+        self, tagnames = None, user = None, timestamp = None, update_summary=True
     ):
         """
         Updates Tag associations for a thread to match the given
@@ -1403,7 +1403,8 @@ class Thread(models.Model):
             #2) todo: notify moderators about newly suggested tags
 
         ####################################################################
-        #self.update_summary_html() # regenerate question/thread summary html
+        if update_summary:
+            self.update_summary_html() # regenerate question/thread summary html
         ####################################################################
         #if there are any modified tags, update their use counts
         modified_tags = set(modified_tags)
