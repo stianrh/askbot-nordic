@@ -1213,6 +1213,7 @@ ul#searchTags {
 }
 .paginator {
   margin: 10px 0;
+  float: left;
 }
 .paginator a {
   color: #ffffff;
