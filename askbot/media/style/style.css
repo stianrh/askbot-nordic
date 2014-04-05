@@ -97,14 +97,6 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
-h2 {
-  font-size: 21px;
-  padding: 3px 0 3px 5px;
-}
-h3 {
-  font-size: 19px;
-  padding: 3px 0 3px 5px;
-}
 ul {
   list-style: disc;
   margin-left: 20px;
