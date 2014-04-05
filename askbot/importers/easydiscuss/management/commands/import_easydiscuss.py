@@ -185,7 +185,7 @@ class Command(BaseCommand):
                 post_tags = EfsqtDiscussPostsTags.objects.using('old-devzone').filter(post_id=ab_post.id).values_list('tag_id', flat=True)
                 tags = EfsqtDiscussTags.objects.using('old-devzone').filter(id__in=post_tags).values_list('title', flat=True)
                 tagnames = ', '.join(tags)
-                ab_post.thread.update_tags(tagnames.lower(), admin)
+                ab_post.thread.update_tags(tagnames.lower(), admin, update_summary=False)
 
             transaction.commit()
 
