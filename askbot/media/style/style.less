@@ -509,14 +509,14 @@ body.user-messages {
 
 .scope-selector {
     display: inline-block;
-    float: left;
     font-size: 20px;
     color: @text-color-dark;
     height: 55px;
     line-height: 55px;
-    margin-left: 16px;
+    margin-left: 12px;
+    float: left;
     &.on {
-        background: url(../images/scopearrow.png) no-repeat center 41px;
+        background: url(../images/scopearrow.png) no-repeat center bottom;
     }
     &.ask-message {
         font-size: 24px;
@@ -542,8 +542,8 @@ body.user-messages {
 }
 
 #searchBar { /* Main search form , check widgets/search_bar.html */
-    width: auto;
-    margin: -49px 8px 0 52px;
+    width: 85%;
+    margin: 6px 0;
     padding: 0 49px 0 8px;
     background-color: white;
     display: block;
@@ -811,6 +811,7 @@ form.ajax-file-upload {
     height: 42px;
     line-height: 44px;
     width: 200px;/* to match width of sidebar */
+    margin: 0;
 }
 
 .search-drop-menu {
@@ -822,8 +823,7 @@ body.anon.ask-page .search-drop-menu {
 }
 #scopeNav {
     height: 41px;
-    float: left;
-    width: 280px;
+    width: 420px;
 }
 
 /* ----- Content layout, check two_column_body.html or one_column_body.html ----- */
