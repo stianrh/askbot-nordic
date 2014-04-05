@@ -34,6 +34,7 @@
     <body class="{% block body_class %}{% endblock %}{% if user_messages %} user-messages{% endif %}{% if page_class %} {{page_class}}{% endif %}{% if request.user.is_anonymous() %} anon{% endif %} lang-{{ current_language_code }}">
         <header id="cmsheader">
             <div class="cmsmenu content-wrapper">
+                <img id="logo" src="{% static "logo.png" %}" alt="Nordic Developer Zone" />
                 <ul>
                     {{ cms_menu }}
                 </ul>
