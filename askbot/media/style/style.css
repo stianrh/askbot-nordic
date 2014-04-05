@@ -1665,10 +1665,7 @@ ul#related-tags li {
 .users-page .wmd-container {
   width: auto;
 }
-.ask-page .wmd-container,
-.question-page .wmd-container,
-.edit-question-page .wmd-container,
-.edit-answer-page .wmd-container {
+* .wmd-container {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -1677,17 +1674,11 @@ ul#related-tags li {
   width: 723px;
   width: 100%;
 }
-.ask-page .post-comments .wmd-container,
-.question-page .post-comments .wmd-container,
-.edit-question-page .post-comments .wmd-container,
-.edit-answer-page .post-comments .wmd-container {
+* .post-comments .wmd-container {
   margin-bottom: 8px;
   margin-left: -2px;
 }
-.ask-page #editor,
-.question-page #editor,
-.edit-question-page #editor,
-.edit-answer-page #editor {
+* #editor {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -1695,10 +1686,7 @@ ul#related-tags li {
   height: 100%;
   padding: 6px;
 }
-.ask-page .retagger-buttons button,
-.question-page .retagger-buttons button,
-.edit-question-page .retagger-buttons button,
-.edit-answer-page .retagger-buttons button {
+* .retagger-buttons button {
   margin: 8px 10px 5px 0;
 }
 .edit-answer-page .wmd-container {
