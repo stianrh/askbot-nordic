@@ -888,7 +888,7 @@ settings.register(
     values.StringValue(
         WORDS,
         'WORDS_UNANSWERED',
-        default = _('UNANSWERED'),
+        default = _('unanswered'),
         description = _('UNANSWERED'),
     )
 )
@@ -897,7 +897,7 @@ settings.register(
     values.StringValue(
         WORDS,
         'WORDS_UNRESOLVED',
-        default = _('UNRESOLVED'),
+        default = _('unresolved'),
         description = _('UNRESOLVED'),
     )
 )
