@@ -12,6 +12,7 @@ from askbot.models import User, tag, post, question, user
 from privatemessages.models import Message, Thread, MessageIndex, Settings
 from askbot.importers.easydiscuss.models import *
 from askbot.importers.easydiscuss import bbcode2markdown
+from askbot.importers.easydiscuss.hasher import EasyDiscussMD5PasswordHasher
 
 def get_or_create_anonymous_user(admin, username, email):
     user = admin.get_or_create_fake_user(username, email)
@@ -61,7 +62,7 @@ class Command(BaseCommand):
                 ab_user.real_name = jm_user.name or jm_user.username
                 ab_user.email = jm_user.email
                 hash, salt = jm_user.password.split(':')
-                ab_user.password = '$'.join(['md5', salt, hash])
+                ab_user.password = '$'.join([EasyDiscussMD5PasswordHasher.algorithm, salt, hash])
                 ab_user.about = ed_user.description
                 ab_user.date_joined = jm_user.registerdate or datetime.now()
                 ab_user.last_login = jm_user.lastvisitdate or datetime.now()
