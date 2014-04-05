@@ -139,7 +139,7 @@
     {% if view_user.about and (not view_user.is_blocked()) %}
         {{view_user.about|linebreaks}}
     {% else %}
-        <p><em>{{ user.real_name }} hasn't included any description.</em></p>
+        <p><em>{{ view_user.real_name }} hasn't included any description.</em></p>
     {% endif %}
     </div>
 </div>
