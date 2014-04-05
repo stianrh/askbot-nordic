@@ -287,6 +287,7 @@ class Command(BaseCommand):
                 message = Message()
                 message.id = ed_message.id
                 message.author_id = ed_message.created_by
+                message.created_at = ed_message.created
                 message.body = bbcode2markdown.convert(ed_message.message)
                 message.save()
                 Message.objects.filter(id=message.id).update(created_at=ed_message.created)
