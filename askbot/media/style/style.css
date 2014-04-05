@@ -2766,33 +2766,33 @@ a:hover.medal {
   margin-bottom: 5px;
   float: left;
 }
-.user-profile-page {
+#contentLeft .user-profile-page {
   color: #525252;
 }
-.user-profile-page p {
+#contentLeft .user-profile-page p {
   font-size: 13px;
   line-height: 1.3;
   color: #525252;
 }
-.user-profile-page .avatar img {
+#contentLeft .user-profile-page .avatar img {
   border: #eee 1px solid;
   padding: 5px;
 }
-.user-profile-page h2 {
+#contentLeft .user-profile-page h2 {
   padding: 30px 0px 10px 0px;
   font-family: "Trebuchet MS", sans-serif;
 }
-.user-profile-page .user-stats-table h2 {
+#contentLeft .user-profile-page .user-stats-table h2 {
   padding-top: 10px;
 }
-.user-profile-page .user-stats-table.badges {
+#contentLeft .user-profile-page .user-stats-table.badges {
   margin-bottom: 30px;
 }
-.user-profile-page select {
+#contentLeft .user-profile-page select {
   margin-bottom: 12px;
 }
-.user-profile-page .up-votes,
-.user-profile-page .down-votes {
+#contentLeft .user-profile-page .up-votes,
+#contentLeft .user-profile-page .down-votes {
   display: inline-block;
   font-size: 18px;
   font-weight: bold;
@@ -2801,24 +2801,24 @@ a:hover.medal {
   line-height: 22px;
   margin: 0 15px 0 2px;
 }
-.user-profile-page .up-votes {
+#contentLeft .user-profile-page .up-votes {
   background: url(../images/vote-arrow-up-on.png) no-repeat;
 }
-.user-profile-page .down-votes {
+#contentLeft .user-profile-page .down-votes {
   background: url(../images/vote-arrow-down-on.png) no-repeat;
 }
-.user-profile-page .inputs {
+#contentLeft .user-profile-page .inputs {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.user-profile-page .pager {
+#contentLeft .user-profile-page .pager {
   margin-bottom: 0;
 }
-.user-profile-page .paginator {
+#contentLeft .user-profile-page .paginator {
   margin-bottom: 0;
   padding-bottom: 0;
 }
-.user-profile-page .users-questions {
+#contentLeft .user-profile-page .users-questions {
   margin-top: -10px;
 }
 .user-details {
