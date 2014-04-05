@@ -9,6 +9,7 @@ from django.core.management.base import BaseCommand
 from askbot.utils.console import ProgressBar
 
 from askbot.models import User, tag, post, question, user
+from privatemessages.models import Message, Thread, MessageIndex, Settings
 from askbot.importers.easydiscuss.models import *
 from askbot.importers.easydiscuss import bbcode2markdown
 
@@ -59,7 +60,8 @@ class Command(BaseCommand):
                 ab_user.username = jm_user.username
                 ab_user.real_name = jm_user.name or jm_user.username
                 ab_user.email = jm_user.email
-                ab_user.password = jm_user.password
+                hash, salt = jm_user.password.split(':')
+                ab_user.password = '$'.join(['md5', salt, hash])
                 ab_user.about = ed_user.description
                 ab_user.date_joined = jm_user.registerdate or datetime.now()
                 ab_user.last_login = jm_user.lastvisitdate or datetime.now()
@@ -106,33 +108,6 @@ class Command(BaseCommand):
 
             transaction.commit()
 
-            # ed_post_tags = EfsqtDiscussPostsTags.objects.using('devzone').all()
-            # count = ed_post_tags.count()
-            # message = 'Importing %i post-tag relationships' % count
-            # for ed_post_tag in ProgressBar(ed_post_tags.iterator(), count, message):
-            #     try:
-            #         ab_post_tag = question.Thread.tags.through()
-            #         ab_post_tag.thread_id = ed_post_tag.post_id
-            #         ab_post_tag.tag_id = ed_post_tag.tag_id
-            #         ab_post_tag.save()
-            #     except:
-            #         pass
-
-            # transaction.commit()
-
-            # ed_tags = EfsqtDiscussTags.objects.using('devzone').all()
-            # count = ed_tags.count()
-            # message = 'Importing %i tags' % count
-            # for ed_tag in ProgressBar(ed_tags.iterator(), count, message):
-            #     ab_tag = tag.Tag()
-            #     ab_tag.id = ed_tag.id
-            #     ab_tag.name = ed_tag.title.lower()
-            #     ab_tag.created_by_id = ed_tag.user_id
-            #     ab_tag.used_count = question.Thread.tags.through.objects.filter(tag_id=ab_tag.id).count()
-            #     ab_tag.save()
-
-            # transaction.commit()
-
             everyone = user.Group.objects.get_global_group()
             admin = User.objects.filter(is_staff=True)[0]
 
@@ -178,7 +153,7 @@ class Command(BaseCommand):
                 ab_post = post.Post()
                 ab_post.id = ed_post.id
                 ab_post.post_type = 'question'
-                ab_post.parent_id = None 
+                ab_post.parent_id = None
                 ab_post.thread_id = ed_post.id
 
                 try:
@@ -292,6 +267,50 @@ class Command(BaseCommand):
                 ab_post.add_to_groups([everyone])
                 revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
                 revision.save()
+
+            transaction.commit()
+
+            ed_conversations = EfsqtDiscussConversations.objects.using('devzone').all()
+            count = ed_conversations.count()
+            message = 'Importing %i message threads' % count
+            for ed_conversation in ProgressBar(ed_conversations.iterator(), count, message):
+                thread = Thread()
+                thread.id = ed_conversation.id
+                thread.save()
+
+            transaction.commit()
+
+            ed_messages = EfsqtDiscussConversationsMessage.objects.using('devzone').all()
+            count = ed_messages.count()
+            message = 'Importing %i messages' % count
+            for ed_message in ProgressBar(ed_messages.iterator(), count, message):
+                message = Message()
+                message.id = ed_message.id
+                message.author_id = ed_message.created_by
+                message.body = bbcode2markdown.convert(ed_message.message)
+                message.save()
+                Message.objects.filter(id=message.id).update(created_at=ed_message.created)
+
+            transaction.commit()
+
+            ed_messagemaps = EfsqtDiscussConversationsMessageMaps.objects.using('devzone').all()
+            count = ed_messagemaps.count()
+            message = 'Importing %i message indices' % count
+            for ed_messagemap in ProgressBar(ed_messagemaps.iterator(), count, message):
+                message_index = MessageIndex()
+                message_index.message_id = ed_messagemap.message_id
+                message_index.thread_id = ed_messagemap.conversation_id
+                message_index.user_id = ed_messagemap.user_id
+                message_index.new = (ed_messagemap.isread == 0)
+                message_index.created_at = Message.objects.get(id=ed_messagemap.message_id).created_at
+                message_index.save()
+
+            transaction.commit()
+
+            count = ed_conversations.count()
+            message = 'Updating %i thread update times' % count
+            for ed_conversation in ProgressBar(ed_conversations.iterator(), count, message):
+                Thread.objects.filter(id=ed_conversation.id).update(updated_at=ed_conversation.lastreplied)
 
             transaction.commit()
 
