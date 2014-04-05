@@ -12,6 +12,7 @@ from askbot.utils.html import sanitize_html
 from askbot.utils.html import strip_tags
 from askbot.utils.html import urlize_html
 from django.utils.html import urlize
+from django.core.urlresolvers import NoReverseMatch
 from markdown2 import Markdown
 from django.utils.translation import ugettext as _
 #url taken from http://regexlib.com/REDetails.aspx?regexp_id=501
@@ -169,8 +170,11 @@ def mentionize_text(text, anticipated_authors):
                                                             anticipated_authors
                                                         )
                 if mentioned_author:
-                    mentioned_authors.append(mentioned_author)
-                    output += format_mention_in_html(mentioned_author)
+                    try:
+                        output += format_mention_in_html(mentioned_author)
+                        mentioned_authors.append(mentioned_author)
+                    except NoReverseMatch:
+                        output += '@'
                 else:
                     output += '@'
 
