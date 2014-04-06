@@ -1416,6 +1416,7 @@ ul#related-tags li {
   float: left;
   font-size: 16px;
   color: #5d5d5d;
+  margin-left: 5px;
 }
 .badges .tag-number {
   float: none;
@@ -1899,10 +1900,9 @@ ul#related-tags li {
   width: 175px;
 }
 .question-page .post-update-info {
-  background-color: #e6ecee;
   float: right;
-  font-size: 9px;
-  line-height: 12px;
+  font-size: 10px;
+  line-height: 14px;
   margin: 0px 0px 5px 5px;
   padding: 4px;
   width: 166px;
@@ -1936,8 +1936,6 @@ ul#related-tags li {
   font-size: 11px;
   height: 18px;
   line-height: 12px;
-  margin-top: 10px;
-  margin-bottom: 8px;
   min-width: 200px;
   padding-left: 5px;
   text-align: right;
@@ -2098,7 +2096,6 @@ ul#related-tags li {
   padding: 0;
 }
 .question-page div.comments.empty {
-  margin-top: -34px;
   float: left;
 }
 .question-page h2.comment-title {
@@ -3644,14 +3641,14 @@ p.signup_p {
   display: inline-block;
 }
 .user-card {
+  background-color: #e6ecee;
+  border: 1px #e6ecee solid;
   display: inline-block;
-  height: 35px;
   width: 166px;
-  overflow: hidden;
 }
 .user-card .avatar-box {
   float: left;
-  margin: 0px 6px 0 2px;
+  margin: 0px 4px 0 0;
 }
 .user-card .info {
   height: 32px;
@@ -3796,9 +3793,6 @@ li.L9 {
 a.primary-group-name {
   color: #990E08;
   font-weight: bold;
-}
-.post-update-info .user-info {
-  margin-top: -2px;
 }
 .users-page .wmd-prompt-dialog {
   background: #ccc;
