@@ -241,34 +241,29 @@ body.user-messages {
 .cmsmenu a:hover {
   color: white;
 }
-.page.content {
+#content {
   padding: 1.4rem 0;
 }
-.page.content h1,
-.page.content h2,
-.page.content h3,
-.page.content h4,
-.page.content h5,
-.page.content h6 {
+#content h1,
+#content h2,
+#content h3,
+#content h4,
+#content h5,
+#content h6 {
   margin: 0 0 .75rem;
 }
-.page.content p,
-.page.content ul,
-.page.content ol {
+#content p,
+#content ul,
+#content ol {
   font-size: 16px;
   line-height: 1.4;
 }
-.page.content p {
+#content p {
   margin: 0 0 1.4rem;
 }
-.page.content ul,
-.page.content ol {
+#content ul,
+#content ol {
   margin: 0 0 1.4rem 1.4rem;
-}
-.sidebar {
-  float: right;
-  padding: 1rem;
-  width: 15rem;
 }
 /* ----- Notify message bar , check blocks/system_messages.html ----- */
 .notify {
