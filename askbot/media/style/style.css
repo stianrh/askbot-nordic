@@ -1936,7 +1936,7 @@ ul#related-tags li {
   font-size: 11px;
   height: 18px;
   line-height: 12px;
-  min-width: 200px;
+  min-width: 300px;
   padding-left: 5px;
   text-align: right;
 }
@@ -1956,7 +1956,8 @@ ul#related-tags li {
 }
 .question-page .post-controls a:hover,
 .question-page .post-controls span.dropdown-toggle:hover {
-  background-color: #f5f0c9;
+  color: #000;
+  text-decoration: underline;
 }
 .question-page .post-controls span.dropdown-toggle {
   background: url(../images/sprites.png) no-repeat -7px -242px;
@@ -1968,7 +1969,6 @@ ul#related-tags li {
   position: relative;
 }
 .question-page .post-controls span.dropdown-toggle:hover {
-  padding-right: 0;
   background: url(../images/sprites.png) no-repeat -7px -274px;
 }
 .question-page .post-controls span.dropdown-toggle:hover form {
@@ -1980,12 +1980,6 @@ ul#related-tags li {
   line-height: 20px !important;
   margin: 0;
   padding: 0 5px;
-  border-radius: 0;
-  -ms-border-radius: 0;
-  -moz-border-radius: 0;
-  -webkit-border-radius: 0;
-  -khtml-border-radius: 0;
-  width: 100% !important;
 }
 .question-page .post-controls span.dropdown-toggle:hover .dropdown-menu {
   display: block;
@@ -2001,7 +1995,7 @@ ul#related-tags li {
   width: 100% !important;
 }
 .question-page .post-controls span.dropdown-toggle:hover .dropdown-menu li:hover {
-  background-color: #f5f0c9;
+  text-decoration: underline;
 }
 .question-page .post-controls .sep {
   color: #ccc;
@@ -2011,8 +2005,7 @@ ul#related-tags li {
 }
 .question-page .post-controls .question-delete,
 .question-page .answer-controls .question-delete {
-  background: url(../images/delete.png) no-repeat left -1px;
-  padding-left: 11px;
+  background: url(../images/delete.png) no-repeat 10% -1px;
 }
 .question-page .post-controls .question-flag,
 .question-page .answer-controls .question-flag {
@@ -2071,7 +2064,7 @@ ul#related-tags li {
 }
 .question-page .post-controls .answer-convert input:hover,
 .question-page .answer-controls .answer-convert input:hover {
-  background-color: #f5f0c9;
+  background-color: #e6ecee;
   border-radius: 3px;
   -ms-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -2127,9 +2120,8 @@ ul#related-tags li {
 }
 .question-page .comments .controls a {
   border: none;
-  color: #988e4c;
+  color: #626366;
   padding: 0 3px 5px 22px;
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 13px;
   font-weight: normal;
   background: url(../images/comment.png) no-repeat center left;
@@ -2141,18 +2133,7 @@ ul#related-tags li {
   -webkit-text-shadow: 0 0 0 #929292;
 }
 .question-page .comments .controls a:hover {
-  text-decoration: none;
-}
-.question-page .comments .button {
-  color: #988e4c;
-  font-size: 11px;
-  padding: 3px;
-  cursor: pointer;
-}
-.question-page .comments a {
-  background-color: inherit;
-  color: #1b79bd;
-  padding: 0;
+  text-decoration: underline;
 }
 .question-page .comments form.post-comments {
   padding: 1px 6px 7px 31px;

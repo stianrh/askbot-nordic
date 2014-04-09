@@ -2104,7 +2104,7 @@ ul#related-tags li {
         font-size: 11px;
         height: 18px;
         line-height: 12px;
-        min-width: 200px;
+        min-width: 300px;
         padding-left: 5px;
         text-align: right;
         
@@ -2125,7 +2125,8 @@ ul#related-tags li {
         
         a:hover,
         span.dropdown-toggle:hover {
-            background-color: #f5f0c9;
+            color: #000;
+            text-decoration: underline;
         }
         span.dropdown-toggle {
             background: url(../images/sprites.png) no-repeat -7px -242px;
@@ -2133,7 +2134,6 @@ ul#related-tags li {
             position: relative;
         }
         span.dropdown-toggle:hover {
-            padding-right: 0;
             background: url(../images/sprites.png) no-repeat -7px -274px;
             form {
                 margin: 0;
@@ -2144,8 +2144,6 @@ ul#related-tags li {
                 line-height: 20px !important;
                 margin: 0;
                 padding: 0 5px;
-                .rounded-corners(0);
-                width: 100% !important;
             }
             .dropdown-menu {
                 display: block;
@@ -2160,7 +2158,7 @@ ul#related-tags li {
                     width: 100% !important;
                 }
                 li:hover {
-                    background-color: #f5f0c9;
+                    text-decoration: underline;
                 }
             }
         }
@@ -2173,8 +2171,7 @@ ul#related-tags li {
     }
     .post-controls, .answer-controls{
         .question-delete{
-            background: url(../images/delete.png) no-repeat left -1px;
-            padding-left:11px;
+            background: url(../images/delete.png) no-repeat 10% -1px;
         }
         .question-flag{
             background: url(../images/flag.png) no-repeat 2px 0;
@@ -2224,7 +2221,7 @@ ul#related-tags li {
         }
         
         .answer-convert input:hover{
-            background-color: #f5f0c9;
+            background-color: @background-color-light;
             .rounded-corners(3px);
         }
     }
@@ -2282,9 +2279,8 @@ ul#related-tags li {
         
         .controls a {
             border: none;
-            color: #988e4c;
+            color: @text-color-dark;
             padding: 0 3px 5px 22px;
-            font-family: @body-font;
             font-size: 13px;
             font-weight: normal;
             background: url(../images/comment.png) no-repeat center left;
@@ -2293,21 +2289,9 @@ ul#related-tags li {
         }
 
         .controls a:hover {
-            text-decoration: none;
+            text-decoration: underline;
         }
 
-        .button {
-            color: #988e4c;
-            font-size: 11px;
-            padding: 3px;
-            cursor: pointer;
-        }
-        a {
-            background-color: inherit;
-            color: @link;
-            padding: 0;
-        }
-        
         form.post-comments {
             padding: 1px 6px 7px 31px;
             border-bottom: 1px solid #edeeeb;
