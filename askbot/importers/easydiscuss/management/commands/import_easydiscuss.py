@@ -164,6 +164,7 @@ class Command(BaseCommand):
                         ed_post.poster_email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
+                ab_post.created_at = ed_post.created
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
                 ab_post.locked_at = ed_post.lockdate
@@ -179,8 +180,10 @@ class Command(BaseCommand):
                 ab_post.is_anonymous = (ed_post.user_id == 0)
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
-                revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
-                revision.save()
+
+                if not ab_post.revisions:
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                    revision.save()
 
                 post_tags = EfsqtDiscussPostsTags.objects.using('devzone').filter(post_id=ab_post.id).values_list('tag_id', flat=True)
                 tags = EfsqtDiscussTags.objects.using('devzone').filter(id__in=post_tags).values_list('title', flat=True)
@@ -207,6 +210,7 @@ class Command(BaseCommand):
                         ed_post.poster_email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
+                ab_post.created_at = ed_post.created
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
                 ab_post.locked_at = ed_post.lockdate
@@ -226,8 +230,9 @@ class Command(BaseCommand):
                     ab_post.thread.accepted_answer_id = ab_post.id
                     ab_post.thread.save()
 
-                revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
-                revision.save()
+                if not ab_post.revisions:
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                    revision.save()
 
             transaction.commit()
 
@@ -253,6 +258,7 @@ class Command(BaseCommand):
                         ed_comment.email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_comment.name, ed_comment.email)
 
+                ab_post.created_at = ed_comment.created
                 ab_post.added_at = ed_comment.created
                 ab_post.last_edited_at = ed_comment.modified
                 ab_post.text = ed_comment.comment
@@ -263,8 +269,10 @@ class Command(BaseCommand):
 
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
-                revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
-                revision.save()
+
+                if not ab_post.revisions:
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                    revision.save()
 
             transaction.commit()
 
@@ -286,6 +294,7 @@ class Command(BaseCommand):
                 message.id = ed_message.id
                 message.author_id = ed_message.created_by
                 message.body = bbcode2markdown.convert(ed_message.message)
+                message.created_at = ed_message.created
                 message.save()
                 Message.objects.filter(id=message.id).update(created_at=ed_message.created)
 
