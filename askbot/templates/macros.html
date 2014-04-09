@@ -152,6 +152,19 @@ poor design of the data or methods on data objects #}
                 )
             }}
         {% endif %}
+        <p>
+            {% if post.__class__.__name__ == 'PostRevision' %}
+                {% trans %}updated{% endtrans %} <strong>{{ timeago(post.revised_at) }}</strong>
+            {% else %}
+                    <a 
+                {% if post.post_type == 'question' %}
+                    href="{% url question_revisions post.id %}"
+                {% else %}
+                    href="{% url answer_revisions post.id %}"
+                {% endif %}
+                    >{% trans %}updated{% endtrans %} <strong>{{ timeago(last_edited_at) }}</strong></a>
+            {% endif %}
+        </p>
     </div>
     {% endif %}
 {% endif %}
