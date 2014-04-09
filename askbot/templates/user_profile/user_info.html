@@ -4,21 +4,6 @@
     <div class="col1">
         <div class='avatar'>
             {{ macros.gravatar(view_user, 128) }}
-            {% if request.user == view_user %}
-                <p><a
-                    {% if support_custom_avatars %}
-                        href="{% url avatar_change %}"
-                    {% else %}
-                        href="{% url faq %}#gravatar"
-                    {% endif %}
-                >{% trans %}change picture{% endtrans %}</a></p>
-                {% if support_custom_avatars %}
-                <p><a
-                    href="{% url avatar_delete %}"
-                    >{% trans %}remove{% endtrans %}</a>
-                </p>
-                {% endif %}
-            {% endif %}
         </div>
         {% if can_show_karma %}
             <div class="scoreNumber">{{view_user.reputation|intcomma}}</div>
@@ -31,22 +16,34 @@
             <div class="button"><a href="{{ url('threads') }}">Send message</a></div>
         {% endif %}
     </div>
-    <div class="col2">
-        <table class="user-details">
-            {% if request.user == view_user %}
-            <tr>
-                <td class="user-profile-tool-links" align="left" colspan="2">
-                    <a href="{% url edit_user view_user.id %}">
-                        {% trans %}update profile{% endtrans %}
-                    </a>
-                    {% if settings.USE_ASKBOT_LOGIN_SYSTEM and request.user == view_user and settings.ALLOW_ADD_REMOVE_LOGIN_METHODS %}
-                        | <a href="{{ settings.LOGIN_URL }}?next={{ settings.LOGIN_URL }}">
-                            {% trans %}manage login methods{% endtrans %}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
+    <div class="col2 user-details">
+        {% if request.user == view_user %}
+        <h3>Actions</h3>
+            <ul>
+                <li><a href="{% url edit_user view_user.id %}">
+                {% trans %}Edit profile{% endtrans %}
+            </a></li>
+            {% if settings.USE_ASKBOT_LOGIN_SYSTEM and request.user == view_user and settings.ALLOW_ADD_REMOVE_LOGIN_METHODS %}
+                <li> <a href="{{ settings.LOGIN_URL }}?next={{ settings.LOGIN_URL }}">
+                    {% trans %}Change password{% endtrans %}
+                </a></li>
             {% endif %}
+                <li><a
+                    {% if support_custom_avatars %}
+                        href="{% url avatar_change %}"
+                    {% else %}
+                        href="{% url faq %}#gravatar"
+                    {% endif %}
+                >{% trans %}Change avatar{% endtrans %}</a></p>
+                {% if support_custom_avatars %}
+                <p><a
+                    href="{% url avatar_delete %}"
+                    >{% trans %}remove{% endtrans %}</a>
+                </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+        <table>
             <tr>
                 <th colspan="2" align="left">
                 <h3>{{user_status_for_display}}</h3>
