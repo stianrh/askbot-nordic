@@ -3005,16 +3005,9 @@ a:hover.medal {
   padding: 10px 0 5px 10px;
 }
 .revision .revision-mark {
-  width: 150px;
   text-align: left;
   display: inline-block;
   font-size: 11px;
-  overflow: hidden;
-}
-.revision .revision-mark .gravatar {
-  float: left;
-  margin-right: 4px;
-  padding-top: 5px;
 }
 .revision .revision-number {
   font-size: 300%;
