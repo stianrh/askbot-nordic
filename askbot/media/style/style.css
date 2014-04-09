@@ -2371,14 +2371,8 @@ ul#related-tags li {
 .question-page .answered-accepted strong {
   color: #E1E818;
 }
-.question-page .answered-by-owner {
-  background: #F1F1FF;
-}
-.question-page .answered-by-owner .comments .button {
-  background-color: #E6ECFF;
-}
-.question-page .answered-by-owner .comments {
-  background-color: #E6ECFF;
+.question-page .answered-by-owner .post-body {
+  border-right: 1px #e6ecee dashed;
 }
 .question-page .answer-img-accept {
   background: url(../images/vote-accepted.png);
