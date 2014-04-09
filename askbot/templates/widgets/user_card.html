@@ -7,9 +7,11 @@
     {{ macros.gravatar(user, 32) }}
     <div class="user-info">
         <a href="{{ user.get_profile_url() }}">{{ user.real_name|escape }}</a>
-        {{ macros.user_country_flag(user) }}
 
         <br/>
+        {% if user.is_nordic_employee() %}
+            Nordic employee<br />
+        {% endif %}
 
         {% if karma_mode == 'public' %}
         <span class="reputation-score">{{ user.reputation }}</span>
@@ -28,6 +30,5 @@
             {% endif %}
         </span>
         {% endif %}
-        {{ macros.user_website_link(user) }}
     </div>
 </div>
