@@ -59,7 +59,6 @@
     {% else %}
         {{ user_card(user, karma_mode=karma_mode, badges_mode=badges_mode) }}
     {% endif %}
-    {{ user_primary_group(user) }}
 {%- endmacro -%}
 
 {%- macro post_last_updater_and_creator_info(
