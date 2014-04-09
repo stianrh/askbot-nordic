@@ -85,6 +85,13 @@ poor design of the data or methods on data objects #}
 {% if contributor_type=="original_author" %}
     <div class='post-update-info'>
     {% if is_wiki %}
+        <img width="35" height="35"
+            src="{{'/images/wiki.png'|media}}"
+            alt="{% trans %}this post is marked as community wiki{% endtrans %}"
+            style="float:left"
+        />
+        <p class="tip">{% trans %}This post is a wiki.
+        Anyone with karma &gt;{{wiki_min_rep}} is welcome to improve it.{% endtrans %}</p>
         <p>
            {%- if post.post_type == 'question' -%}
                {{ settings.WORDS_ASKED|escape }}
@@ -95,14 +102,10 @@ poor design of the data or methods on data objects #}
            {% endif %}
            <strong>{{ timeago(post.added_at) }}</strong>
         </p>
-        <img width="35" height="35"
-            src="{{'/images/wiki.png'|media}}"
-            alt="{% trans %}this post is marked as community wiki{% endtrans %}"
-            style="float:left"
-        />
-        <p class="tip">{% trans %}This post is a wiki.
-        Anyone with karma &gt;{{wiki_min_rep}} is welcome to improve it.{% endtrans %}</p>
     {% else %}
+        {{ post_contributor_avatar_and_credentials(
+            post, post.author, karma_mode = karma_mode, badges_mode = badges_mode
+        ) }}
         <p style="line-height:12px;">
             {# todo: access to class names needs to be removed here #}
             {% if post.post_type == 'question' %}
@@ -118,9 +121,6 @@ poor design of the data or methods on data objects #}
                 <strong>{{ timeago(post.added_at) }}</strong>
             {% endif %}
         </p>
-        {{ post_contributor_avatar_and_credentials(
-            post, post.author, karma_mode = karma_mode, badges_mode = badges_mode
-        ) }}
     {% endif %}
     </div>
 {% elif contributor_type=="last_updater" %}
@@ -135,15 +135,6 @@ poor design of the data or methods on data objects #}
     {% endif %}
     {% if last_edited_at %}
     <div class='post-update-info'>
-        <p style="line-height:12px;">
-            <a 
-        {% if post.post_type == 'question' %}
-            href="{% url question_revisions post.id %}"
-        {% else %}
-            href="{% url answer_revisions post.id %}"
-        {% endif %}
-            >{% trans %}updated{% endtrans %} <strong>{{ timeago(last_edited_at) }}</strong></a>
-        </p>
         {% if original_author != update_author or is_wiki %}
             {{ 
                 post_contributor_avatar_and_credentials(
