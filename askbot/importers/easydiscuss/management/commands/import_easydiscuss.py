@@ -306,6 +306,18 @@ class Command(BaseCommand):
 
             transaction.commit()
 
+            message_indices = MessageIndex.objects.order_by('user', 'thread', 'message__created_at')
+            count = message_indices.count()
+            message = 'Updating %i message index date boundaries' % count
+            previous_index = None
+            for message_index in ProgressBar(message_indices.iterator(), count, message):
+                if previous_index and previous_index.thread_id == message_index.thread_id:
+                    next_day = message_index.message.created_at.date() != previous_index.message.created_at.date()
+                    MessageIndex.objects.filter(id=message_index.id).update(next_day=next_day)
+                previous_index = message_index
+
+            transaction.commit()
+
             count = ed_conversations.count()
             message = 'Updating %i thread update times' % count
             for ed_conversation in ProgressBar(ed_conversations.iterator(), count, message):
