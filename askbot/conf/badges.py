@@ -37,7 +37,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'TEACHER_BADGE_MIN_UPVOTES',
-        default=1,
+        default=20,
         description=_('Teacher: minimum upvotes for the answer')
     )
 )
@@ -46,7 +46,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'NICE_ANSWER_BADGE_MIN_UPVOTES',
-        default=2,
+        default=5,
         description=_('Nice Answer: minimum upvotes for the answer')
     )
 )
@@ -55,7 +55,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'GOOD_ANSWER_BADGE_MIN_UPVOTES',
-        default=3,
+        default=10,
         description=_('Good Answer: minimum upvotes for the answer')
     )
 )
@@ -64,7 +64,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'GREAT_ANSWER_BADGE_MIN_UPVOTES',
-        default=5,
+        default=15,
         description=_('Great Answer: minimum upvotes for the answer')
     )
 )
@@ -73,7 +73,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'NICE_QUESTION_BADGE_MIN_UPVOTES',
-        default=2,
+        default=5,
         description=_('Nice Question: minimum upvotes for the question')
     )
 )
@@ -82,7 +82,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'GOOD_QUESTION_BADGE_MIN_UPVOTES',
-        default=3,
+        default=10,
         description=_('Good Question: minimum upvotes for the question')
     )
 )
@@ -91,7 +91,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'GREAT_QUESTION_BADGE_MIN_UPVOTES',
-        default=5,
+        default=15,
         description=_('Great Question: minimum upvotes for the question')
     )
 )
@@ -100,7 +100,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'POPULAR_QUESTION_BADGE_MIN_VIEWS',
-        default=15,
+        default=500,
         description=_('Popular Question: minimum views')
     )
 )
@@ -109,7 +109,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'NOTABLE_QUESTION_BADGE_MIN_VIEWS',
-        default=25,
+        default=150,
         description=_('Notable Question: minimum views')
     )
 )
@@ -118,7 +118,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'FAMOUS_QUESTION_BADGE_MIN_VIEWS',
-        default=50,
+        default=1000,
         description=_('Famous Question: minimum views')
     )
 )
@@ -127,7 +127,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'SELF_LEARNER_BADGE_MIN_UPVOTES',
-        default=1,
+        default=10,
         description=_('Self-Learner: minimum answer upvotes')
     )
 )
@@ -145,7 +145,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'ENLIGHTENED_BADGE_MIN_UPVOTES',
-        default=3,
+        default=15,
         description=_('Enlightened Duty: minimum upvotes')
     )
 )
@@ -154,7 +154,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'GURU_BADGE_MIN_UPVOTES',
-        default=5,
+        default=30,
         description=_('Guru: minimum upvotes')
     )
 )
@@ -163,7 +163,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'NECROMANCER_BADGE_MIN_UPVOTES',
-        default=1,
+        default=3,
         description=_('Necromancer: minimum upvotes')
     )
 )
@@ -190,7 +190,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'FAVORITE_QUESTION_BADGE_MIN_STARS',
-        default=3,
+        default=5,
         description=_('Favorite Question: minimum stars')
     )
 )
@@ -199,7 +199,7 @@ settings.register(
     IntegerValue(
         BADGES,
         'STELLAR_QUESTION_BADGE_MIN_STARS',
-        default=5,
+        default=10,
         description=_('Stellar Question: minimum stars')
     )
 )
