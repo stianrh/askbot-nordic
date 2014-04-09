@@ -298,6 +298,7 @@ class Command(BaseCommand):
             message = 'Importing %i message indices' % count
             for ed_messagemap in ProgressBar(ed_messagemaps.iterator(), count, message):
                 message_index = MessageIndex()
+                message_index.id = ed_messagemap.id
                 message_index.message_id = ed_messagemap.message_id
                 message_index.thread_id = ed_messagemap.conversation_id
                 message_index.user_id = ed_messagemap.user_id
