@@ -674,11 +674,9 @@ input[type="reset"],
   border: 0 !important;
   cursor: pointer;
   color: #ffffff;
-  font-family: "Trebuchet MS", sans-serif;
-  font-size: 14px;
-  font-weight: bold;
   height: 27px;
   margin-right: 10px;
+  margin-top: 5px;
   text-align: center;
   text-decoration: none;
   border-radius: 4px;
@@ -686,6 +684,19 @@ input[type="reset"],
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -khtml-border-radius: 4px;
+}
+button a,
+input[type="submit"] a,
+input[type="button"] a,
+input[type="reset"] a,
+.button a,
+button a:hover,
+input[type="submit"] a:hover,
+input[type="button"] a:hover,
+input[type="reset"] a:hover,
+.button a:hover {
+  color: #fff;
+  text-decoration: none;
 }
 button.large,
 input[type="submit"].large,

@@ -722,14 +722,16 @@ input[type="reset"],
     border: 0 !important;
     cursor: pointer;
     color: @text-color-light;
-    font-family: @main-font;
-    font-size: 14px;
-    font-weight: bold;
     height: 27px;
     margin-right: 10px;
+    margin-top: 5px;
     text-align: center;
     text-decoration: none;
     .rounded-corners(4px);
+    a, a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
 }
 button.large,
 input[type="submit"].large,
