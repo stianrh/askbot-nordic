@@ -27,6 +27,9 @@
         {% if user_follow_feature_on %}
             {{ macros.follow_user_toggle(visitor = request.user, subject = view_user) }}
         {% endif %}
+        {% if request.user != view_user %}
+            <div class="button"><a href="{{ url('threads') }}">Send message</a></div>
+        {% endif %}
     </div>
     <div class="col2">
         <table class="user-details">
