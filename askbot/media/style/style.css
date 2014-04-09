@@ -2726,33 +2726,33 @@ a:hover.medal {
   margin-bottom: 5px;
   float: left;
 }
-#contentLeft .user-profile-page {
+.user-profile-page #ContentLeft {
   color: #525252;
 }
-#contentLeft .user-profile-page p {
+.user-profile-page #ContentLeft p {
   font-size: 13px;
   line-height: 1.3;
   color: #525252;
 }
-#contentLeft .user-profile-page .avatar img {
+.user-profile-page #ContentLeft .avatar img {
   border: #eee 1px solid;
   padding: 5px;
 }
-#contentLeft .user-profile-page h2 {
+.user-profile-page #ContentLeft h2 {
   padding: 30px 0px 10px 0px;
   font-family: "Trebuchet MS", sans-serif;
 }
-#contentLeft .user-profile-page .user-stats-table h2 {
+.user-profile-page #ContentLeft .user-stats-table h2 {
   padding-top: 10px;
 }
-#contentLeft .user-profile-page .user-stats-table.badges {
+.user-profile-page #ContentLeft .user-stats-table.badges {
   margin-bottom: 30px;
 }
-#contentLeft .user-profile-page select {
+.user-profile-page #ContentLeft select {
   margin-bottom: 12px;
 }
-#contentLeft .user-profile-page .up-votes,
-#contentLeft .user-profile-page .down-votes {
+.user-profile-page #ContentLeft .up-votes,
+.user-profile-page #ContentLeft .down-votes {
   display: inline-block;
   font-size: 18px;
   font-weight: bold;
@@ -2761,24 +2761,24 @@ a:hover.medal {
   line-height: 22px;
   margin: 0 15px 0 2px;
 }
-#contentLeft .user-profile-page .up-votes {
+.user-profile-page #ContentLeft .up-votes {
   background: url(../images/vote-arrow-up-on.png) no-repeat;
 }
-#contentLeft .user-profile-page .down-votes {
+.user-profile-page #ContentLeft .down-votes {
   background: url(../images/vote-arrow-down-on.png) no-repeat;
 }
-#contentLeft .user-profile-page .inputs {
+.user-profile-page #ContentLeft .inputs {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-#contentLeft .user-profile-page .pager {
+.user-profile-page #ContentLeft .pager {
   margin-bottom: 0;
 }
-#contentLeft .user-profile-page .paginator {
+.user-profile-page #ContentLeft .paginator {
   margin-bottom: 0;
   padding-bottom: 0;
 }
-#contentLeft .user-profile-page .users-questions {
+.user-profile-page #ContentLeft .users-questions {
   margin-top: -10px;
 }
 .user-details {
