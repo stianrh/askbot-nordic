@@ -1,3 +1,33 @@
+var getCookie = function(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
+
+var csrfSafeMethod = function(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+var csrftoken = getCookie('csrftoken');
+
+$.ajaxSetup({
+    crossDomain: false,
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type)) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
 /**
  * attention - this function needs to be retired
  * as it cannot accurately give url to the media file
@@ -246,19 +276,19 @@ var notify = function() {
                 var par = $('<p class="notification"></p>');
                 par.html(html);
                 $(".notify").prepend(par);
-            }          
+            }
             $(".notify").fadeIn("slow");
             visible = true;
             if (autohide) {
                 setTimeout(
-                    function() { 
+                    function() {
                         notify.close(false);
                         notify.clear();
                     },
                     3000
                 );
             }
-        },       
+        },
         clear: function() {
             $('.notify').empty();
         },
@@ -272,8 +302,8 @@ var notify = function() {
             $(".notify").fadeOut("fast");
             $('body').removeClass('user-messages');
             visible = false;
-        },     
-        isVisible: function() { return visible; }     
+        },
+        isVisible: function() { return visible; }
     };
 }();
 
@@ -423,7 +453,7 @@ WrappedElement.prototype.setElement = function(element){
     this._element = element;
 };
 
-/** 
+/**
  * this function must be overridden for any object
  * what will use "DOM generation" pattern
  *
@@ -454,7 +484,7 @@ WrappedElement.prototype.decorate = function(element){
  * Normally you call this method to generate the dom
  * structure, if applicable, or just obtain the
  * jQuery object encapsulating the dom.
- * 
+ *
  * @return {object} jQuery
  */
 WrappedElement.prototype.getElement = function(){
@@ -498,7 +528,7 @@ WrappedElement.prototype.dispose = function(){
     this._in_document = false;
 };
 
-/** 
+/**
  * @constructor
  * a loader
  */
@@ -534,7 +564,7 @@ WaitIcon.prototype.createDom = function() {
     var img = this.makeElement('img');
     img.attr('src', mediaUrl('media/images/ajax-loader.gif'));
     box.append(img);
-    this.setVisible(this._isVisible); 
+    this.setVisible(this._isVisible);
 };
 
 var Paginator = function() {
@@ -542,7 +572,7 @@ var Paginator = function() {
 };
 inherits(Paginator, WrappedElement);
 
-/** 
+/**
  * A mandotory method.
  * this method needs to be implemented by the subclass
  * @interface
@@ -561,7 +591,7 @@ Paginator.prototype.getPageDataUrl = function(pageNo) {
     throw 'implement me in the subclass';
 };
 
-/** 
+/**
  * Optional method
  * @interface - implement in subclass
  * returns url parameters for the page request
@@ -730,9 +760,9 @@ Paginator.prototype.createButton = function(cls, label) {
 
 Paginator.prototype.getPageButtonHandler = function(pageNo) {
     var me = this;
-    return function() { 
+    return function() {
         if (me.getCurrentPageNo() !== pageNo) {
-            me.startLoadingPageData(pageNo); 
+            me.startLoadingPageData(pageNo);
         }
         return false;
     };
@@ -760,7 +790,7 @@ Paginator.prototype.decorate = function(element) {
     }
 
     var currPageNo = element.find('.curr').data('page');
-    
+
     //next page button
     var nextPage = element.find('.next');
     this._nextPageButton = nextPage;
@@ -789,7 +819,7 @@ Paginator.prototype.decorate = function(element) {
  * makes images never take more spaces then they can take
  * @param {<Array>} breakPoints
  * @param {number} maxWidth
- * an array of array values like (min-width, width-offset) 
+ * an array of array values like (min-width, width-offset)
  * where min-width is screen minimum width
  * width-offset - difference between the actual screen width and
  * max-width of the image.
@@ -944,7 +974,7 @@ Widget.prototype.makeButton = function(label, handler) {
  * Can be used for an input box or textarea.
  * The original value will be treated as an instruction.
  * When user focuses on the field, the tip will be gone,
- * when the user escapes without typing anything besides 
+ * when the user escapes without typing anything besides
  * perhaps empty text, the instruction is restored.
  * When instruction is shown, class "blank" is present
  * in the input/textare element.
@@ -952,7 +982,7 @@ Widget.prototype.makeButton = function(label, handler) {
  * For the usage examples - search for "new TippedInput"
  * there is at least one example for both - decoration and
  * the "dom creation" patterns.
- * 
+ *
  * Also - in the FileUploadDialog the TippedInput is used
  * as a sub-element - the widget composition use case.
  */
@@ -1026,14 +1056,14 @@ TippedInput.prototype.createDom = function() {
 /**
  * Attaches the TippedInput behavior to
  * a pre-existing <input> element
- * 
+ *
  * decorate() method normally does not create
  * new dom elements, but it might add some missing elements,
  * if necessary.
  *
  * for example the decorate might be composing inside
  * a more complex widget, in which case other elements
- * can be added via a "composition" pattern, or 
+ * can be added via a "composition" pattern, or
  * just "naked dom elements" added to the current widget's element
  *
  */
@@ -1666,7 +1696,7 @@ FileUploadDialog.prototype.startFileUpload = function(startUploadHandler) {
     var spinner = this._spinner;
     var label = this._label;
 
-    spinner.ajaxStart(function(){ 
+    spinner.ajaxStart(function(){
         spinner.show();
         label.hide();
     });
@@ -1719,7 +1749,7 @@ FileUploadDialog.prototype.startFileUpload = function(startUploadHandler) {
 
             /* re-install this as the upload extension
              * will remove the handler to prevent double uploading
-             * this hack is a manipulation around the 
+             * this hack is a manipulation around the
              * ajaxFileUpload jQuery plugin. */
             me.installFileUploadHandler(startUploadHandler);
         },
@@ -2079,11 +2109,11 @@ TwoStateToggle.prototype.decorate = function(element){
     var messages = {};
     messages['on-state'] =
         element.attr('data-on-state-text') || gettext('enabled');
-    messages['off-state'] = 
+    messages['off-state'] =
         element.attr('data-off-state-text') || gettext('disabled');
     messages['on-prompt'] =
         element.attr('data-on-prompt-text') || messages['on-state'];
-    messages['off-prompt'] = 
+    messages['off-prompt'] =
         element.attr('data-off-prompt-text') || messages['off-state'];
     this._state_messages = messages;
 
@@ -2362,7 +2392,7 @@ SelectBox.prototype.empty = function() {
     this._items = [];
 };
 
-/* 
+/*
  * why do we have these two almost identical methods?
  * the difference seems to be remove/vs fade out
  */
@@ -2497,12 +2527,12 @@ SelectBox.prototype.createDom = function() {
 };
 
 /**
- * This is a dropdown list elment 
+ * This is a dropdown list elment
  */
 
 var GroupDropdown = function(groups){
     WrappedElement.call(this);
-    this._group_list = groups; 
+    this._group_list = groups;
 };
 inherits(GroupDropdown, WrappedElement);
 
@@ -2544,7 +2574,7 @@ GroupDropdown.prototype.createDom =  function(){
  */
 GroupDropdown.prototype.insertGroup = function(group_name, url){
 
-    //1) take out first and last list elements: 
+    //1) take out first and last list elements:
     // everyone and the "add group" item
     var list = this._element.children();
     var everyoneGroup = list.first().detach();
@@ -2622,7 +2652,7 @@ GroupDropdown.prototype._add_group_handler = function(group_name){
                 } else {
                     me.insertGroup(data['group_name'], data['url']);
                     me.setState('display');
-                    return true; 
+                    return true;
                 }
             } else{
                 notify.show(data['message']);
@@ -2635,14 +2665,14 @@ GroupDropdown.prototype._add_group_handler = function(group_name){
 
 GroupDropdown.prototype.enableAddGroups = function(){
     var self = this;
-    this._add_link.click(function(){ 
+    this._add_link.click(function(){
         self._add_link.hide();
-        self._input_box_element.show(); 
-        self._input_box_element.focus(); 
+        self._input_box_element.show();
+        self._input_box_element.focus();
     });
     this._input_box_element.keydown(function(event){
         if (event.which == 13 || event.keyCode==13){
-            self._add_group_handler(); 
+            self._add_group_handler();
             self._input_box_element.val('');
         }
     });
@@ -3691,7 +3721,7 @@ AutoCompleter.prototype.isContentChar = function(symbol){
  * and saves _selection_start and _selection_end coordinates
  * respects settings autocompleteMultiple and
  * multipleSeparator
- * @return {string} the current word in the 
+ * @return {string} the current word in the
  * autocompletable word
  */
 AutoCompleter.prototype.getValue = function(){
@@ -3730,7 +3760,7 @@ AutoCompleter.prototype.getValue = function(){
     return text.substring(start, end);
 }
 
-/** 
+/**
  * sets value of the input box
  * by replacing the previous selection
  * with the value from the autocompleter
