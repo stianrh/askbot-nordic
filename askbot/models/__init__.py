@@ -268,7 +268,7 @@ User.add_to_class(
     )
 )
 
-GRAVATAR_TEMPLATE = "//www.gravatar.com/avatar/%(gravatar)s?s=%(size)d&d=%(type)s"
+GRAVATAR_TEMPLATE = "%(gravatar_url)s/%(gravatar)s?s=%(size)d&d=%(type)s&r=PG"
 
 def user_get_gravatar_url(self, size):
     """returns gravatar url
@@ -278,6 +278,7 @@ def user_get_gravatar_url(self, size):
         gravatar_type = site_url(self.get_default_avatar_url(size))
 
     return GRAVATAR_TEMPLATE % {
+                'gravatar_url': askbot_settings.GRAVATAR_BASE_URL,
                 'gravatar': self.gravatar,
                 'type': urlquote(gravatar_type),
                 'size': size,
@@ -361,7 +362,7 @@ def user_strip_email_signature(self, text):
     return text
 
 def _check_gravatar(gravatar):
-    gravatar_url = "http://www.gravatar.com/avatar/%s?d=404" % gravatar
+    gravatar_url = askbot_settings.GRAVATAR_BASE_URL + "/%s?d=404" % gravatar
     code = urllib.urlopen(gravatar_url).getcode()
     if urllib.urlopen(gravatar_url).getcode() != 404:
         return 'g' #gravatar
@@ -1575,6 +1576,9 @@ def user_restore_post(
         post.deleted_by = None
         post.deleted_at = None
         post.save()
+        if post.post_type == 'question':
+            post.thread.deleted = False
+            post.thread.save()
         post.thread.invalidate_cached_data()
         if post.post_type == 'answer':
             post.thread.update_answer_count()
@@ -2339,11 +2343,12 @@ def user_get_primary_group(self):
     first non-personal non-everyone group
     works only for one real private group per-person
     """
-    groups = self.get_groups(private=True)
-    for group in groups:
-        if group.is_personal():
-            continue
-        return group
+    if askbot_settings.GROUPS_ENABLED:
+        groups = self.get_groups(private=True)
+        for group in groups:
+            if group.is_personal():
+                continue
+            return group
     return None
 
 def user_can_make_group_private_posts(self):
@@ -3065,13 +3070,13 @@ def format_instant_notification_email(
             )
         #todo: remove hardcoded style
     else:
-        content_preview = post.format_for_email(is_leaf_post = True)
+        content_preview = post.format_for_email(is_leaf_post=True, recipient=to_user)
 
     #add indented summaries for the parent posts
-    content_preview += post.format_for_email_as_parent_thread_summary()
+    content_preview += post.format_for_email_as_parent_thread_summary(recipient=to_user)
 
     #content_preview += '<p>======= Full thread summary =======</p>'
-    #content_preview += post.thread.format_for_email(user=to_user)
+    #content_preview += post.thread.format_for_email(recipient=to_user)
 
     if update_type == 'post_shared':
         user_action = _('%(user)s shared a %(post_link)s.')
@@ -3095,10 +3100,22 @@ def format_instant_notification_email(
 
     post_url = site_url(post.get_absolute_url())
     user_url = site_url(from_user.get_absolute_url())
+
+    if to_user.is_administrator_or_moderator() and askbot_settings.SHOW_ADMINS_PRIVATE_USER_DATA:
+        user_link_fmt = '<a href="%(profile_url)s">%(username)s</a> (<a href="mailto:%(email)s">%(email)s</a>)'
+        user_link = user_link_fmt % {
+            'profile_url': user_url,
+            'username': from_user.username,
+            'email': from_user.email
+        }
+    elif post.is_anonymous:
+        user_link = from_user.get_name_of_anonymous_user()
+    else:
+        user_link = '<a href="%s">%s</a>' % (user_url, from_user.username)
+
     user_action = user_action % {
-        'user': '<a href="%s">%s</a>' % (user_url, from_user.username),
+        'user': user_link,
         'post_link': '<a href="%s">%s</a>' % (post_url, _(post.post_type))
-        #'post_link': '%s <a href="%s">>>></a>' % (_(post.post_type), post_url)
     }
 
     can_reply = to_user.can_post_by_email()

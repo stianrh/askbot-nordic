@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.utils.translation import string_concat
 from django.utils.translation import get_language
+from django.utils.translation import activate as activate_language
 
 import askbot
 from askbot.conf import settings as askbot_settings
@@ -610,7 +611,7 @@ class Thread(models.Model):
 
     accepted_answer = models.ForeignKey('Post', null=True, blank=True, related_name='+')
     answer_accepted_at = models.DateTimeField(null=True, blank=True)
-    added_at = models.DateTimeField(default = datetime.datetime.now)
+    added_at = models.DateTimeField(auto_now_add=True)
 
     #db_column will be removed later
     points = models.IntegerField(default = 0, db_column='score')
@@ -842,16 +843,13 @@ class Thread(models.Model):
         else:
             return self.tagnames.split(u', ')
 
-    def get_title(self, question=None):
-        if not question:
-            question = self._question_post() # allow for optimization if the caller has already fetched the question post for this thread
+    def get_title(self):
         if self.is_private():
             attr = const.POST_STATUS['private']
         elif self.closed:
             attr = const.POST_STATUS['closed']
-        elif question.deleted:
+        elif self.deleted:
             attr = const.POST_STATUS['deleted']
-
         else:
             attr = None
         if attr is not None:
@@ -859,13 +857,13 @@ class Thread(models.Model):
         else:
             return self.title
 
-    def format_for_email(self, user=None):
+    def format_for_email(self, recipient=None):
         """experimental function: output entire thread for email"""
 
         question, answers, junk, published_ans_ids = \
-                                self.get_cached_post_data(user=user)
+                                self.get_cached_post_data(user=recipient)
 
-        output = question.format_for_email_as_subthread()
+        output = question.format_for_email_as_subthread(recipient=recipient)
         if answers:
             #todo: words
             answer_heading = ungettext(
@@ -875,7 +873,7 @@ class Thread(models.Model):
                                 ) % {'count': len(answers)}
             output += '<p>%s</p>' % answer_heading
             for answer in answers:
-                output += answer.format_for_email_as_subthread()
+                output += answer.format_for_email_as_subthread(recipient=recipient)
         return output
 
     def get_answers_by_user(self, user):
@@ -1120,7 +1118,8 @@ class Thread(models.Model):
             # we had question post id denormalized on the thread
             tags_list = self.get_tag_names()
             similar_threads = Thread.objects.filter(
-                                        tags__name__in=tags_list
+                                        tags__name__in=tags_list,
+                                        language_code=self.language_code
                                     ).exclude(
                                         id = self.id
                                     ).exclude(
@@ -1155,7 +1154,7 @@ class Thread(models.Model):
                 # this is a "legacy" problem inherited from the old models
                 if question_post:
                     url = question_post.get_absolute_url()
-                    title = thread.get_title(question_post)
+                    title = thread.get_title()
                     result.append({'url': url, 'title': title})
 
             return result
@@ -1544,6 +1543,7 @@ class Thread(models.Model):
         }
         from askbot.views.context import get_extra as get_extra_context
         context.update(get_extra_context('ASKBOT_QUESTION_SUMMARY_EXTRA_CONTEXT', None, context))
+        activate_language(self.language_code)
         html = get_template('widgets/question_summary.html').render(context)
         # INFO: Timeout is set to 30 days:
         # * timeout=0/None is not a reliable cross-backend way to set infinite timeout

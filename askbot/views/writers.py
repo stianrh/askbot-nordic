@@ -223,7 +223,11 @@ def ask(request):#view used to ask a new question
             request.user.message_set.create(message=_('Sorry, but you have only read access'))
             return HttpResponseRedirect(referer)
 
-    form = forms.AskForm(request.POST, user=request.user)
+    if askbot_settings.READ_ONLY_MODE_ENABLED:
+        return HttpResponseRedirect(reverse('index'))
+
+    form = forms.AskForm(request.REQUEST, user=request.user)
+
     if request.method == 'POST':
         if form.is_valid():
             timestamp = datetime.datetime.now()
@@ -395,8 +399,13 @@ def edit_question(request, id):
     """edit question view
     """
     question = get_object_or_404(models.Post, id=id)
+
+    if askbot_settings.READ_ONLY_MODE_ENABLED:
+        return HttpResponseRedirect(question.get_absolute_url())
+
     revision = question.get_latest_revision()
     revision_form = None
+
     try:
         request.user.assert_can_edit_question(question)
         if request.method == 'POST':
@@ -497,6 +506,10 @@ def edit_question(request, id):
 @decorators.check_spam('text')
 def edit_answer(request, id):
     answer = get_object_or_404(models.Post, id=id)
+
+    if askbot_settings.READ_ONLY_MODE_ENABLED:
+        return HttpResponseRedirect(answer.get_absolute_url())
+
     revision = answer.get_latest_revision()
 
     class_path = getattr(settings, 'ASKBOT_EDIT_ANSWER_FORM', None)
@@ -595,6 +608,10 @@ def answer(request, id, form_class=forms.AnswerForm):#process a new answer
     authenticated users post directly
     """
     question = get_object_or_404(models.Post, post_type='question', id=id)
+
+    if askbot_settings.READ_ONLY_MODE_ENABLED:
+        return HttpResponseRedirect(question.get_absolute_url())
+
     if request.method == "POST":
 
         #this check prevents backward compatilibility
@@ -732,6 +749,10 @@ def post_comments(request):#generic ajax handler to load comments to an object
                         '<a href="%(sign_in_url)s">sign in</a>.') % \
                         {'sign_in_url': url_utils.get_login_url()}
                 raise exceptions.PermissionDenied(msg)
+
+            if askbot_settings.READ_ONLY_MODE_ENABLED:
+                raise exceptions.PermissionDenied(askbot_settings.READ_ONLY_MESSAGE)
+
             comment = user.post_comment(
                 parent_post=post, body_text=form.cleaned_data['comment']
             )
@@ -752,6 +773,9 @@ def post_comments(request):#generic ajax handler to load comments to an object
 def edit_comment(request):
     if request.user.is_anonymous():
         raise exceptions.PermissionDenied(_('Sorry, anonymous users cannot edit comments'))
+
+    if askbot_settings.READ_ONLY_MODE_ENABLED:
+        raise exceptions.PermissionDenied(askbot_settings.READ_ONLY_MESSAGE)
 
     form = forms.EditCommentForm(request.POST)
     if form.is_valid() == False:
@@ -816,6 +840,9 @@ def delete_comment(request):
             comment = get_object_or_404(models.Post, post_type='comment', id=comment_id)
             request.user.assert_can_delete_comment(comment)
 
+            if askbot_settings.READ_ONLY_MODE_ENABLED:
+                raise exceptions.PermissionDenied(askbot_settings.READ_ONLY_MESSAGE)
+
             parent = comment.parent
             comment.delete()
             #attn: recalc denormalized field
@@ -834,6 +861,7 @@ def delete_comment(request):
                     mimetype = 'application/json'
                 )
 
+@login_required
 @decorators.post_only
 def comment_to_answer(request):
 
@@ -849,7 +877,9 @@ def comment_to_answer(request):
                     id=comment_id
                 )
 
-    request.user.repost_comment_as_answer(comment)
+    if askbot_settings.READ_ONLY_MODE_ENABLED is False:
+        request.user.repost_comment_as_answer(comment)
+
     return HttpResponseRedirect(comment.get_absolute_url())
 
 @decorators.post_only
@@ -867,6 +897,9 @@ def repost_answer_as_comment(request, destination=None):
         answer_id = int(answer_id)
         answer = get_object_or_404(models.Post,
                 post_type = 'answer', id=answer_id)
+
+        if askbot_settings.READ_ONLY_MODE_ENABLED:
+            return HttpResponseRedirect(answer.get_absolute_url())
 
         if destination == 'comment_under_question':
             destination_post = answer.thread._question_post()

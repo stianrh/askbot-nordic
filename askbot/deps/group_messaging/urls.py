@@ -1,6 +1,10 @@
 """url configuration for the group_messaging application"""
-from django.conf.urls import patterns, url
-from group_messaging import views
+try:
+    from django.conf.urls import patterns, url
+except ImportError:
+    from django.conf.urls.defaults import patterns, url
+
+    from group_messaging import views
 
 urlpatterns = patterns('',
     url(

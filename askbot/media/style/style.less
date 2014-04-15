@@ -619,20 +619,16 @@ body.user-messages {
     -webkit-box-sizing: border-box;
     background: whitesmoke;
     border-top: none;
-    bottom: -50px;
+    top: 42px;
     margin: 0;
     outline: 1px solid #dadad4;
     position: absolute;
     z-index: 10000;
 
-     &.waiting {
-         bottom: -27px;
-     }
-
     ul {
         list-style: none;
         overflow: auto;
-        padding: 0 0 10px 0;
+        padding: 0;
         margin: 0;
         position: relative;
         width: 100%;
@@ -654,7 +650,10 @@ body.user-messages {
     .footer {
         text-align: center;
         margin: 0 0 1px 0;
-        padding: 9px 0 10px 0;
+        padding: 4px 0 10px 0;
+    }
+    &.empty .footer {
+        padding-top: 9px;
     }
 }
 
@@ -708,12 +707,18 @@ input[type="submit"].searchBtn {
         color: white;
         height: 0;
         z-index: 0;
+        position: absolute;
+        left: -1000px;/* hide away */
     }
-    .search-drop-menu.empty {
-        border: none;
-        padding: 0;
-        ul {
-            padding: 0;
+    .search-drop-menu {
+        top: 37px;
+        &.empty {
+            border: none;
+            outline: none;
+            padding: 0 !important;
+            ul {
+                padding: 0 !important;
+            }
         }
     }
 }
@@ -1737,6 +1742,7 @@ ul#related-tags li {
     padding: 4px 0 0 0;
     margin-top:0px;
     width: 100%;
+    position: relative;
 
     p {
        margin:0 0 5px 0;
@@ -3768,6 +3774,15 @@ a.offensive {
     margin-bottom: 0px;
 }
 
+.system-messages {
+    color: red;
+    background: yellow;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 25px;
+    padding: 0 5px;
+}
+
 p.space-above {
     margin-top: 10px;
 }
@@ -5026,9 +5041,6 @@ body.lang-fi {
 }
 
 body.lang-ru {
-    #scopeNav {
-        width: 315px;
-    }
     .scope-selector {
         font-size: 17px;
     }
