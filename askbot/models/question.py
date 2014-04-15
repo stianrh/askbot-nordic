@@ -312,7 +312,6 @@ class ThreadManager(BaseQuerySetManager):
             query_users = User.objects.filter(username__in=search_state.query_users)
             if query_users:
                 qs = qs.filter(
-                    posts__post_type='question',
                     posts__author__in=query_users
                 ) # TODO: unify with search_state.author ?
 
