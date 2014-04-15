@@ -7,6 +7,7 @@ from datetime import datetime
 from django.db import transaction
 from django.core.management.base import BaseCommand
 from askbot.utils.console import ProgressBar
+from django.core.urlresolvers import reverse
 
 from askbot.models import User, tag, post, question, user
 from privatemessages.models import Message, Thread, MessageIndex, Settings
@@ -181,7 +182,7 @@ class Command(BaseCommand):
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
 
-                if not ab_post.revisions:
+                if not ab_post.revisions.exists():
                     revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
                     revision.save()
 
@@ -230,7 +231,7 @@ class Command(BaseCommand):
                     ab_post.thread.accepted_answer_id = ab_post.id
                     ab_post.thread.save()
 
-                if not ab_post.revisions:
+                if not ab_post.revisions.exists():
                     revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
                     revision.save()
 
@@ -270,11 +271,37 @@ class Command(BaseCommand):
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
 
-                if not ab_post.revisions:
+                if not ab_post.revisions.exists():
                     revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
                     revision.save()
 
             transaction.commit()
+
+            image_exts = ['jpg', 'jepg', 'png', 'gif', 'bmp', 'svg']
+            ed_attachments = EfsqtDiscussAttachments.objects.using('devzone').all()
+            count = ed_attachments.count()
+            message = 'Importing %i post attachments' % count
+            for ed_attachment in ProgressBar(ed_attachments.iterator(), count, message):
+                try:
+                    ab_post = post.Post.objects.get(id=ed_attachment.uid)
+                except:
+                    continue
+
+                ab_post.text = ab_post.text + '\n\n%s[%s](%s%s/%s)' % (
+                    '!' if ed_attachment.title.split('.')[-1] in image_exts else '',
+                    ed_attachment.title,
+                    reverse('upload'),
+                    ed_attachment.path,
+                    ed_attachment.title,
+                )
+
+                ab_post.html = ab_post.parse_post_text()['html']
+                ab_post.save()
+
+            transaction.commit()
+            WARNING = '\033[93m'
+            ENDC = '\033[0m'
+            print WARNING + 'You need to manually copy uploads, keeping directory structure, to <askbot media folder>/uploads/' + ENDC
 
             ed_conversations = EfsqtDiscussConversations.objects.using('devzone').all()
             count = ed_conversations.count()
