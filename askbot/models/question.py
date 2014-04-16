@@ -32,6 +32,7 @@ from askbot.utils.lists import LazyList
 from askbot.search import mysql
 from askbot.utils.slug import slugify
 from askbot.search.state_manager import DummySearchState
+from haystack.query import SearchQuerySet
 
 
 def clean_tagnames(tagnames):
@@ -235,9 +236,7 @@ class ThreadManager(BaseQuerySetManager):
         todo: move to query set
         """
         if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
-            from askbot.search.haystack.searchquery import AskbotSearchQuerySet
-            hs_qs = AskbotSearchQuerySet().filter(content=search_query)
-            return hs_qs.get_django_queryset()
+            return SearchQuerySet().models(self.model).auto_query(search_query)
         else:
             if not qs:
                 qs = self.all()
@@ -454,32 +453,21 @@ class ThreadManager(BaseQuerySetManager):
             'answers-asc': 'answer_count',
             'votes-desc': '-points',
             'votes-asc': 'points',
-
-            'relevance-desc': '-relevance', # special Postgresql-specific ordering, 'relevance' quaso-column is added by get_for_query()
+            'relevance-desc': '-relevance',
         }
 
         orderby = QUESTION_ORDER_BY_MAP[search_state.sort]
 
         if not (
-            getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False) \
+            getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False)
             and orderby=='-relevance'
         ):
-            #FIXME: this does not produces the very same results as postgres.
-            qs = qs.extra(order_by=[orderby])
+            qs = qs.order_by(orderby)
 
+        if search_state.stripped_query and getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
+            qs = [result.object for result in qs]
 
-        # HACK: We add 'ordering_key' column as an alias and order by it, because when distict() is used,
-        #       qs.extra(order_by=[orderby,]) is lost if only `orderby` column is from askbot_post!
-        #       Removing distinct() from the queryset fixes the problem, but we have to use it here.
-        # UPDATE: Apparently we don't need distinct, the query don't duplicate Thread rows!
-        # qs = qs.extra(select={'ordering_key': orderby.lstrip('-')}, order_by=['-ordering_key' if orderby.startswith('-') else 'ordering_key'])
-        # qs = qs.distinct()
-
-        qs = qs.only('id', 'title', 'view_count', 'answer_count', 'last_activity_at', 'last_activity_by', 'closed', 'tagnames', 'accepted_answer')
-
-        #print qs.query
-
-        return qs.distinct(), meta_data
+        return qs, meta_data
 
     def precache_view_data_hack(self, threads):
         # TODO: Re-enable this when we have a good test cases to verify that it works properly.

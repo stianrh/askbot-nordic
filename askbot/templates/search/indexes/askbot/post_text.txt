@@ -1,1 +1,3 @@
+{{ object.thread.title }}
 {{ object.text }}
+{{ object.author.username }}
