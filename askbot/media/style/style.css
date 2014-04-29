@@ -183,11 +183,10 @@ h1 {
 }
 /* ----- Extra space above for messages ----- */
 body.user-messages {
-  margin-top: 2.4em;
+  margin-top: 34px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  color: #dedede;
 }
 /* ----- Custom positions ----- */
 .left {
