@@ -1,6 +1,7 @@
 {{ object.title }}
-{{ object.tags }}
+{{ object.tagnames }}
 
-{% for tag in object.tags.all() %}
-{{ tag.name }}
+{% for post in object.posts.all() %}
+{{ post.text }}
+{{ post.author }}
 {% endfor %}

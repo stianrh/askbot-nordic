@@ -596,7 +596,10 @@ body.user-messages {
 .search-drop-menu .footer {
   text-align: center;
   margin: 0 0 1px 0;
-  padding: 9px 0 10px 0;
+  padding: 4px 0 10px 0;
+}
+.search-drop-menu.empty .footer {
+  padding-top: 9px;
 }
 .search-drop-menu.empty ul {
   padding: 1px;
@@ -634,13 +637,20 @@ input[type="submit"].searchBtn:hover {
   color: white;
   height: 0;
   z-index: 0;
+  position: absolute;
+  left: -1000px;
+  /* hide away */
+}
+.ask-page .search-drop-menu {
+  top: 37px;
 }
 .ask-page .search-drop-menu.empty {
   border: none;
-  padding: 0;
+  outline: none;
+  padding: 0 !important;
 }
 .ask-page .search-drop-menu.empty ul {
-  padding: 0;
+  padding: 0 !important;
 }
 input[type="button"].cancelSearchBtn {
   font-size: 30px !important;
@@ -1448,6 +1458,7 @@ ul#related-tags li {
   padding: 4px 0 0 0;
   margin-top: 0px;
   width: 100%;
+  position: relative;
 }
 #askFormBar p {
   margin: 0 0 5px 0;
@@ -3278,6 +3289,14 @@ a.offensive {
 .message p {
   margin-bottom: 0px;
 }
+.system-messages {
+  color: red;
+  background: yellow;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 25px;
+  padding: 0 5px;
+}
 p.space-above {
   margin-top: 10px;
 }
@@ -4482,9 +4501,6 @@ body.lang-fi .box .inputs #ignoredTagInput,
 body.lang-fi .box .inputs #subscribedTagInput,
 body.lang-fi .box .inputs #ab-tag-search {
   width: 142px;
-}
-body.lang-ru #scopeNav {
-  width: 315px;
 }
 body.lang-ru .scope-selector {
   font-size: 17px;

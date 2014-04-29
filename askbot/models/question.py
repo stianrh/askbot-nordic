@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.utils.translation import string_concat
 from django.utils.translation import get_language
+from django.utils.translation import activate as activate_language
 
 import askbot
 from askbot.conf import settings as askbot_settings
@@ -31,6 +32,7 @@ from askbot.utils.lists import LazyList
 from askbot.search import mysql
 from askbot.utils.slug import slugify
 from askbot.search.state_manager import DummySearchState
+from haystack.query import SearchQuerySet
 
 
 def clean_tagnames(tagnames):
@@ -234,9 +236,7 @@ class ThreadManager(BaseQuerySetManager):
         todo: move to query set
         """
         if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
-            from askbot.search.haystack.searchquery import AskbotSearchQuerySet
-            hs_qs = AskbotSearchQuerySet().filter(content=search_query)
-            return hs_qs.get_django_queryset()
+            return SearchQuerySet().models(self.model).auto_query(search_query)
         else:
             if not qs:
                 qs = self.all()
@@ -311,7 +311,6 @@ class ThreadManager(BaseQuerySetManager):
             query_users = User.objects.filter(username__in=search_state.query_users)
             if query_users:
                 qs = qs.filter(
-                    posts__post_type='question',
                     posts__author__in=query_users
                 ) # TODO: unify with search_state.author ?
 
@@ -454,32 +453,21 @@ class ThreadManager(BaseQuerySetManager):
             'answers-asc': 'answer_count',
             'votes-desc': '-points',
             'votes-asc': 'points',
-
-            'relevance-desc': '-relevance', # special Postgresql-specific ordering, 'relevance' quaso-column is added by get_for_query()
+            'relevance-desc': '-relevance',
         }
 
         orderby = QUESTION_ORDER_BY_MAP[search_state.sort]
 
         if not (
-            getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False) \
+            getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False)
             and orderby=='-relevance'
         ):
-            #FIXME: this does not produces the very same results as postgres.
-            qs = qs.extra(order_by=[orderby])
+            qs = qs.order_by(orderby)
 
+        if search_state.stripped_query and getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
+            qs = [result.object for result in qs]
 
-        # HACK: We add 'ordering_key' column as an alias and order by it, because when distict() is used,
-        #       qs.extra(order_by=[orderby,]) is lost if only `orderby` column is from askbot_post!
-        #       Removing distinct() from the queryset fixes the problem, but we have to use it here.
-        # UPDATE: Apparently we don't need distinct, the query don't duplicate Thread rows!
-        # qs = qs.extra(select={'ordering_key': orderby.lstrip('-')}, order_by=['-ordering_key' if orderby.startswith('-') else 'ordering_key'])
-        # qs = qs.distinct()
-
-        qs = qs.only('id', 'title', 'view_count', 'answer_count', 'last_activity_at', 'last_activity_by', 'closed', 'tagnames', 'accepted_answer')
-
-        #print qs.query
-
-        return qs.distinct(), meta_data
+        return qs, meta_data
 
     def precache_view_data_hack(self, threads):
         # TODO: Re-enable this when we have a good test cases to verify that it works properly.
@@ -610,7 +598,7 @@ class Thread(models.Model):
 
     accepted_answer = models.ForeignKey('Post', null=True, blank=True, related_name='+')
     answer_accepted_at = models.DateTimeField(null=True, blank=True)
-    added_at = models.DateTimeField(default = datetime.datetime.now)
+    added_at = models.DateTimeField(auto_now_add=True)
 
     #db_column will be removed later
     points = models.IntegerField(default = 0, db_column='score')
@@ -842,16 +830,13 @@ class Thread(models.Model):
         else:
             return self.tagnames.split(u', ')
 
-    def get_title(self, question=None):
-        if not question:
-            question = self._question_post() # allow for optimization if the caller has already fetched the question post for this thread
+    def get_title(self):
         if self.is_private():
             attr = const.POST_STATUS['private']
         elif self.closed:
             attr = const.POST_STATUS['closed']
-        elif question.deleted:
+        elif self.deleted:
             attr = const.POST_STATUS['deleted']
-
         else:
             attr = None
         if attr is not None:
@@ -859,13 +844,13 @@ class Thread(models.Model):
         else:
             return self.title
 
-    def format_for_email(self, user=None):
+    def format_for_email(self, recipient=None):
         """experimental function: output entire thread for email"""
 
         question, answers, junk, published_ans_ids = \
-                                self.get_cached_post_data(user=user)
+                                self.get_cached_post_data(user=recipient)
 
-        output = question.format_for_email_as_subthread()
+        output = question.format_for_email_as_subthread(recipient=recipient)
         if answers:
             #todo: words
             answer_heading = ungettext(
@@ -875,7 +860,7 @@ class Thread(models.Model):
                                 ) % {'count': len(answers)}
             output += '<p>%s</p>' % answer_heading
             for answer in answers:
-                output += answer.format_for_email_as_subthread()
+                output += answer.format_for_email_as_subthread(recipient=recipient)
         return output
 
     def get_answers_by_user(self, user):
@@ -1120,7 +1105,8 @@ class Thread(models.Model):
             # we had question post id denormalized on the thread
             tags_list = self.get_tag_names()
             similar_threads = Thread.objects.filter(
-                                        tags__name__in=tags_list
+                                        tags__name__in=tags_list,
+                                        language_code=self.language_code
                                     ).exclude(
                                         id = self.id
                                     ).exclude(
@@ -1155,7 +1141,7 @@ class Thread(models.Model):
                 # this is a "legacy" problem inherited from the old models
                 if question_post:
                     url = question_post.get_absolute_url()
-                    title = thread.get_title(question_post)
+                    title = thread.get_title()
                     result.append({'url': url, 'title': title})
 
             return result
@@ -1545,6 +1531,7 @@ class Thread(models.Model):
         }
         from askbot.views.context import get_extra as get_extra_context
         context.update(get_extra_context('ASKBOT_QUESTION_SUMMARY_EXTRA_CONTEXT', None, context))
+        activate_language(self.language_code)
         html = get_template('widgets/question_summary.html').render(context)
         # INFO: Timeout is set to 30 days:
         # * timeout=0/None is not a reliable cross-backend way to set infinite timeout

@@ -7,6 +7,7 @@ from datetime import datetime
 from django.db import transaction
 from django.core.management.base import BaseCommand
 from askbot.utils.console import ProgressBar
+from django.core.urlresolvers import reverse
 
 from askbot.models import User, tag, post, question, user
 from privatemessages.models import Message, Thread, MessageIndex, Settings
@@ -165,6 +166,7 @@ class Command(BaseCommand):
                         ed_post.poster_email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
+                ab_post.created_at = ed_post.created
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
                 ab_post.locked_at = ed_post.lockdate
@@ -180,8 +182,10 @@ class Command(BaseCommand):
                 ab_post.is_anonymous = (ed_post.user_id == 0)
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
-                revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
-                revision.save()
+
+                if not ab_post.revisions.exists():
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                    revision.save()
 
                 post_tags = EfsqtDiscussPostsTags.objects.using('old-devzone').filter(post_id=ab_post.id).values_list('tag_id', flat=True)
                 tags = EfsqtDiscussTags.objects.using('old-devzone').filter(id__in=post_tags).values_list('title', flat=True)
@@ -208,6 +212,7 @@ class Command(BaseCommand):
                         ed_post.poster_email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_post.poster_name, ed_post.poster_email)
 
+                ab_post.created_at = ed_post.created
                 ab_post.added_at = ed_post.created
                 ab_post.locked = ed_post.islock
                 ab_post.locked_at = ed_post.lockdate
@@ -227,8 +232,9 @@ class Command(BaseCommand):
                     ab_post.thread.accepted_answer_id = ab_post.id
                     ab_post.thread.save()
 
-                revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
-                revision.save()
+                if not ab_post.revisions.exists():
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                    revision.save()
 
             transaction.commit()
 
@@ -237,6 +243,7 @@ class Command(BaseCommand):
             message = 'Importing %i comments' % count
             for ed_comment in ProgressBar(ed_comments.iterator(), count, message):
                 ab_post = post.Post()
+                ab_post.id = ed_post.id
                 ab_post.post_type = 'comment'
                 ab_post.parent_id = ed_comment.post_id
 
@@ -253,6 +260,7 @@ class Command(BaseCommand):
                         ed_comment.email = 'noreply@nordicsemi.no'
                     ab_post.author = get_or_create_anonymous_user(admin, ed_comment.name, ed_comment.email)
 
+                ab_post.created_at = ed_comment.created
                 ab_post.added_at = ed_comment.created
                 ab_post.last_edited_at = ed_comment.modified
                 ab_post.text = ed_comment.comment
@@ -260,16 +268,41 @@ class Command(BaseCommand):
                 ab_post.summary = ab_post.get_snippet()
                 ab_post.language_code = LANGUAGE
                 ab_post.is_anonymous = (ed_comment.user_id == 0)
-                # skip already added comments
-                if post.Post.objects.filter(author=ab_post.author, added_at=ed_comment.created).count() > 0:
-                    continue
 
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
-                revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
-                revision.save()
+
+                if not ab_post.revisions.exists():
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                    revision.save()
 
             transaction.commit()
+
+            image_exts = ['jpg', 'jepg', 'png', 'gif', 'bmp', 'svg']
+            ed_attachments = EfsqtDiscussAttachments.objects.using('old-devzone').all()
+            count = ed_attachments.count()
+            message = 'Importing %i post attachments' % count
+            for ed_attachment in ProgressBar(ed_attachments.iterator(), count, message):
+                try:
+                    ab_post = post.Post.objects.get(id=ed_attachment.uid)
+                except:
+                    continue
+
+                ab_post.text = ab_post.text + '\n\n%s[%s](%s%s/%s)' % (
+                    '!' if ed_attachment.title.split('.')[-1] in image_exts else '',
+                    ed_attachment.title,
+                    reverse('upload'),
+                    ed_attachment.path,
+                    ed_attachment.title,
+                )
+
+                ab_post.html = ab_post.parse_post_text()['html']
+                ab_post.save()
+
+            transaction.commit()
+            WARNING = '\033[93m'
+            ENDC = '\033[0m'
+            print WARNING + 'You need to manually copy uploads, keeping directory structure, to <askbot media folder>/uploads/' + ENDC
 
             ed_conversations = EfsqtDiscussConversations.objects.using('old-devzone').all()
             count = ed_conversations.count()
@@ -290,6 +323,7 @@ class Command(BaseCommand):
                 message.author_id = ed_message.created_by
                 message.created_at = ed_message.created
                 message.body = bbcode2markdown.convert(ed_message.message)
+                message.created_at = ed_message.created
                 message.save()
                 Message.objects.filter(id=message.id).update(created_at=ed_message.created)
 
@@ -300,12 +334,25 @@ class Command(BaseCommand):
             message = 'Importing %i message indices' % count
             for ed_messagemap in ProgressBar(ed_messagemaps.iterator(), count, message):
                 message_index = MessageIndex()
+                message_index.id = ed_messagemap.id
                 message_index.message_id = ed_messagemap.message_id
                 message_index.thread_id = ed_messagemap.conversation_id
                 message_index.user_id = ed_messagemap.user_id
                 message_index.new = (ed_messagemap.isread == 0)
                 message_index.created_at = Message.objects.get(id=ed_messagemap.message_id).created_at
                 message_index.save()
+
+            transaction.commit()
+
+            message_indices = MessageIndex.objects.order_by('user', 'thread', 'message__created_at')
+            count = message_indices.count()
+            message = 'Updating %i message index date boundaries' % count
+            previous_index = None
+            for message_index in ProgressBar(message_indices.iterator(), count, message):
+                if previous_index and previous_index.thread_id == message_index.thread_id:
+                    next_day = message_index.message.created_at.date() != previous_index.message.created_at.date()
+                    MessageIndex.objects.filter(id=message_index.id).update(next_day=next_day)
+                previous_index = message_index
 
             transaction.commit()
 

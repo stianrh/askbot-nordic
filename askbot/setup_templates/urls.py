@@ -2,7 +2,12 @@
 main url configuration file for the askbot site
 """
 from django.conf import settings
-from django.conf.urls import include, patterns, url, handler404, handler500
+try:
+    from django.conf.urls import handler404, handler500
+    from django.conf.urls import include, patterns, url
+except ImportError:
+    from django.conf.urls.defaults import handler404, handler500
+    from django.conf.urls.defaults import include, patterns, url
 from django.contrib import admin
 
 admin.autodiscover()

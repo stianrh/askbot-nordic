@@ -3,11 +3,15 @@ Changes in Askbot
 
 Development master branch (only on github)
 ------------------------------------------
-
+* Allowed custom providers of gravatar service (michas2)
+* Allowed configurable custom OpenID login button
+* Allowed custom list of feedback recipients (Keto)
+* Added option to show user's emails to the moderators
+* Added Read-Only mode for the site in the "access control" section.
 * Added `askbot_add_osqa_content` management command.
 * Management command to add data from other Askbot site.
 * Allowed simple overrides of livesettings with `ASKBOT_...` prefixed 
-  variables in the `settings.py` file
+  variables in the `settings.py` file.
 
 0.7.49 (Sep 19, 2013)
 ---------------------

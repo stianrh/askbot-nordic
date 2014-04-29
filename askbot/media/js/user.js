@@ -283,7 +283,7 @@ PostModerationControls.prototype.createDom = function() {
         reasonsDlg.readSelectedEditData();//read data of selected edits
         reasonsDlg.show();//open the "big" dialog
     });
-    setupButtonEventHandlers(acceptBtn, function() { 
+    setupButtonEventHandlers(acceptBtn, function() {
         me.moderatePost(null, 'remove_flag');
     });
 };
@@ -371,7 +371,7 @@ RejectPostDialog.prototype.makeAlertBox = function(errors){
     } else if (errors.constructor === [].constructor){
         if (errors.length > 1){
             alert_box.setContent(
-                '<div>' + 
+                '<div>' +
                 gettext('Looks there are some things to fix:') +
                 '</div>'
             )
@@ -632,7 +632,7 @@ RejectPostDialog.prototype.decorate = function(element){
 
     setupButtonEventHandlers(
         element.find('.select-other-reason'),
-        function(){ 
+        function(){
             me.resetInputs();
             me.setState('select');
         }
@@ -640,10 +640,10 @@ RejectPostDialog.prototype.decorate = function(element){
 
     setupButtonEventHandlers(
         element.find('.add-new-reason'),
-        function(){ 
+        function(){
             me.resetSelectedReasonId();
             me.resetInputs();
-            me.setState('add-new') 
+            me.setState('add-new')
         }
     );
 
@@ -733,7 +733,7 @@ FollowUser.prototype.go = function(){
 FollowUser.prototype.toggleState = function(){
     if (this._available_action === 'follow'){
         this._available_action = 'unfollow';
-        var unfollow_div = document.createElement('div'); 
+        var unfollow_div = document.createElement('div');
         unfollow_div.setAttribute('class', 'unfollow');
         var red_div = document.createElement('div');
         red_div.setAttribute('class', 'unfollow-red');
@@ -745,7 +745,7 @@ FollowUser.prototype.toggleState = function(){
         unfollow_div.appendChild(green_div);
         this._element.html(unfollow_div);
     } else {
-        var follow_div = document.createElement('div'); 
+        var follow_div = document.createElement('div');
         follow_div.innerHTML = interpolate(gettext('follow %s'), [this._user_name]);
         follow_div.setAttribute('class', 'follow');
         this._available_action = 'follow';
@@ -860,7 +860,7 @@ GroupsContainer.prototype.addGroup = function(group_data){
 };
 
 GroupsContainer.prototype.removeGroup = function(group){
-    var idx = $.inArray(group, this._groups);    
+    var idx = $.inArray(group, this._groups);
     if (idx === -1){
         return;
     }
@@ -1133,7 +1133,7 @@ UserAnswersPaginator.prototype.getPageDataUrlParams = function(pageNo) {
         var tweetingControl = new Tweeting();
         tweetingControl.decorate(tweeting);
     }
-    
+
     var qPager = $('.user-questions-pager');
     if (qPager.length) {
         var qPaginator = new UserQuestionsPaginator();
