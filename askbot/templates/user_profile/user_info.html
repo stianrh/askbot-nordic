@@ -15,6 +15,7 @@
         {% if request.user != view_user %}
             <div class="button"><a href="{{ url('threads') }}">Send message</a></div>
         {% endif %}
+        <div class="button"><a href="{{ url('user_index', subindex='users', subindex_id=view_user.id) }}">View blog</a></div>
     </div>
     <div class="col2 user-details">
         {% if request.user == view_user %}
