@@ -14,12 +14,12 @@
     {% include "main_page/tag_search.html" %}
 {% endif %}
 
-{% if request.user.is_authenticated() and settings.SIDEBAR_MAIN_SHOW_TAG_SELECTOR %} 
-    {% include "widgets/tag_selector.html" %}
-{% endif %}
-
 {% if tags and settings.SIDEBAR_MAIN_SHOW_TAGS %}
     {% include "widgets/related_tags.html" %}
+{% endif %}
+
+{% if request.user.is_authenticated() and settings.SIDEBAR_MAIN_SHOW_TAG_SELECTOR %} 
+    {% include "widgets/tag_selector.html" %}
 {% endif %}
 
 {% if 'SIDEBAR_MAIN_FOOTER'|show_block_to(request.user) %}
