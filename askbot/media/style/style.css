@@ -796,6 +796,7 @@ body.anon.ask-page .search-drop-menu {
   float: left;
   position: relative;
   padding-bottom: 10px;
+  margin-top: 10px;
 }
 #ContentRight {
   width: 200px;
