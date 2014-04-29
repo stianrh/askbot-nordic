@@ -926,16 +926,6 @@ body.anon.ask-page .search-drop-menu {
   padding: 0;
   width: 130px;
 }
-.box a.followed div.unfollow {
-  display: none;
-}
-.box a.followed:hover div {
-  display: none;
-}
-.box a.followed:hover div.unfollow {
-  display: inline;
-  color: #a05736;
-}
 .box .favorite-number {
   padding: 5px 0 0 5px;
   font-size: 100%;
@@ -2821,18 +2811,6 @@ a:hover.medal {
 }
 .user-about p {
   font-size: 13px;
-}
-.follow-toggle .unfollow div.unfollow-red {
-  display: none;
-}
-.follow-toggle .unfollow:hover div.unfollow-red {
-  display: inline;
-  color: #fff;
-  font-weight: bold;
-  color: #A05736;
-}
-.follow-toggle .unfollow:hover div.unfollow-green {
-  display: none;
 }
 .count {
   font-family: "Trebuchet MS", sans-serif;
