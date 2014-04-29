@@ -3592,13 +3592,15 @@ p.signup_p {
 }
 .user-card {
   background-color: #e6ecee;
-  border: 1px #e6ecee solid;
+  padding-left: 4px;
   display: inline-block;
   width: 166px;
 }
 .user-card .avatar-box {
-  float: left;
-  margin: 0px 4px 0 0;
+  float: right;
+  height: 100%;
+  margin: 0 0 0 4px;
+  padding: 3px;
 }
 .user-card .info {
   height: 32px;
