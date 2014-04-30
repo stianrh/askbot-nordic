@@ -19,7 +19,7 @@ settings.register(
     values.StringValue(
         WORDS,
         'WORDS_ASK_YOUR_QUESTION',
-        default=_('Ask Your Question'),
+        default=_('Ask a question'),
         description=_('Ask Your Question'),
         help_text=_('Used on a button')
     )
