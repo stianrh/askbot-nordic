@@ -689,6 +689,7 @@ input[type="reset"],
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -khtml-border-radius: 4px;
+  padding: 10px;
 }
 button a,
 input[type="submit"] a,
@@ -711,7 +712,6 @@ input[type="reset"].large,
   font-size: 20px;
   height: 35px;
   line-height: 35px;
-  padding: 0 10px;
 }
 button:hover,
 input[type="submit"]:hover,
