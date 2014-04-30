@@ -990,11 +990,6 @@ body.anon.ask-page .search-drop-menu {
   margin-top: 3px;
   float: right;
   font-size: 14px;
-  border-radius: 5px;
-  -ms-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -khtml-border-radius: 5px;
 }
 .tabBar h2 {
   float: left;
