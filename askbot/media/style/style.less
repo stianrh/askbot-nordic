@@ -600,10 +600,8 @@ body.user-messages {
     -webkit-box-sizing: border-box;
     background: whitesmoke;
     border: 1px solid #c9c9b5;
-    border-top: none;
-    margin: 0 8px 0 52px;
     position: relative;
-    top: 48px;
+    top: 2.5em;
     z-index: 10000;
 
     ul {
@@ -654,8 +652,8 @@ body.user-messages {
 
 input[type="submit"].searchBtn,
 input[type="submit"].searchBtn:hover {
-    width: 40px;
-    height: 40px;
+    height: 100%;
+    margin-top: 0;
     background: url(../images/search.png) center no-repeat;
     cursor:pointer;
     z-index: 10001;
@@ -726,13 +724,12 @@ input[type="reset"],
     border: 0 !important;
     cursor: pointer;
     color: @text-color-light;
-    height: 27px;
     margin-right: 10px;
     margin-top: 5px;
     text-align: center;
     text-decoration: none;
     .rounded-corners(4px);
-    padding: 10px;
+    padding: 5px 10px;
     a, a:hover {
         color: #fff;
         text-decoration: none;
@@ -809,9 +806,6 @@ form.ajax-file-upload {
     margin: 0;
 }
 
-.search-drop-menu {
-    width: auto;
-}
 .ask-page .search-drop-menu,
 body.anon.ask-page .search-drop-menu {
     padding: 7px 10px 1px 0;
@@ -3489,19 +3483,6 @@ button::-moz-focus-inner {
     padding:0;
     border:none;
 }
-.submit {
-    cursor: pointer; /*letter-spacing:1px;*/
-    background-color: #D4D0C8;
-    height: 30px;
-    border: 1px solid #777777; /*	width:100px; */
-    font-weight: bold;
-    font-size: 120%;
-}
-
-.submit:hover {
-    text-decoration: underline;
-}
-
 .submit.small {
     margin-right:5px;
     height:20px;

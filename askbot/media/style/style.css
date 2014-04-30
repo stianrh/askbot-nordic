@@ -562,10 +562,8 @@ body.user-messages {
   -webkit-box-sizing: border-box;
   background: whitesmoke;
   border: 1px solid #c9c9b5;
-  border-top: none;
-  margin: 0 8px 0 52px;
   position: relative;
-  top: 48px;
+  top: 2.5em;
   z-index: 10000;
 }
 .search-drop-menu ul {
@@ -609,8 +607,8 @@ body.user-messages {
 }
 input[type="submit"].searchBtn,
 input[type="submit"].searchBtn:hover {
-  width: 40px;
-  height: 40px;
+  height: 100%;
+  margin-top: 0;
   background: url(../images/search.png) center no-repeat;
   cursor: pointer;
   z-index: 10001;
@@ -679,7 +677,6 @@ input[type="reset"],
   border: 0 !important;
   cursor: pointer;
   color: #ffffff;
-  height: 27px;
   margin-right: 10px;
   margin-top: 5px;
   text-align: center;
@@ -689,7 +686,7 @@ input[type="reset"],
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -khtml-border-radius: 4px;
-  padding: 10px;
+  padding: 5px 10px;
 }
 button a,
 input[type="submit"] a,
@@ -774,9 +771,6 @@ form.ajax-file-upload img.spinner {
   width: 200px;
   /* to match width of sidebar */
   margin: 0;
-}
-.search-drop-menu {
-  width: auto;
 }
 .ask-page .search-drop-menu,
 body.anon.ask-page .search-drop-menu {
@@ -3231,19 +3225,6 @@ p.space-above {
 button::-moz-focus-inner {
   padding: 0;
   border: none;
-}
-.submit {
-  cursor: pointer;
-  /*letter-spacing:1px;*/
-  background-color: #D4D0C8;
-  height: 30px;
-  border: 1px solid #777777;
-  /*	width:100px; */
-  font-weight: bold;
-  font-size: 120%;
-}
-.submit:hover {
-  text-decoration: underline;
 }
 .submit.small {
   margin-right: 5px;
