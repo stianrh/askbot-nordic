@@ -552,7 +552,7 @@ body.user-messages {
   top: 0;
 }
 #searchBar input[type="button"].cancelSearchBtn {
-  right: 28px;
+  right: 35px;
   top: 0;
   background: url(../images/close-small.png) center no-repeat;
   text-indent: -9999px;
@@ -610,6 +610,7 @@ body.user-messages {
 input[type="submit"].searchBtn,
 input[type="submit"].searchBtn:hover {
   height: 100%;
+  width: 40px;
   margin-top: 0;
   background: url(../images/search.png) center no-repeat;
   cursor: pointer;
@@ -649,26 +650,13 @@ input[type="submit"].searchBtn:hover {
   padding: 0 !important;
 }
 input[type="button"].cancelSearchBtn {
-  font-size: 30px !important;
-  color: #aaa;
-  height: 37px !important;
-  line-height: 37px;
+  height: 30px !important;
+  box-shadow: none;
   border: 0px;
-  -webkit-box-shadow: 0 0 0 #929292;
-  -moz-box-shadow: 0 0 0 #929292;
-  box-shadow: 0 0 0 #929292;
-  border-radius: 0;
-  -ms-border-radius: 0;
-  -moz-border-radius: 0;
-  -webkit-border-radius: 0;
-  -khtml-border-radius: 0;
   text-align: center;
   width: 35px !important;
   cursor: pointer;
   z-index: 10001;
-}
-.cancelSearchBtn:hover {
-  color: #d84040;
 }
 button,
 input[type="submit"],
