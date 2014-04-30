@@ -212,7 +212,6 @@ body.user-messages {
   padding: 0;
   text-align: center;
   background-color: #f5dd69;
-  font-family: "Trebuchet MS", sans-serif;
 }
 .notify .notification {
   color: #424242;
@@ -281,7 +280,6 @@ body.user-messages {
 #header {
   margin-top: 0px;
   background: #626366;
-  font-family: "Trebuchet MS", sans-serif;
 }
 .content-wrapper {
   /* wrapper positioning class */
@@ -441,7 +439,6 @@ body.user-messages {
   height: 55px;
   background: #e6ecee;
   margin-bottom: 10px;
-  font-family: "Trebuchet MS", sans-serif;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -524,7 +521,6 @@ body.user-messages {
   background: transparent;
   border: 0px;
   color: #484848;
-  font-family: "Trebuchet MS", sans-serif;
   width: 100%;
   margin: 8px 0 6px 0;
   padding: 0 60px 0 8px;
@@ -821,7 +817,6 @@ body.anon.ask-page .search-drop-menu {
 .box p {
   margin-bottom: 4px;
   color: #707070;
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 14px;
 }
 .box p.info-box-follow-up-links {
@@ -838,14 +833,12 @@ body.anon.ask-page .search-drop-menu {
   color: #626366;
   padding-right: 10px;
   margin-bottom: 10px;
-  font-family: "Trebuchet MS", sans-serif;
 }
 .box h3 {
   color: #4a757f;
   font-size: 18px;
   text-align: left;
   font-weight: normal;
-  font-family: "Trebuchet MS", sans-serif;
   padding-left: 0px;
 }
 .box .contributorback {
@@ -860,7 +853,6 @@ body.anon.ask-page .search-drop-menu {
   vertical-align: bottom;
   display: inline;
   text-align: left;
-  font-family: "Trebuchet MS", sans-serif;
 }
 .box #displayTagFilterControl label,
 .box #emailTagFilterControl label {
@@ -929,7 +921,6 @@ body.anon.ask-page .search-drop-menu {
 .box .favorite-number {
   padding: 5px 0 0 5px;
   font-size: 100%;
-  font-family: Arial;
   font-weight: bold;
   color: #777;
   text-align: center;
@@ -1075,7 +1066,6 @@ body.anon.ask-page .search-drop-menu {
   padding-top: 3px;
   background: #ffffff url(../images/feed-icon-small.png) no-repeat center right;
   float: right;
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 16px;
 }
 .rss:hover {
@@ -1089,14 +1079,12 @@ body.anon.ask-page .search-drop-menu {
   float: left;
   margin-bottom: 6px;
   padding-top: 6px;
-  font-family: "Trebuchet MS", sans-serif;
 }
 #listSearchTags {
   float: left;
   margin-top: 3px;
   color: #707070;
   font-size: 16px;
-  font-family: "Trebuchet MS", sans-serif;
 }
 ul#searchTags {
   margin-left: 10px;
@@ -1110,7 +1098,6 @@ ul#searchTags {
   margin: 5px 0 10px 0;
   padding: 0px;
   float: left;
-  font-family: "Trebuchet MS", sans-serif;
 }
 .search-tips a {
   text-decoration: underline;
@@ -1429,7 +1416,6 @@ ul#related-tags li {
 /* ----- Ask and Edit Question Form template----- */
 .section-title {
   color: #626366;
-  font-family: "Trebuchet MS", sans-serif;
   font-weight: bold;
   font-size: 24px;
 }
@@ -1710,7 +1696,6 @@ ul#related-tags li {
   min-height: 20px;
   overflow: auto;
   font-size: 13px;
-  font-family: "Trebuchet MS", sans-serif;
 }
 .wmd-preview p {
   margin-bottom: 14px;
@@ -1829,7 +1814,6 @@ ul#related-tags li {
 /* ----- Question template ----- */
 .question-page h1 {
   padding-top: 0px;
-  font-family: "Trebuchet MS", sans-serif;
 }
 .question-page h1 a {
   color: #464646;
@@ -1847,7 +1831,6 @@ ul#related-tags li {
   background-position: center left;
 }
 .question-page p.rss a {
-  font-family: "Trebuchet MS", sans-serif;
   vertical-align: top;
 }
 .question-page .post {
@@ -1874,7 +1857,6 @@ ul#related-tags li {
 }
 .question-page .post-body {
   overflow: auto;
-  font-family: "Trebuchet MS", sans-serif;
   color: #4b4b4b;
   word-wrap: break-word;
   max-width: 683px;
@@ -1951,7 +1933,6 @@ ul#related-tags li {
   cursor: pointer;
   border: none;
   font-size: 12px;
-  font-family: "Trebuchet MS", sans-serif;
   text-decoration: none;
   height: 18px;
   line-height: 18px;
@@ -2049,7 +2030,6 @@ ul#related-tags li {
 .question-page .answer-controls .answer-convert input {
   font-size: 12px;
   color: #777;
-  font-family: "Trebuchet MS", sans-serif;
   text-decoration: none;
   display: inline;
   white-space: nowrap;
@@ -2080,7 +2060,6 @@ ul#related-tags li {
 }
 .question-page #questionCount {
   float: left;
-  font-family: "Trebuchet MS", sans-serif;
   line-height: 15px;
 }
 .question-page #fmanswer_button {
@@ -2099,7 +2078,6 @@ ul#related-tags li {
   color: #626366;
   font-weight: bold;
   font-size: 23px;
-  font-family: "Trebuchet MS", sans-serif;
   float: left;
   padding-left: 0;
   width: 200px;
@@ -2147,7 +2125,6 @@ ul#related-tags li {
 .question-page .comments textarea {
   box-sizing: border-box;
   color: #666;
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 13px;
   height: 54px;
   line-height: 1.3;
@@ -2184,14 +2161,12 @@ ul#related-tags li {
   display: inline-block;
   width: auto;
   vertical-align: top;
-  font-family: "Trebuchet MS", sans-serif;
   float: right;
   text-align: right;
 }
 .question-page .comments .comment {
   border-bottom: 1px solid #edeeeb;
   display: table;
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 11px;
   margin: 0;
   min-height: 25px;
@@ -2268,7 +2243,6 @@ ul#related-tags li {
   border: none;
   height: 13px;
   width: auto;
-  font-family: Arial;
   font-size: 13px;
   font-weight: normal;
   line-height: 13px;
@@ -2394,7 +2368,6 @@ ul#related-tags li {
   margin-top: 10px;
 }
 .question-page #fmanswer h2 {
-  font-family: "Trebuchet MS", sans-serif;
   color: #626366;
   font-size: 24px;
 }
@@ -2452,7 +2425,6 @@ ul#related-tags li {
   background: url(../images/vote-arrow-down-on-new.png) no-repeat;
 }
 .vote-number {
-  font-family: "Trebuchet MS", sans-serif;
   padding: 2px 0 5px 0;
   font-size: 25px;
   font-weight: bold;
@@ -2508,24 +2480,14 @@ ul#related-tags li {
   padding: 0 5px;
   width: 200px;
 }
-.openid-signin,
-.meta,
-.user-profile-edit-page {
-  line-height: 1.3;
-  color: #525252;
-}
 .openid-signin p,
 .meta p,
 .user-profile-edit-page p {
-  color: #707070;
-  line-height: 1.3;
-  color: #525252;
   margin-bottom: 12px;
 }
 .openid-signin h2,
 .meta h2,
 .user-profile-edit-page h2 {
-  color: #525252;
   padding-left: 0px;
   font-size: 16px;
 }
@@ -2652,7 +2614,6 @@ ul#related-tags li {
   background: url(../images/openid.gif) no-repeat 0% 50%;
   padding: 5px 5px 5px 15px;
   cursor: pointer;
-  font-family: Trebuchet MS;
   font-weight: 300;
   font-size: 150%;
   width: 500px;
@@ -2744,7 +2705,6 @@ a:hover.medal {
 }
 .user-profile-page #ContentLeft h2 {
   padding: 30px 0px 10px 0px;
-  font-family: "Trebuchet MS", sans-serif;
 }
 .user-profile-page #ContentLeft .user-stats-table h2 {
   padding-top: 10px;
@@ -2807,13 +2767,11 @@ a:hover.medal {
   font-size: 13px;
 }
 .count {
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 200%;
   font-weight: 700;
   color: #777777;
 }
 .scoreNumber {
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 35px;
   font-weight: 800;
   color: #777;
@@ -2822,7 +2780,6 @@ a:hover.medal {
   margin-top: 3px;
 }
 .vote-count {
-  font-family: Arial;
   font-size: 160%;
   font-weight: 700;
   color: #777;
@@ -2836,7 +2793,6 @@ a:hover.medal {
   background-color: #EEEEEE;
   color: #555555;
   float: left;
-  font-family: Arial;
   font-size: 15px;
   font-weight: bold;
   height: 17px;
@@ -2923,7 +2879,6 @@ a:hover.medal {
   color: #525252;
 }
 .revision h3 {
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 21px;
   padding-left: 0px;
 }
@@ -2962,7 +2917,6 @@ a:hover.medal {
 .revision .revision-number {
   font-size: 300%;
   font-weight: bold;
-  font-family: sans-serif;
 }
 del,
 del .post-tag {
@@ -2987,7 +2941,6 @@ body.main-page ins {
   color: white;
   cursor: pointer;
   display: none;
-  font-family: "Trebuchet MS", sans-serif;
   font-size: 14px;
   font-weight: normal;
   padding-bottom: 10px;
@@ -3317,7 +3270,6 @@ button::-moz-focus-inner {
   z-index: 100;
   padding: 5px 0;
   text-align: center;
-  font-family: sans-serif;
   font-size: 120%;
   font-weight: Bold;
   color: #FFFFFF;
@@ -3942,7 +3894,6 @@ textarea.tipped-input {
 .tag-subscriptions .action {
   cursor: pointer;
   color: #4A757F;
-  font-family: "Trebuchet MS", sans-serif;
   text-decoration: none;
 }
 .tag-subscriptions ul.tags li {
