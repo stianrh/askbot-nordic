@@ -577,13 +577,13 @@ for the purposes of the AJAX comment editor #}
 {%- macro follow_toggle(follow, name, alias, id) -%}
     {# follow - boolean; name - object type name; alias - e.g. users name; id - object id #}
     <div 
-        class="button follow-toggle follow-user-toggle" 
+        class="button follow-toggle follow-user-toggle {% if not follow %}un{% endif %}follow" 
         id="follow-{{ name|escape }}-{{ id }}"
     >
         {% if follow %}
-        <div class="follow">{% trans %}Follow{% endtrans %}</div>
+        {% trans %}Follow{% endtrans %}
         {% else %}
-        <div class="unfollow">{% trans %}Unfollow{% endtrans %}</div>
+        {% trans %}Unfollow{% endtrans %}
         {% endif %}
     </div>
 {%- endmacro -%}

@@ -698,7 +698,7 @@ FollowUser.prototype.setUserName = function(user_name){
 FollowUser.prototype.decorate = function(element){
     this._element = element;
     this._user_id = parseInt(element.attr('id').split('-').pop());
-    this._available_action = element.children().hasClass('follow') ? 'follow':'unfollow';
+    this._available_action = element.hasClass('follow') ? 'follow':'unfollow';
     var me = this;
     setupButtonEventHandlers(this._element, function(){ me.go() });
 };
@@ -731,15 +731,13 @@ FollowUser.prototype.go = function(){
 };
 
 FollowUser.prototype.toggleState = function(){
-    div = document.createElement('div');
     if (this._available_action === 'follow'){
         this._available_action = 'unfollow';
-        div.innerHTML = "Unfollow";
-        this._element.html(div);
+        this._element.html("Unfollow");
     } else {
         this._available_action = 'follow';
-        div.innerHTML = "Follow";
-        this._element.html(div);
+        this._element.innerHTML = "Follow";
+        this._element.html("Follow");
     }
 };
 
