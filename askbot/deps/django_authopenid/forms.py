@@ -320,6 +320,7 @@ class ClassicRegisterForm(SetPasswordForm):
 
     next = NextUrlField()
     username = UserNameField(widget_attrs={'tabindex': 0})
+    real_name = forms.CharField(label="Display name", required=True)
     email = UserEmailField()
     login_provider = PasswordLoginProviderField()
     #fields password1 and password2 are inherited

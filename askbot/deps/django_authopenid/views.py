@@ -93,7 +93,7 @@ from askbot.utils.http import get_request_info
 from askbot.models.signals import user_logged_in, user_registered
 
 def create_authenticated_user_account(
-    username=None, email=None, password=None,
+    username=None, real_name=None, email=None, password=None,
     user_identifier=None, login_provider_name=None
 ):
     """creates a user account, user association with
@@ -101,6 +101,9 @@ def create_authenticated_user_account(
     """
 
     user = User.objects.create_user(username, email)
+    if real_name:
+        user.real_name = real_name
+        user.save()
     user_registered.send(None, user=user)
 
     logging.debug('creating new openid user association for %s', username)
@@ -1184,12 +1187,14 @@ def signup_with_password(request):
             logging.debug('both forms are valid')
             next = form.cleaned_data['next']
             username = form.cleaned_data['username']
+            real_name = form.cleaned_data['real_name']
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
 
             if askbot_settings.REQUIRE_VALID_EMAIL_FOR == 'nothing':
                 user = create_authenticated_user_account(
                     username=username,
+                    real_name=real_name,
                     email=email,
                     password=password,
                 )
