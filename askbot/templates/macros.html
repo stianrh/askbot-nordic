@@ -685,6 +685,7 @@ for the purposes of the AJAX comment editor #}
 {%- macro paginator(p, position='left', anchor='') -%}{# p is paginator context dictionary #}
 {% spaceless %}
     {% if p.is_paginated %}
+        <div class="pager">
         <div 
             class="paginator"
             style="float:{{ position }}"
@@ -745,6 +746,7 @@ for the purposes of the AJAX comment editor #}
         </span>
 
     </div>
+    </div>
     {% endif %}
 {% endspaceless %}
 {%- endmacro -%}
@@ -753,6 +755,7 @@ for the purposes of the AJAX comment editor #}
 {%- macro paginator_main_page(p, position, search_state) -%} {# p is paginator context dictionary #}
     {% spaceless %}
         {% if p.is_paginated %}
+        <div class="pager">
             <div class="paginator" style="float:{{position}}">
                 {% if p.has_previous %}
                     <span class="prev"><a href="{{ search_state.change_page(p.previous).full_url() }}" title="{% trans %}previous{% endtrans %}">
@@ -783,6 +786,7 @@ for the purposes of the AJAX comment editor #}
                     <span class="next"><a href="{{ search_state.change_page(p.next).full_url() }}" title="{% trans %}next page{% endtrans %}">{% trans %}next page{% endtrans %} &raquo;</a></span>
                 {% endif %}
             </div>
+        </div>
         {% endif %}
     {% endspaceless %}
 {%- endmacro -%}
