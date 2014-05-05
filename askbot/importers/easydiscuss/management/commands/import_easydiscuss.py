@@ -244,7 +244,6 @@ class Command(BaseCommand):
             message = 'Importing %i comments' % count
             for ed_comment in ProgressBar(ed_comments.iterator(), count, message):
                 ab_post = post.Post()
-                ab_post.id = ed_post.id
                 ab_post.post_type = 'comment'
                 ab_post.parent_id = ed_comment.post_id
 
@@ -269,6 +268,9 @@ class Command(BaseCommand):
                 ab_post.summary = ab_post.get_snippet()
                 ab_post.language_code = LANGUAGE
                 ab_post.is_anonymous = (ed_comment.user_id == 0)
+                # skip already added comments
+                if post.Post.objects.filter(author=ab_post.author, added_at=ed_comment.created).count() > 0:
+                    continue
 
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
