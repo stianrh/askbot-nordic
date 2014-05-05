@@ -21,12 +21,14 @@ class EfsqtDiscussAttachments(models.Model):
     size = models.TextField()
     class Meta:
         db_table = 'efsqt_discuss_attachments'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussCaptcha(models.Model):
     response = models.CharField(max_length=5L)
     created = models.DateTimeField()
     class Meta:
         db_table = 'efsqt_discuss_captcha'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussCategory(models.Model):
     created_by = models.IntegerField()
@@ -48,6 +50,7 @@ class EfsqtDiscussCategory(models.Model):
     container = models.IntegerField()
     class Meta:
         db_table = 'efsqt_discuss_category'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussComments(models.Model):
     comment = models.TextField(blank=True)
@@ -66,6 +69,7 @@ class EfsqtDiscussComments(models.Model):
     lft = models.IntegerField()
     class Meta:
         db_table = 'efsqt_discuss_comments'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussConversations(models.Model):
     created = models.DateTimeField()
@@ -73,6 +77,7 @@ class EfsqtDiscussConversations(models.Model):
     lastreplied = models.DateTimeField()
     class Meta:
         db_table = 'efsqt_discuss_conversations'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussConversationsMessage(models.Model):
     conversation_id = models.BigIntegerField()
@@ -81,6 +86,7 @@ class EfsqtDiscussConversationsMessage(models.Model):
     created_by = models.BigIntegerField()
     class Meta:
         db_table = 'efsqt_discuss_conversations_message'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussConversationsMessageMaps(models.Model):
     user_id = models.BigIntegerField()
@@ -90,6 +96,7 @@ class EfsqtDiscussConversationsMessageMaps(models.Model):
     state = models.IntegerField()
     class Meta:
         db_table = 'efsqt_discuss_conversations_message_maps'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussFavourites(models.Model):
     created_by = models.BigIntegerField()
@@ -98,6 +105,7 @@ class EfsqtDiscussFavourites(models.Model):
     created = models.DateTimeField()
     class Meta:
         db_table = 'efsqt_discuss_favourites'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussHashkeys(models.Model):
     uid = models.BigIntegerField()
@@ -105,6 +113,7 @@ class EfsqtDiscussHashkeys(models.Model):
     key = models.TextField()
     class Meta:
         db_table = 'efsqt_discuss_hashkeys'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussLikes(models.Model):
     type = models.CharField(max_length=20L)
@@ -113,6 +122,7 @@ class EfsqtDiscussLikes(models.Model):
     created = models.DateTimeField()
     class Meta:
         db_table = 'efsqt_discuss_likes'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussOauth(models.Model):
     type = models.CharField(max_length=255L)
@@ -122,12 +132,14 @@ class EfsqtDiscussOauth(models.Model):
     params = models.TextField()
     class Meta:
         db_table = 'efsqt_discuss_oauth'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussOauthPosts(models.Model):
     post_id = models.BigIntegerField()
     oauth_id = models.BigIntegerField()
     class Meta:
         db_table = 'efsqt_discuss_oauth_posts'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussPostTypes(models.Model):
     title = models.TextField()
@@ -137,6 +149,7 @@ class EfsqtDiscussPostTypes(models.Model):
     alias = models.CharField(max_length=255L)
     class Meta:
         db_table = 'efsqt_discuss_post_types'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussPosts(models.Model):
     title = models.TextField(blank=True)
@@ -176,12 +189,14 @@ class EfsqtDiscussPosts(models.Model):
     ip = models.CharField(max_length=255L)
     class Meta:
         db_table = 'efsqt_discuss_posts'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussPostsTags(models.Model):
     post_id = models.BigIntegerField(null=True, blank=True)
     tag_id = models.BigIntegerField(null=True, blank=True)
     class Meta:
         db_table = 'efsqt_discuss_posts_tags'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussSubscription(models.Model):
     userid = models.BigIntegerField()
@@ -195,6 +210,7 @@ class EfsqtDiscussSubscription(models.Model):
     sent_out = models.DateTimeField()
     class Meta:
         db_table = 'efsqt_discuss_subscription'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussTags(models.Model):
     title = models.CharField(max_length=100L)
@@ -204,6 +220,7 @@ class EfsqtDiscussTags(models.Model):
     user_id = models.IntegerField(null=True, blank=True)
     class Meta:
         db_table = 'efsqt_discuss_tags'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussUsers(models.Model):
     nickname = models.CharField(max_length=255L, blank=True)
@@ -222,6 +239,7 @@ class EfsqtDiscussUsers(models.Model):
     site = models.TextField(blank=True)
     class Meta:
         db_table = 'efsqt_discuss_users'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussViews(models.Model):
     user_id = models.BigIntegerField(unique=True)
@@ -230,6 +248,7 @@ class EfsqtDiscussViews(models.Model):
     ip = models.CharField(max_length=20L)
     class Meta:
         db_table = 'efsqt_discuss_views'
+        managed = False # Avoids creating table
 
 class EfsqtDiscussVotes(models.Model):
     user_id = models.IntegerField(null=True, blank=True)
@@ -240,6 +259,7 @@ class EfsqtDiscussVotes(models.Model):
     session_id = models.CharField(max_length=200L, blank=True)
     class Meta:
         db_table = 'efsqt_discuss_votes'
+        managed = False # Avoids creating table
 
 class EfsqtUserNotes(models.Model):
     user_id = models.IntegerField()
@@ -258,6 +278,7 @@ class EfsqtUserNotes(models.Model):
     publish_down = models.DateTimeField()
     class Meta:
         db_table = 'efsqt_user_notes'
+        managed = False # Avoids creating table
 
 class EfsqtUserProfiles(models.Model):
     user_id = models.IntegerField()
@@ -266,12 +287,14 @@ class EfsqtUserProfiles(models.Model):
     ordering = models.IntegerField()
     class Meta:
         db_table = 'efsqt_user_profiles'
+        managed = False # Avoids creating table
 
 class EfsqtUserUsergroupMap(models.Model):
     user_id = models.IntegerField(primary_key=True)
     group_id = models.IntegerField()
     class Meta:
         db_table = 'efsqt_user_usergroup_map'
+        managed = False # Avoids creating table
 
 class EfsqtUsergroups(models.Model):
     parent_id = models.IntegerField()
@@ -280,6 +303,7 @@ class EfsqtUsergroups(models.Model):
     title = models.CharField(max_length=100L)
     class Meta:
         db_table = 'efsqt_usergroups'
+        managed = False # Avoids creating table
 
 class EfsqtUsers(models.Model):
     name = models.CharField(max_length=255L)
@@ -297,3 +321,4 @@ class EfsqtUsers(models.Model):
     resetcount = models.IntegerField(db_column='resetCount') # Field name made lowercase.
     class Meta:
         db_table = 'efsqt_users'
+        managed = False # Avoids creating table
