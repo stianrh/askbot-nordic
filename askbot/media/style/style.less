@@ -1389,8 +1389,7 @@ ul#related-tags li {
 .tag-left, .tag-right, .delete-icon {
     background: @background-color-dark;
     color: @text-color-light;
-    cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     display: inline-block;
     float: left;
 }
@@ -1401,9 +1400,11 @@ ul#related-tags li {
 }
 
 .delete-icon {
-    width: 10px;
+    width: 14px;
     text-align:center;
     background: @background-color-light;
+    cursor: pointer;
+    float: none;
     color: @text-color-dark;
 }
 .delete-icon:hover {
@@ -1413,11 +1414,8 @@ ul#related-tags li {
 
 .tags {
     a,li .tag {
-        padding: 0 2px;
+        padding: 0 4px;
         color: @text-color-light !important;
-    }
-    a:hover,li .tag:hover {
-        color: @background-color-light !important;
     }
 }
 
