@@ -54,8 +54,14 @@
 
 {%- macro post_contributor_avatar_and_credentials(post, user, karma_mode = None, badges_mode = None) -%}
     {% if post.is_anonymous %}
-        <img alt="{% trans %}anonymous user{% endtrans %}" src="{{ '/images/anon.png'|media }} " class="gravatar" width="32" height="32" />
-        <p>{{ user.get_anonymous_name() }}</p>
+        <div class="user-card">
+            <span class="avatar-box">
+                <img alt="{% trans %}anonymous user{% endtrans %}" src="{{ '/images/anon.png'|media }} " class="gravatar" width="32" height="32" />
+            </span>
+            <div class="user-info">
+                Guest
+            </div>
+        </div>
     {% else %}
         {{ user_card(user, karma_mode=karma_mode, badges_mode=badges_mode) }}
     {% endif %}
