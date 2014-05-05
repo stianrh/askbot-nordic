@@ -47,7 +47,7 @@ settings.register(
             'implicitly turns this feature on, because '
             'underscores are heavily used in LaTeX input.'
         ),
-        default = False
+        default = True
     )
 )
 
