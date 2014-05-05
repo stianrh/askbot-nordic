@@ -14,6 +14,7 @@ from privatemessages.models import Message, Thread, MessageIndex, Settings
 from askbot.importers.easydiscuss.models import *
 from askbot.importers.easydiscuss import bbcode2markdown
 from askbot.importers.easydiscuss.hasher import EasyDiscussMD5PasswordHasher
+from django.core import management
 
 def get_or_create_anonymous_user(admin, username, email):
     user = admin.get_or_create_fake_user(username, email)
@@ -361,6 +362,9 @@ class Command(BaseCommand):
             for ed_conversation in ProgressBar(ed_conversations.iterator(), count, message):
                 Thread.objects.filter(id=ed_conversation.id).update(updated_at=ed_conversation.lastreplied)
 
+            transaction.commit()
+
+            management.call_command("fix_answer_counts")
             transaction.commit()
 
         except:
