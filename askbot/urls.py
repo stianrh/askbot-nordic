@@ -14,6 +14,7 @@ except ImportError:
 
 from django.contrib import admin
 from askbot import views
+from askbot.views.attachment import get_attachment
 from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed
 from askbot.sitemap import QuestionsSitemap
 from askbot.skins.utils import update_media_revision
@@ -168,6 +169,7 @@ urlpatterns = patterns('',
         },
         name = 'custom_js'
     ),
+    url('^attachment/(?P<filehash>.+)', get_attachment, name='get_attachment'),
     #no translation for this url!!
     service_url(r'^import-data/$', views.writers.import_data, name='import_data'),
     service_url(r'^%s$' % _('faq/'), views.meta.faq, name='faq'),
