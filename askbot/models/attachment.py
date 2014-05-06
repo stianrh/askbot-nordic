@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 
 class Attachment(models.Model):
@@ -7,4 +8,4 @@ class Attachment(models.Model):
     class Meta:
         app_label = 'askbot'
 
-
+admin.site.register(Attachment)
