@@ -41,6 +41,7 @@ from askbot.conf import settings as askbot_settings
 from askbot.models.question import Thread
 from askbot.skins import utils as skin_utils
 from askbot.mail import messages
+from askbot.models.attachment import Attachment
 from askbot.models.question import QuestionView, AnonymousQuestion
 from askbot.models.question import DraftQuestion
 from askbot.models.question import FavoriteQuestion
@@ -3771,6 +3772,8 @@ __all__ = [
         'Group',
 
         'User',
+
+        'Attachment',
 
         'ReplyAddress',
 
