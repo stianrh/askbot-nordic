@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, IntegrityError
 import os
 from binascii import hexlify
 
