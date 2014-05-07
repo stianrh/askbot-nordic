@@ -298,7 +298,7 @@ class Command(BaseCommand):
                 )
 
                 ab_post.html = ab_post.parse_post_text()['html']
-                ab_post.summary = None
+                ab_post.summary = ab_post.get_snippet()
                 ab_post.save()
 
             transaction.commit()
@@ -363,9 +363,6 @@ class Command(BaseCommand):
             transaction.commit()
 
             management.call_command("fix_answer_counts")
-            transaction.commit()
-
-            management.call_command("generate_post_snippets")
             transaction.commit()
 
         except:
