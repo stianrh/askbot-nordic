@@ -882,7 +882,7 @@ def user_reputation(request, user, context):
         'active_tab':'users',
         'page_class': 'user-profile-page',
         'tab_name': 'reputation',
-        'page_title': _("Profile - User's Karma"),
+        'page_title': _("Profile - User's reputation"),
         'reputation': reputes,
         'reps': reps
     }
