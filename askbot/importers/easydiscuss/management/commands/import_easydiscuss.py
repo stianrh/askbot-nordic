@@ -9,7 +9,7 @@ from django.core.management.base import BaseCommand
 from askbot.utils.console import ProgressBar
 from django.core.urlresolvers import reverse
 
-from askbot.models import User, tag, post, question, user
+from askbot.models import User, tag, post, question, user, Attachment
 from privatemessages.models import Message, Thread, MessageIndex, Settings
 from askbot.importers.easydiscuss.models import *
 from askbot.importers.easydiscuss import bbcode2markdown
@@ -288,15 +288,17 @@ class Command(BaseCommand):
                 except:
                     continue
 
-                ab_post.text = ab_post.text + '\n\n%s[%s](%s%s/%s)' % (
+                a = Attachment(filename=ed_attachment.title, filehash=ed_attachment.path)
+                a.save()
+
+                ab_post.text = ab_post.text + '\n\n%s[%s](%s)' % (
                     '!' if ed_attachment.title.split('.')[-1] in image_exts else '',
-                    ed_attachment.title,
-                    reverse('upload'),
-                    ed_attachment.path,
-                    ed_attachment.title,
+                    a.filename,
+                    reverse('get_attachment', kwargs={'filehash': a.filehash}),
                 )
 
                 ab_post.html = ab_post.parse_post_text()['html']
+                ab_post.summary = None
                 ab_post.save()
 
             transaction.commit()
