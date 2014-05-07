@@ -1877,7 +1877,7 @@ EditCommentForm.prototype.getSaveHandler = function(){
         me._comment.getElement().show();
         var commentData = me._comment.getData();
         var timestamp = commentData['comment_added_at'] || gettext('just now');
-        var userName = commentData['user_display_name'] || askbot['data']['userName'];
+        var userName = commentData['user_display_name'] || askbot['data']['realName'];
 
         me._comment.setContent({
             'html': editor.getHtml(),

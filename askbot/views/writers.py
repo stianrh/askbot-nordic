@@ -691,7 +691,7 @@ def __generate_comments_json(obj, user):#non-view generates json data for the po
             'object_id': obj.id,
             'comment_added_at': str(comment.added_at.replace(microsecond = 0)) + tz,
             'html': comment.html,
-            'user_display_name': escape(comment_owner.username),
+            'user_display_name': escape(comment_owner.real_name),
             'user_url': comment_owner.get_profile_url(),
             'user_id': comment_owner.id,
             'is_deletable': is_deletable,
