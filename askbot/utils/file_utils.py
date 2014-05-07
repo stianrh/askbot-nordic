@@ -22,4 +22,4 @@ def store_file(file_object, file_name_prefix = ''):
 
     file_url = reverse('get_attachment', kwargs={'filehash': attachment.filehash})
 
-    return file_storage, file_object.name, file_url
+    return file_storage, attachment.filehash, file_url
