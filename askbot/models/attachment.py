@@ -19,7 +19,7 @@ class Attachment(models.Model):
                 # hash already used
                 self.filehash = _create_hash()
         else:
-            raise IntegrityError("Could not make a hash for attachment")
+            raise IntegrityError("Could not make a hash for attachment, last tried %s" % (self.filehash, ))
 
     class Meta:
         app_label = 'askbot'
