@@ -302,9 +302,6 @@ class Command(BaseCommand):
                 ab_post.save()
 
             transaction.commit()
-            WARNING = '\033[93m'
-            ENDC = '\033[0m'
-            print WARNING + 'You need to manually copy uploads, keeping directory structure, to <askbot media folder>/uploads/' + ENDC
 
             ed_conversations = EfsqtDiscussConversations.objects.using('old-devzone').all()
             count = ed_conversations.count()
