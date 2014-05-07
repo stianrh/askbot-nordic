@@ -169,7 +169,7 @@ urlpatterns = patterns('',
         },
         name = 'custom_js'
     ),
-    url('^attachment/(?P<filehash>.+)', get_attachment, name='get_attachment'),
+    url('^attachment/(?P<filehash>.+)/?', get_attachment, name='get_attachment'),
     #no translation for this url!!
     service_url(r'^import-data/$', views.writers.import_data, name='import_data'),
     service_url(r'^%s$' % _('faq/'), views.meta.faq, name='faq'),
