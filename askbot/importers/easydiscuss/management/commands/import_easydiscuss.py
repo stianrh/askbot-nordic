@@ -368,6 +368,9 @@ class Command(BaseCommand):
             management.call_command("fix_answer_counts")
             transaction.commit()
 
+            management.call_command("generate_post_snippets")
+            transaction.commit()
+
         except:
             print
             print traceback.format_exc()
