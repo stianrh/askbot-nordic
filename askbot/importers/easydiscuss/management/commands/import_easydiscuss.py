@@ -278,7 +278,7 @@ class Command(BaseCommand):
 
             transaction.commit()
 
-            image_exts = ['jpg', 'jepg', 'png', 'gif', 'bmp', 'svg']
+            image_exts = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg']
             ed_attachments = EfsqtDiscussAttachments.objects.using('old-devzone').all()
             count = ed_attachments.count()
             message = 'Importing %i post attachments' % count
