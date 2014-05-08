@@ -3081,21 +3081,28 @@ def format_instant_notification_email(
 
     if update_type == 'post_shared':
         user_action = _('%(user)s shared a %(post_link)s.')
+        subject_format = _('%(user)s shared %(title)s.')
     elif post.is_comment():
         if update_type.endswith('update'):
             user_action = _('%(user)s edited a %(post_link)s.')
+            subject_format = _('%(user)s edited a comment in %(title)s.')
         else:
             user_action = _('%(user)s posted a %(post_link)s')
+            subject_format = _('%(user)s commented in %(title)s.')
     elif post.is_answer():
         if update_type.endswith('update'):
             user_action = _('%(user)s edited an %(post_link)s.')
+            subject_format = _('%(user)s edited an answer in %(title)s.')
         else:
             user_action = _('%(user)s posted an %(post_link)s.')
+            subject_format = _('%(user)s answered in %(title)s.')
     elif post.is_question():
         if update_type.endswith('update'):
             user_action = _('%(user)s edited a %(post_link)s.')
+            subject_format = _('%(user)s edited a question in %(title)s.')
         else:
             user_action = _('%(user)s posted a %(post_link)s.')
+            subject_format = _('%(user)s asked %(title)s.')
     else:
         raise ValueError('unrecognized post type')
 
@@ -3165,8 +3172,8 @@ def format_instant_notification_email(
         'reply_address': reply_address,
         'is_multilingual': getattr(django_settings, 'ASKBOT_MULTILINGUAL', False)
     }
-    subject_line = _('"%(title)s"') % {'title': origin_post.thread.title}
-
+    user = from_user.get_name_of_anonymous_user() if post.is_anonymous else from_user.real_name
+    subject_line = subject_format % {'user': user, 'title': origin_post.thread.title}
     content = template.render(Context(update_data))
 
     return subject_line, content
