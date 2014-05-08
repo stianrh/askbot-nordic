@@ -1028,9 +1028,6 @@ ul#searchTags {
   margin-bottom: 7px;
   display: block;
 }
-.short-summary a {
-  color: #464646;
-}
 .short-summary .userinfo {
   text-align: right;
   line-height: 20px;
@@ -1707,7 +1704,6 @@ ul#related-tags li {
   padding-top: 0px;
 }
 .question-page h1 a {
-  color: #464646;
   font-size: 26px;
   font-weight: normal;
   line-height: 1;
