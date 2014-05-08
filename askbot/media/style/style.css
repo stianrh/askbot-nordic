@@ -606,7 +606,7 @@ input[type="reset"],
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -khtml-border-radius: 4px;
-  padding: 5px 10px;
+  padding: 4px 5px;
 }
 button a,
 input[type="submit"] a,
@@ -3123,13 +3123,6 @@ button::-moz-focus-inner {
 }
 .submit.small:hover {
   text-decoration: none;
-}
-.question-page a.submit {
-  display: -moz-inline-stack;
-  display: inline-block;
-  line-height: 30px;
-  padding: 0 5px;
-  *display: inline;
 }
 .noscript {
   position: fixed;
