@@ -1098,20 +1098,20 @@ ul#searchTags {
 .paginator a {
   color: #ffffff;
   background-color: #f26721 !important;
+  border-radius: 4px;
+  -ms-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -khtml-border-radius: 4px;
   margin: 0 2px;
+  padding: 4px 5px;
 }
 .paginator a:hover {
   color: #ffffff;
   background-color: #626366 !important;
 }
-.paginator .curr {
-  font-weight: bold;
-}
 .paginator .curr a {
   background-color: #626366 !important;
-}
-.paginator .curr.page a:hover {
-  background: #f26721 !important;
 }
 /* ----- Tags Styles ----- */
 /* tag formatting is also copy-pasted in template

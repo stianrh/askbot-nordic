@@ -1177,24 +1177,19 @@ ul#searchTags {
     a {
         color: #ffffff;
         background-color: @highlight-color !important;
+        .rounded-corners(4px);
         margin: 0 2px;
+        padding: 4px 5px;
     }
     a:hover {
         color: #ffffff;
         background-color: @background-color-dark !important;
     }
     .curr {
-        font-weight: bold;
         a {
             background-color: @background-color-dark !important;
         }
     }
-    .curr.page {
-        a:hover {
-            background: @highlight-color !important;
-        }
-    }
-
 }
 
 /* ----- Tags Styles ----- */
