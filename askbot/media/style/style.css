@@ -95,9 +95,12 @@ p {
   margin-bottom: 6px;
 }
 a {
-  color: #1b79bd;
+  color: #626366;
   text-decoration: none;
   cursor: pointer;
+}
+a:hover {
+  color: #f26721;
 }
 ul {
   list-style: disc;
