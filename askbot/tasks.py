@@ -23,6 +23,8 @@ import logging
 import uuid
 import datetime
 
+import askbot.mail 
+
 from django.contrib.contenttypes.models import ContentType
 from django.template import Context
 from django.template.loader import get_template
@@ -32,7 +34,6 @@ from django.utils import simplejson
 from celery.decorators import task
 from askbot.conf import settings as askbot_settings
 from askbot import const
-from askbot import mail
 from askbot.models import Post, Thread, User, ReplyAddress
 from askbot.models.badges import award_badges_signal
 from askbot.models import get_reply_to_addresses, format_instant_notification_email
@@ -118,7 +119,7 @@ def notify_author_of_published_revision_celery_task(revision):
         #todo: possibly add headers to organize messages in threads
         headers = {'Reply-To': append_content_address}
         #send the message
-        mail.send_mail(
+        askbot.mail.send_mail(
             subject_line = _('Your post at %(site_name)s is now published') % data,
             body_text = template.render(Context(data)),
             recipient_list = [revision.author.email,],
@@ -230,7 +231,7 @@ def send_instant_notifications_about_activity_in_post(
     update_type_map = const.RESPONSE_ACTIVITY_TYPE_MAP_FOR_TEMPLATES
     update_type = update_type_map[update_activity.activity_type]
     origin_post = post.get_origin_post()
-    headers = mail.thread_headers(
+    headers = askbot.mail.thread_headers(
                             post,
                             origin_post,
                             update_activity.activity_type
@@ -264,7 +265,7 @@ def send_instant_notifications_about_activity_in_post(
 
         headers['Reply-To'] = reply_address
         try:
-            mail.send_mail(
+            askbot.mail.send_mail(
                 subject_line=subject_line,
                 body_text=body_text,
                 recipient_list=[user.email],

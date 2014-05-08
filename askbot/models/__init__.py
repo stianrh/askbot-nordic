@@ -69,8 +69,8 @@ from askbot.utils.html import sanitize_html
 from askbot.utils.html import site_url
 from askbot.utils.diff import textDiff as htmldiff
 from askbot.utils.url_utils import strip_path
-from askbot import mail
 from askbot.models import signals
+import askbot.mail
 
 from django import VERSION
 
@@ -3535,7 +3535,7 @@ def send_respondable_email_validation_message(
                             askbot_settings.REPLY_BY_EMAIL_HOSTNAME
                         )
 
-    mail.send_mail(
+    askbot.mail.send_mail(
         subject_line = subject_line,
         body_text = body_text,
         recipient_list = [user.email, ],
