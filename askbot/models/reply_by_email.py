@@ -8,7 +8,6 @@ from django.utils.translation import ugettext as _
 from askbot.models.post import Post
 from askbot.models.base import BaseQuerySetManager
 from askbot.conf import settings as askbot_settings
-from askbot import mail
 
 class ReplyAddressManager(BaseQuerySetManager):
     """A manager for the :class:`ReplyAddress` model"""
