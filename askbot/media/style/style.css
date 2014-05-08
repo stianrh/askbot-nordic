@@ -82,7 +82,7 @@ textarea,
 #askFormBar .questionTitleInput,
 .wmd-container,
 .folded-editor {
-  border: #e6ecee 2px solid;
+  border: #f1f1f2 2px solid;
   height: 22px;
   padding: 0 5px;
 }
@@ -445,7 +445,7 @@ body.user-messages {
   -webkit-box-sizing: border-box;
 }
 #secondaryHeader .content-wrapper {
-  background-color: #e6ecee;
+  background-color: #f1f1f2;
   width: 960px;
   padding: 0 10px;
 }
@@ -816,7 +816,7 @@ body.anon.ask-page .search-drop-menu {
 }
 .box h2 {
   padding-left: 0;
-  background: #e6ecee;
+  background: #f1f1f2;
   line-height: 30px;
   text-align: right;
   font-size: 18px !important;
@@ -981,7 +981,7 @@ body.anon.ask-page .search-drop-menu {
 }
 /* ----- Sorting top Tab, check main_page/tab_bar.html ------*/
 .tabBar {
-  background-color: #e6ecee;
+  background-color: #f1f1f2;
   height: 30px;
   margin-bottom: 3px;
   margin-top: 3px;
@@ -1100,7 +1100,7 @@ ul#searchTags {
   position: relative;
   filter: inherit;
   padding: 10px 0 3px 0;
-  border-bottom: 1px solid #e6ecee;
+  border-bottom: 1px solid #f1f1f2;
   margin-bottom: 1px;
   overflow: hidden;
   width: 733px;
@@ -1153,7 +1153,7 @@ ul#searchTags {
   width: 51px;
   float: right;
   height: 35px;
-  background-color: #e6ecee;
+  background-color: #f1f1f2;
   color: #666;
   border-radius: 5px;
   -ms-border-radius: 5px;
@@ -1297,7 +1297,7 @@ ul#related-tags li {
 .delete-icon {
   width: 14px;
   text-align: center;
-  background: #e6ecee;
+  background: #f1f1f2;
   cursor: pointer;
   float: none;
   color: #626366;
@@ -1831,7 +1831,7 @@ ul#related-tags li {
   margin-bottom: 10px;
 }
 .question-page .answer .post-content {
-  border-bottom: 1px solid #e6ecee;
+  border-bottom: 1px solid #f1f1f2;
 }
 .question-page .post-body {
   overflow: auto;
@@ -2026,7 +2026,7 @@ ul#related-tags li {
 }
 .question-page .post-controls .answer-convert input:hover,
 .question-page .answer-controls .answer-convert input:hover {
-  background-color: #e6ecee;
+  background-color: #f1f1f2;
   border-radius: 3px;
   -ms-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -2328,7 +2328,7 @@ ul#related-tags li {
   color: #E1E818;
 }
 .question-page .answered-by-owner .post-body {
-  border-right: 1px #e6ecee dashed;
+  border-right: 1px #f1f1f2 dashed;
 }
 .question-page .answer-img-accept {
   background: url(../images/vote-accepted.png);
@@ -2734,7 +2734,7 @@ a:hover.medal {
   vertical-align: top;
 }
 .user-about {
-  background-color: #e6ecee;
+  background-color: #f1f1f2;
   height: 200px;
   line-height: 20px;
   overflow: auto;
@@ -3506,7 +3506,7 @@ p.signup_p {
   display: inline-block;
 }
 .user-card {
-  background-color: #e6ecee;
+  background-color: #f1f1f2;
   padding-left: 4px;
   display: inline-block;
   width: 166px;
