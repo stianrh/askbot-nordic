@@ -18,8 +18,6 @@ from django.utils.translation import activate as activate_language
 
 import askbot
 from askbot.conf import settings as askbot_settings
-from askbot import mail
-from askbot.mail import messages
 from askbot.models.tag import Tag, TagSynonym
 from askbot.models.tag import get_tags_by_names
 from askbot.models.tag import filter_accepted_tags, filter_suggested_tags
