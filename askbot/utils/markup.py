@@ -64,7 +64,7 @@ def get_parser():
                 "of url templates, fix this by visiting" + settings_url)
 
     return Markdown(
-                safe_mode=True,
+                safe_mode='escape',
                 html4tags=True,
                 extras=extras,
                 link_patterns=link_patterns
