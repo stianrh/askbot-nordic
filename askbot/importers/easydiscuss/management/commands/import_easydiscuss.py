@@ -184,7 +184,7 @@ class Command(BaseCommand):
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
 
-                if ab_post.last_edited_at:
+                if not ab_post.revisions.exists():
                     revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
                     revision.save()
 
@@ -233,7 +233,7 @@ class Command(BaseCommand):
                     ab_post.thread.accepted_answer_id = ab_post.id
                     ab_post.thread.save()
 
-                if ab_post.last_edited_at:
+                if not ab_post.revisions.exists():
                     revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at or ab_post.created_at)
                     revision.save()
 
@@ -276,7 +276,7 @@ class Command(BaseCommand):
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
 
-                if ab_post.last_edited_at:
+                if not ab_post.revisions.exists():
                     revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at or ab_post.created_at)
                     revision.save()
 
