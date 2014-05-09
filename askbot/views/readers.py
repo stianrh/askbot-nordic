@@ -256,6 +256,13 @@ def questions(request, **kwargs):
             'query_string': search_state.query_string(),
             'search_state': search_state,
             'feed_url': context_feed_url,
+            'statistics': {
+                'total_questions': models.Thread.objects.count(),
+                'unanswered_questions': models.Thread.objects.filter(answer_count=0).count(),
+                'resolved_questions': models.Thread.objects.filter(accepted_answer__isnull=False).count(),
+                'total_users': models.User.objects.count(),
+                'latest_user': models.User.objects.latest('id'),
+            }
         }
 
         extra_context = context.get_extra(
