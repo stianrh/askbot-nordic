@@ -2839,18 +2839,18 @@ body.main-page ins {
   width: 100%;
   clear: both;
   text-align: left;
-  padding: 8px 0 0 0;
   font-size: 16px;
 }
 #ground * {
   margin-bottom: 0;
 }
 .footer-links {
+  margin-top: 20px;
   float: left;
   width: 50%;
 }
 .powered-link {
-  padding-top: 10px;
+  padding-top: 5px;
   font-size: 10px;
   float: right;
   text-align: right;
