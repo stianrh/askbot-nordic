@@ -310,7 +310,7 @@ class ThreadManager(BaseQuerySetManager):
             if query_users:
                 qs = qs.filter(
                     posts__author__in=query_users
-                ) # TODO: unify with search_state.author ?
+                ).distinct() # TODO: unify with search_state.author ?
 
         #unified tags - is list of tags taken from the tag selection
         #plus any tags added to the query string with #tag or [tag:something]
