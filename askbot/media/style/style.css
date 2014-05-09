@@ -121,7 +121,9 @@ li input {
   margin: 3px 3px 4px 3px;
 }
 pre,
-code {
+code,
+pre *,
+code * {
   font-family: Consolas, Monaco, Liberation Mono, Lucida Console, Monospace;
   font-size: 100%;
   clear: both;
