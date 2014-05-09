@@ -1023,6 +1023,9 @@ ul#searchTags {
   margin-bottom: 7px;
   display: block;
 }
+.short-summary p {
+  font-size: 14px;
+}
 .short-summary .userinfo {
   text-align: right;
   line-height: 20px;
