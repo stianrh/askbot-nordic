@@ -324,6 +324,10 @@ urlpatterns = patterns('',
         name='comment_to_answer'
     ),
     service_url(
+        r'^comment/convert/?(?P<comment_id>\d+)/?$',
+        views.writers.comment_to_answer,
+    ),
+    service_url(
         r'^answer/repost-as-comment-under-question/$',
         views.writers.repost_answer_as_comment,
         kwargs={'destination': 'comment_under_question'},

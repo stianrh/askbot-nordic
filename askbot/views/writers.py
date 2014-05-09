@@ -862,14 +862,7 @@ def delete_comment(request):
                 )
 
 @login_required
-@decorators.post_only
-def comment_to_answer(request):
-
-    try:
-        comment_id = int(request.POST.get('comment_id'))
-    except (ValueError, TypeError):
-        #type or value error is raised is int() fails
-        raise Http404
+def comment_to_answer(request, comment_id):
 
     comment = get_object_or_404(
                     models.Post,
@@ -878,7 +871,9 @@ def comment_to_answer(request):
                 )
 
     if askbot_settings.READ_ONLY_MODE_ENABLED is False:
-        request.user.repost_comment_as_answer(comment)
+        comment.last_edited_by = request.user
+        comment.last_edited_at = datetime.datetime.now()
+        comment.author.repost_comment_as_answer(comment)
 
     return HttpResponseRedirect(comment.get_absolute_url())
 
