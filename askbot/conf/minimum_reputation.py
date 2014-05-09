@@ -18,7 +18,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_VOTE_UP',
-        default=5,
+        default=1,
         description=_('Upvote')
     )
 )
