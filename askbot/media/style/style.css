@@ -2113,36 +2113,9 @@ ul#related-tags li {
   color: #666;
   font-size: 13px;
 }
-.question-page .comments .comment-body .edit {
-  padding-left: 6px;
-}
-.question-page .comments .comment-body .convert-comment {
-  display: inline;
-  white-space: nowrap;
-  padding-left: 0px;
-}
-.question-page .comments .comment-body .convert-comment input {
-  background: none;
-  padding: 0px;
-  color: #1B79BD;
-  border: none;
-  height: 13px;
-  width: auto;
-  font-size: 13px;
-  font-weight: normal;
-  line-height: 13px;
-  margin: 0 0 3px 8px;
-  vertical-align: middle;
-  -webkit-box-shadow: 0 0 0 #929292;
-  -moz-box-shadow: 0 0 0 #929292;
-  box-shadow: 0 0 0 #929292;
-  text-shadow: 0 0 0 #929292;
-  -moz-text-shadow: 0 0 0 #929292;
-  -webkit-text-shadow: 0 0 0 #929292;
-}
-.question-page .comments .comment-body .convert-comment input:hover {
-  text-decoration: underline;
-  cursor: pointer;
+.question-page .comments .comment-body a.edit,
+.question-page .comments .comment-body a.convert {
+  margin-left: 6px;
 }
 .question-page .comments .comment-body p {
   font-size: 13px;
@@ -3427,10 +3400,6 @@ img.flag {
 }
 .main-page img.flag {
   vertical-align: text-bottom;
-}
-a.edit {
-  padding-left: 3px;
-  color: #145bff;
 }
 /* Pretty printing styles. Used with prettify.js. minified in one line */
 .pln {
