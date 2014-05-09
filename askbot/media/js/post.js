@@ -2008,7 +2008,7 @@ Comment.prototype.decorate = function(element){
         this._edit_link.decorate(edit_link);
     }
 
-    var convert_link = this._element.find('form.convert-comment');
+    var convert_link = this._element.find('a.convert');
     if (this._is_convertible){
         this._convert_link = new CommentConvertLink(comment_id); 
         this._convert_link.decorate(convert_link);

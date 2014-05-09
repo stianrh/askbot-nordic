@@ -1387,33 +1387,22 @@ EditLink.prototype.decorate = function(element){
 };
 
 var CommentConvertLink = function(comment_id){
-    WrappedElement.call(this)
+    SimpleControl.call(this)
     this._comment_id = comment_id;
 };
-inherits(CommentConvertLink, WrappedElement);
+inherits(CommentConvertLink, SimpleControl);
 
 CommentConvertLink.prototype.createDom = function(){
-    var element = this.makeElement('form');
-    element.addClass('convert-comment');
-    element.attr('method', 'POST');
-    element.attr('action', askbot['urls']['convertComment']);
-    var hidden_input = this.makeElement('input');
-    hidden_input.attr('type', 'hidden');
-    hidden_input.attr('value', this._comment_id);
-    hidden_input.attr('name', 'comment_id');
-    hidden_input.attr('id', 'id_comment_id');
-    element.append(hidden_input);
-
-    var submit = this.makeElement('input');
-    submit.attr('type', 'submit');
-    submit.attr('value', gettext('convert to answer'));
-    element.append(submit);
+    var element = $('<a></a>');
+    element.addClass('convert');
     this.decorate(element);
 };
 
-
 CommentConvertLink.prototype.decorate = function(element){
     this._element = element;
+    this._element.attr('href', askbot['urls']['convertComment']+this._comment_id);
+    this._element.html(gettext('convert to answer'));
+    this.setHandlerInternal();
 };
 
 var DeleteIcon = function(title){
