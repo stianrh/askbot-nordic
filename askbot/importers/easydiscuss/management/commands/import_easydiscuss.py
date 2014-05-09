@@ -174,8 +174,9 @@ class Command(BaseCommand):
                 ab_post.points = ed_post.sum_totalvote
                 ab_post.vote_up_count = ed_post.num_likes
                 ab_post.vote_down_count = ed_post.num_negvote
-                ab_post.last_edited_at = ed_post.modified
-                ab_post.last_edited_by_id = ed_post.user_id or None
+                if ed_post.modified != ed_post.created:
+                    ab_post.last_edited_at = ed_post.modified 
+                    ab_post.last_edited_by_id = ab_post.author.id
                 ab_post.text = bbcode2markdown.convert(ed_post.content)
                 ab_post.html = ab_post.parse_post_text()['html']
                 ab_post.summary = ab_post.get_snippet()
@@ -183,7 +184,7 @@ class Command(BaseCommand):
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
 
-                if not ab_post.revisions.exists():
+                if ab_post.last_edited_at:
                     revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
                     revision.save()
 
@@ -219,8 +220,9 @@ class Command(BaseCommand):
                 ab_post.points = ed_post.sum_totalvote
                 ab_post.vote_up_count = ed_post.num_likes
                 ab_post.vote_down_count = ed_post.num_negvote
-                ab_post.last_edited_at = ed_post.modified
-                ab_post.last_edited_by_id = ed_post.user_id or ab_post.author.id
+                if ed_post.modified != ed_post.created:
+                    ab_post.last_edited_at = ed_post.modified 
+                    ab_post.last_edited_by_id = ab_post.author.id
                 ab_post.text = bbcode2markdown.convert(ed_post.content)
                 ab_post.html = ab_post.parse_post_text()['html']
                 ab_post.summary = ab_post.get_snippet()
@@ -231,8 +233,8 @@ class Command(BaseCommand):
                     ab_post.thread.accepted_answer_id = ab_post.id
                     ab_post.thread.save()
 
-                if not ab_post.revisions.exists():
-                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                if ab_post.last_edited_at:
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at or ab_post.created_at)
                     revision.save()
 
             transaction.commit()
@@ -260,7 +262,9 @@ class Command(BaseCommand):
 
                 ab_post.created_at = ed_comment.created
                 ab_post.added_at = ed_comment.created
-                ab_post.last_edited_at = ed_comment.modified
+                if ed_comment.modified != ed_comment.created:
+                    ab_post.last_edited_at = ed_comment.modified 
+                    ab_post.last_edited_by_id = ab_post.author.id
                 ab_post.text = ed_comment.comment
                 ab_post.html = ab_post.parse_post_text()['html']
                 ab_post.summary = ab_post.get_snippet()
@@ -272,8 +276,8 @@ class Command(BaseCommand):
                 ab_post.save()
                 ab_post.add_to_groups([everyone])
 
-                if not ab_post.revisions.exists():
-                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                if ab_post.last_edited_at:
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at or ab_post.created_at)
                     revision.save()
 
             transaction.commit()
