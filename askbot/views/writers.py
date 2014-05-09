@@ -871,9 +871,7 @@ def comment_to_answer(request, comment_id):
                 )
 
     if askbot_settings.READ_ONLY_MODE_ENABLED is False:
-        comment.last_edited_by = request.user
-        comment.last_edited_at = datetime.datetime.now()
-        comment.author.repost_comment_as_answer(comment)
+        request.user.repost_comment_as_answer(comment)
 
     return HttpResponseRedirect(comment.get_absolute_url())
 

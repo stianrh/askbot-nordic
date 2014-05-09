@@ -1382,8 +1382,11 @@ def user_repost_comment_as_answer(self, comment):
     #todo: add assertion
     #self.assert_can_repost_comment_as_answer(comment)
 
-    comment.post_type = 'answer'
     old_parent = comment.parent
+
+    comment.post_type = 'answer'
+    comment.last_edited_at = datetime.datetime.now()
+    comment.last_edited_by = self
 
     comment.parent = comment.thread._question_post()
     comment.save()
