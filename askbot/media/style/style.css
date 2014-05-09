@@ -2844,10 +2844,10 @@ body.main-page ins {
   font-size: 16px;
 }
 #ground * {
-  margin-bottom: 0;
+  margin-bottom: 3px;
 }
 .footer-links {
-  margin-top: 20px;
+  margin-top: 3px;
   float: left;
   width: 50%;
 }
