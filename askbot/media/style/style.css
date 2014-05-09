@@ -848,15 +848,8 @@ body.anon.ask-page .search-drop-menu {
   display: inline;
   float: none;
 }
-.statsWidget p {
-  color: #707070;
-  font-size: 16px;
-  border-bottom: #cccccc 1px solid;
-  font-size: 13px;
-}
 .statsWidget p strong {
   float: right;
-  padding-right: 10px;
 }
 .questions-related {
   word-wrap: break-word;
