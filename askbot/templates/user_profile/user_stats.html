@@ -19,7 +19,8 @@
     {% spaceless %}
         <h2 style="clear:both;">
             <span class="count">{{ top_answer_count }}</span>
-            {{ settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(top_answer_count)|capitalize }}
+            {{ settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(top_answer_count)|capitalize }},
+            <span class="count">{{ accepted_answer_count }}</span> accepted
         </h2>
     {% endspaceless %}
     {% include "user_profile/users_answers.html" %}

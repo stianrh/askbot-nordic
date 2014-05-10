@@ -15,7 +15,7 @@ import operator
 import urllib
 
 from django.db.models import Count
-from django.db.models import Q
+from django.db.models import Q, F
 from django.conf import settings as django_settings
 from django.contrib.auth.decorators import login_required
 from django.core import exceptions as django_exceptions
@@ -430,6 +430,7 @@ def user_stats(request, user, context):
                     'page_object': a_paginator.page(1),
                     'base_url' : '?' #this paginator will be ajax
                 })
+    accepted_answer_count = models.Post.objects.filter(author=580, post_type='answer', thread__accepted_answer_id=F('id')).count()
     #
     # Votes
     #
@@ -539,6 +540,7 @@ def user_stats(request, user, context):
 
         'top_answers': top_answers,
         'top_answer_count': top_answer_count,
+        'accepted_answer_count': accepted_answer_count,
         'a_paginator_context': a_paginator_context,
         'page_size': const.USER_POSTS_PAGE_SIZE,
 
