@@ -185,7 +185,7 @@ class Command(BaseCommand):
                 ab_post.add_to_groups([everyone])
 
                 if not ab_post.revisions.exists():
-                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at)
+                    revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at or ab_post.created_at)
                     revision.save()
 
                 post_tags = EfsqtDiscussPostsTags.objects.using('old-devzone').filter(post_id=ab_post.id).values_list('tag_id', flat=True)
