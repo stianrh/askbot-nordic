@@ -22,6 +22,9 @@ class Attachment(models.Model):
         else:
             raise IntegrityError("Could not make a hash for attachment, last tried %s" % (self.filehash, ))
 
+    def __unicode__(self):
+        return "<Attachment: %s, hash: %s>" % (self.filename, self.filehash)
+
     class Meta:
         app_label = 'askbot'
 
