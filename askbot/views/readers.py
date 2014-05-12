@@ -261,7 +261,7 @@ def questions(request, **kwargs):
                 'unanswered_questions': models.Thread.objects.filter(answer_count=0).count(),
                 'resolved_questions': models.Thread.objects.filter(accepted_answer__isnull=False).count(),
                 'total_users': models.User.objects.count(),
-                'latest_user': models.User.objects.latest('id'),
+                'latest_user': models.User.objects.latest('id') if models.User.objects.count() > 0 else None,
             }
         }
 

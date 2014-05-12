@@ -25,7 +25,7 @@
         <h4>Statistics</h4>
         <ul>
             <li>Total users: {{ statistics.total_users }}</li>
-            <li>Latest user: <a href="{{ statistics.latest_user.get_profile_url() }}">{{ statistics.latest_user.real_name }}</a></li>
+            <li>Latest user: {% if statistics.latest_user is none %}None{% else %}<a href="{{ statistics.latest_user.get_profile_url() }}">{{ statistics.latest_user.real_name }}</a>{% endif %}</li>
             <li>Resolved questions: {{ statistics.resolved_questions }}</li>
             <li>Unanswered questions: {{ statistics.unanswered_questions }}</li>
             <li>Total questions: {{ statistics.total_questions }}</li>
