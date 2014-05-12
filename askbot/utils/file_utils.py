@@ -6,13 +6,13 @@ import urlparse
 from django.core.files.storage import get_storage_class
 from django.core.urlresolvers import reverse
 from django.conf import settings as django_settings
-from askbot.models.attachment import Attachment
 
 def store_file(file_object, file_name_prefix = ''):
     """Creates an instance of django's file storage
     object based on the file-like object,
     returns the storage object, file name, file url
     """
+    from askbot.models.attachment import Attachment
     attachment = Attachment(filename=file_object.name)
     attachment.save()
 
