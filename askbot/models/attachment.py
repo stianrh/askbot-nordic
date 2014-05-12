@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models, IntegrityError
 import os
 from binascii import hexlify
@@ -24,4 +25,4 @@ class Attachment(models.Model):
     class Meta:
         app_label = 'askbot'
 
-
+admin.site.register(Attachment)
