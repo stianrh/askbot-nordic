@@ -10,16 +10,24 @@ def convert(bbcode):
     markdown = re.sub(r'\[s\](.+?)\[/s\]', r'<del>\g<1></del>', markdown)
     markdown = re.sub(r'\[url\](.+?)\[/url\]', r'[\g<1>]', markdown)
     markdown = re.sub(r'\[url=?(.*?)\](.+?)\[/url\]', r'[\g<2>](\g<1>)', markdown)
-    markdown = re.sub(r'\[img\](.+?)\[/img\]', r'!(\g<1>)[\g<1>]', markdown)
-    markdown = re.sub(r'\[quote.*?\](.+?)\[/quote\]', r'> \g<1>', markdown, flags=re.DOTALL)
-    markdown = re.sub(r'\[code.*?\](.+?)\[/code\]', r'    \g<1>', markdown)
+    markdown = re.sub(r'\[img\](.+?)\[/img\]', r'!(\g<1>)[\g<1>]\n', markdown)
+
+    markdown = re.sub(r'\[quote.*?\](.+?)\[/quote\]', r'> \g<1>\n', markdown)
+    bb_codes = re.findall(r'\[quote.*?\].*?\[/quote\]', markdown, flags=re.DOTALL)
+    for bb_code in bb_codes:
+        cleaned = re.sub(r'\[quote.*?\](.+?)\[/quote\]', r'\g<1>', bb_code, flags=re.DOTALL)
+        lines = cleaned.split('\n')
+        lines = ['>    %s' % line.strip() for line in lines]
+        markdown = markdown.replace(bb_code, '\n'.join(lines))
+
+    markdown = re.sub(r'\[code.*?\](.+?)\[/code\]', r'    \g<1>\n', markdown)
 
     bb_codes = re.findall(r'\[code.*?\].*?\[/code\]', markdown, flags=re.DOTALL)
     for bb_code in bb_codes:
-        lines = bb_code.split('\n')
-        if len(lines) > 1:
-            lines = ['    %s' % line for line in lines[1:-1]]
-            markdown = markdown.replace(bb_code, '\n'.join(lines))
+        cleaned = re.sub(r'\[code.*?\](.+?)\[/code\]', r'\g<1>', bb_code, flags=re.DOTALL)
+        lines = cleaned.split('\n')
+        lines = ['    %s' % line.strip() for line in lines]
+        markdown = markdown.replace(bb_code, '\n'.join(lines))
 
     bb_lists = re.findall(r'\[list\].*?\[/list\]', markdown, flags=re.DOTALL)
     for bb_list in bb_lists:
