@@ -9,7 +9,6 @@ from django.core.management.base import BaseCommand
 from askbot.utils.console import ProgressBar
 from django.core.urlresolvers import reverse
 
-from askbot.models import User, tag, post, question, user, Attachment
 from privatemessages.models import Message, Thread, MessageIndex, Settings
 from askbot.importers.easydiscuss.models import *
 from askbot.importers.easydiscuss import bbcode2markdown
@@ -28,6 +27,8 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         try:
             LANGUAGE = 'en'
+
+            from askbot.models import User, tag, post, question, user, Attachment
 
             nordic_group = user.Group.objects.get_or_create(
                 name='Nordic employees',
