@@ -22,7 +22,9 @@
         {% block before_css %}{% endblock %}
         {% include "meta/html_head_stylesheets.html" ignore missing %}
         {% block forestyle %}{% endblock %}
+        {% if request %}
         {% include "meta/html_head_javascript.html" ignore missing %}
+        {% endif %}
         {% block forejs %}{% endblock %}
         {% if settings.USE_CUSTOM_HTML_HEAD %}
             {{ settings.CUSTOM_HTML_HEAD }}
