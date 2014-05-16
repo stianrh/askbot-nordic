@@ -62,7 +62,9 @@
             {{ settings.CUSTOM_HEADER }}
         </div>
         {% endif %}
+        {% block secondary_header %}
         {% include "widgets/secondary_header.html" %} {# Scope selector, search input and ask button #}
+        {% endblock secondary_header %}
         {% if settings.ENABLE_LEADING_SIDEBAR %}
         <div id="leading-sidebar">
             {{ settings.LEADING_SIDEBAR }}
