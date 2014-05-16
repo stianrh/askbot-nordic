@@ -1,7 +1,10 @@
-{% extends "two_column_body.html" %}
+{% extends "base.html" %}
 <!-- template 500.html -->
 {% block title %}{% spaceless %}{% trans %}Internal server error{% endtrans %}{% endspaceless %}{% endblock %}
-{% block content %}
+
+{% block secondary_header %}
+{% endblock %}
+{% block body %}
 <h1>{% trans %}Internal server error{% endtrans %}</h1>
 <div id="main-body">
     <div style="padding:5px 0px 10px 0;line-height:25px">
