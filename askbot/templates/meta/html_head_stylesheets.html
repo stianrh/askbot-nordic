@@ -9,7 +9,9 @@
         <link href="{{"/style/style.css"|media }}" rel="stylesheet" type="text/css" />
         <link href="{% static "css/common.css" %}" rel="stylesheet" type="text/css" />
         <link href="{% static "css/cms.css" %}" rel="stylesheet" type="text/css" />
+        {% if skin %}
         {{ skin.get_extra_css_link() }}
+        {% endif %}
     {% endcompress %}
 {% endif %}
 {% if settings.USE_CUSTOM_CSS %}
