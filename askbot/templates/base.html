@@ -74,12 +74,14 @@
             {% block body %}
             {% endblock %}
         </div>
+        {% block footer %}
         {% if settings.FOOTER_MODE == 'default' %}
             {% include "widgets/footer.html" %}
         {% elif settings.FOOTER_MODE == 'customize' %}
             {{ settings.CUSTOM_FOOTER }}
         {% endif %}
         {% include "custom_footer.html" ignore missing %}
+        {% endblock %}
         {% include "meta/bottom_scripts.html" %}
         {% block endjs %}
         {% endblock %}
