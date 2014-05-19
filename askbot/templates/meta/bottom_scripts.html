@@ -64,18 +64,17 @@
     $(document).ready(function(){
         // focus input on the search bar endcomment
         var activeTab = askbot['data']['activeTab'];
-        if (inArray(activeTab, ['users', 'questions', 'tags', 'badges'])) {
-            var searchInput = $('#keywords');
-        } else if (activeTab === 'ask') {
+        if (activeTab === 'ask') {
             var searchInput = $('#id_title');
         } else {
-            var searchInput = undefined;
+            var searchInput = $('#keywords');
             animateHashes();
         }
 
         var haveFullTextSearchTab = inArray(activeTab, ['questions', 'badges', 'ask']);
         var haveUserProfilePage = $('body').hasClass('user-profile-page');
-        if ((haveUserProfilePage || haveFullTextSearchTab) && searchInput.length) {
+        if (true) {
+        //if ((haveUserProfilePage || haveFullTextSearchTab) && searchInput.length) {
             var search = new FullTextSearch();
             askbot['controllers'] = askbot['controllers'] || {};
             askbot['controllers']['fullTextSearch'] = search;
