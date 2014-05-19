@@ -443,7 +443,7 @@ settings.register(
     values.StringValue(
         WORDS,
         'WORDS_PLEASE_ASK_YOUR_QUESTION_HERE',
-        default=_('Please ask your question here'),
+        default=_('Ask a question'),
         description=_('Please ask your question here'),
     )
 )
