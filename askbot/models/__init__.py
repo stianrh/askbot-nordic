@@ -2041,7 +2041,7 @@ def user_add_missing_askbot_subscriptions(self):
         feed_setting.save()
 
 def user_is_moderator(self):
-    return (self.status == 'm' and self.is_administrator() == False)
+    return (self.status == 'm' and self.is_administrator() == False) or (self.groups.filter(name='askbot_moderators').count() > 0)
 
 def user_is_post_moderator(self, post):
     """True, if user and post have common groups
