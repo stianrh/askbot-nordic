@@ -9,7 +9,7 @@ def convert(bbcode):
     markdown = re.sub(r'\[u\](.+?)\[/u\]', r'<u>\g<1></u>', markdown)
     markdown = re.sub(r'\[s\](.+?)\[/s\]', r'<del>\g<1></del>', markdown)
     markdown = re.sub(r'\[url\](.+?)\[/url\]', r'[\g<1>]', markdown)
-    markdown = re.sub(r'\[url=?(.*?)\](.+?)\[/url\]', r'[\g<2>](\g<1>)', markdown)
+    markdown = re.sub(r'\[url=?(.*?)\](.+?)\[/url\]', r'[\g<2>](\g<1>)', markdown, flags=re.DOTALL)
     markdown = re.sub(r'\[img\](.+?)\[/img\]', r'!(\g<1>)[\g<1>]\n', markdown)
 
     markdown = re.sub(r'\[quote.*?\](.+?)\[/quote\]', r'> \g<1>\n', markdown)
