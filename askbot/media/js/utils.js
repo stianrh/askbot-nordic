@@ -371,7 +371,7 @@ QSutils.remove_search_tag = function(query_string, tag){
 
     var tags = tag_string.split(this.TAG_SEP);
 
-    var pos = $.inArray(encodeURIComponent(tag), tags);
+    var pos = $.inArray(tag, tags);
     if(pos > -1) {
         tags.splice(pos, 1); /* array.splice() works in-place */
     }
