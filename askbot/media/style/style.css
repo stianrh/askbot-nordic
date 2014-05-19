@@ -38,7 +38,6 @@ p {
 }
 label {
   vertical-align: middle;
-  display: block;
 }
 hr {
   border: none;
@@ -664,6 +663,7 @@ form#signin-form input[type="password"] {
   width: 200px;
 }
 form#signin-form label {
+  display: block;
   text-align: right;
   margin-right: 5px;
 }
