@@ -7,6 +7,14 @@
 <p>{% trans %}Most importantly - questions should be <strong>relevant</strong> to this community.{% endtrans %}
 {% trans %}Before you ask - please make sure to search for a similar question. You can search questions by their title or tags.{% endtrans %}
 </p>
+<h2>{% trans %}How does questions, answers and comments work?{% endtrans %}</h2>
+<p>
+    {% trans %}This site is for asking and answering questions, not for open-ended discussions.{% endtrans %}
+    {% trans %}We encourage everyone to post question for asking and answers for answering; try to avoid asking multiple questions in one post.{% endtrans %}
+</p>
+<p>
+    {% trans %}Each question and answer can be commented – the comments are good for limited discussions, and to clear up any uncertainties about a question.{% endtrans %}
+</p>
 <h2>{% trans %}What kinds of questions should be avoided?{% endtrans %}</h2>
 <p>{% trans %}Please avoid asking questions that are not relevant to this community, too subjective and argumentative.{% endtrans %}
 </p>
@@ -67,6 +75,28 @@
 </table>
 <h2>{% trans %}Why can other people can edit my questions/answers?{% endtrans %}</h2>
 <p> {% trans %}Goal of this site is to provide the best possible answers.{% endtrans %} {% trans %}To achieve this, we've made it so that questions and answers can be edited like wiki pages by experienced users of this site. Hopefully this should improve the overall quality of the knowledge base content.{% endtrans %}
+</p>
+<h2>{% trans %}How does searching work?{% endtrans %}</h2>
+<p>{% trans %}Type your question in the search bar and see whether a similar question has been asked before{% endtrans %}.
+</p>
+<p>{% trans %}Search has advanced capabilities:{% endtrans %}</p>
+<ul>
+    <li>{% trans %}to search in title - enter [title: your text]{% endtrans %}</li>
+    <li>{% trans %}to search by tags - enter [tag: sometag] or #sometag{% endtrans %}</li>
+    <li>{% trans %}to search by user - enter [user: somename] or @somename or @"some name"{% endtrans %}</li>
+</ul>
+<p>{% trans %}In addition, it is possible to click on tags to add them to the search query.{% endtrans %}
+{% if settings.TAG_SEARCH_INPUT_ENABLED %}
+    {% trans %}Finally, a separate tag search box is available in the side bar of the main page, where the search tags can be entered as well{% endtrans %}
+{% endif %}
+</p>
+<h2>{% trans %}How does voting work?{% endtrans %}</h2>
+<p>
+    {% trans %}Voting helps to select best answers and thank most helpful users. Unless there is something in particular, it's much better to vote an answer or comment up than to post a thank-you reply or comment!{% endtrans %}
+</p>
+<p>
+    {% trans %}Please vote when you find helpful information,
+    it really helps the community.{% endtrans %}
 </p>
 <script type="text/javascript">
     //highlihts section if url has matching #anchor_name
