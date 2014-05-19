@@ -25,6 +25,7 @@ h1, h2, h3, h4, h5, h6, ul, li, dl, dt, dd, form, img, p {
 
 label {
     vertical-align: middle;
+    display: block;
 }
 
 hr {
@@ -34,7 +35,7 @@ hr {
 
 input, select, textarea {
     vertical-align: middle;
-    margin-left:0px;
+    margin: 3px 0;
     -webkit-appearance: none;
     .rounded-corners(0);
 }
@@ -688,6 +689,15 @@ input[type="submit"].link:hover {
     text-decoration: underline;
 }
 
+form#signin-form {
+    input[type="text"],input[type="password"] {
+        width: 200px;
+    }
+    label {
+        text-align: right;
+        margin-right: 5px;
+    }
+}
 form.ajax-file-upload {
     height: 60px;
     position: relative;
@@ -2500,32 +2510,6 @@ ul#related-tags li {
 
 /* -----Content pages, Login, About, FAQ, Users----- */
 
-.openid-signin {
-    input[type="text"],
-    input[type="password"] {
-        color: #525252;
-        font-size: 12px;
-        line-height: 25px;
-        height: 25px;
-        margin: 0px;
-        padding: 0 5px;
-        width: 200px;
-    }
-}
-
-.registration-page {
-    .login {
-        input[type="text"] {
-            height: 22px;
-            font-size: 12px;
-            line-height: 22px;
-            color: #525252;
-            padding: 0 5px;
-            width: 200px;
-        }
-    }
-}
-
 .openid-signin,
 .meta,
 .user-profile-edit-page,
@@ -2614,22 +2598,6 @@ ul#related-tags li {
 
 .openid-signin form {
     margin-bottom: 5px;
-}
-
-#local_login_buttons,
-#password-fs,
-#openid-fs,
-#signup-form {
-    input[type="text"],
-    input[type="password"] {
-        color: #525252;
-        font-size: 12px;
-        line-height: 25px;
-        height: 25px;
-        margin: 0px;
-        padding: 0 5px;
-        width: 200px;
-    }
 }
 
 #email-input-fs,

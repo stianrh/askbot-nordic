@@ -38,6 +38,7 @@ p {
 }
 label {
   vertical-align: middle;
+  display: block;
 }
 hr {
   border: none;
@@ -47,7 +48,7 @@ input,
 select,
 textarea {
   vertical-align: middle;
-  margin-left: 0px;
+  margin: 3px 0;
   -webkit-appearance: none;
   border-radius: 0;
   -ms-border-radius: 0;
@@ -665,6 +666,14 @@ input[type="submit"].link {
 }
 input[type="submit"].link:hover {
   text-decoration: underline;
+}
+form#signin-form input[type="text"],
+form#signin-form input[type="password"] {
+  width: 200px;
+}
+form#signin-form label {
+  text-align: right;
+  margin-right: 5px;
 }
 form.ajax-file-upload {
   height: 60px;
@@ -2334,24 +2343,6 @@ ul#related-tags li {
   background-position: -52px 0px;
 }
 /* -----Content pages, Login, About, FAQ, Users----- */
-.openid-signin input[type="text"],
-.openid-signin input[type="password"] {
-  color: #525252;
-  font-size: 12px;
-  line-height: 25px;
-  height: 25px;
-  margin: 0px;
-  padding: 0 5px;
-  width: 200px;
-}
-.registration-page .login input[type="text"] {
-  height: 22px;
-  font-size: 12px;
-  line-height: 22px;
-  color: #525252;
-  padding: 0 5px;
-  width: 200px;
-}
 .openid-signin p,
 .meta p,
 .user-profile-edit-page p {
@@ -2453,22 +2444,6 @@ ul#related-tags li {
 }
 .openid-signin form {
   margin-bottom: 5px;
-}
-#local_login_buttons input[type="text"],
-#password-fs input[type="text"],
-#openid-fs input[type="text"],
-#signup-form input[type="text"],
-#local_login_buttons input[type="password"],
-#password-fs input[type="password"],
-#openid-fs input[type="password"],
-#signup-form input[type="password"] {
-  color: #525252;
-  font-size: 12px;
-  line-height: 25px;
-  height: 25px;
-  margin: 0px;
-  padding: 0 5px;
-  width: 200px;
 }
 #email-input-fs,
 #local_login_buttons,
