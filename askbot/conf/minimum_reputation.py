@@ -133,7 +133,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_RETAG_OTHERS_QUESTIONS',
-        default=50,
+        default=20,
         description=_('Retag questions posted by other people')
     )
 )
@@ -201,7 +201,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_TRIGGER_EMAIL',
-        default=15,
+        default=5,
         description=_('Trigger email notifications'),
         help_text=_('Reduces spam')
     )
