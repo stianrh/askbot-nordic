@@ -3,9 +3,6 @@
 {% from "macros.html" import timeago %}
 <!-- signin.html -->
 {% block title %}{% spaceless %}{% trans %}User login{% endtrans %}{% endspaceless %}{% endblock %}
-{% block forestyle %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{"/jquery-openid/openid.css"|media}}"/>
-{% endblock %}
 {% block forejs %}
     {% include "meta/bottom_scripts.html" %}
     {% include "meta/html_head_javascript.html" %}
