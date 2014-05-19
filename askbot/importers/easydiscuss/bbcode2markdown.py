@@ -4,11 +4,11 @@ import re
 
 def convert(bbcode):
     markdown = bbcode
-    markdown = re.sub(r'\[b\](.+?)\[/b\]', r'**\g<1>**', markdown)
-    markdown = re.sub(r'\[i\](.+?)\[/i\]', r'*\g<1>*', markdown)
-    markdown = re.sub(r'\[u\](.+?)\[/u\]', r'<u>\g<1></u>', markdown)
-    markdown = re.sub(r'\[s\](.+?)\[/s\]', r'<del>\g<1></del>', markdown)
-    markdown = re.sub(r'\[url\](.+?)\[/url\]', r'[\g<1>]', markdown)
+    markdown = re.sub(r'\[b\](.+?)\[/b\]', lambda x: r'**%s**' % x.group(1).strip(), markdown)
+    markdown = re.sub(r'\[i\](.+?)\[/i\]', lambda x: r'*%s*' % x.group(1).strip(), markdown)
+    markdown = re.sub(r'\[u\](.+?)\[/u\]', lambda x: r'<u>%s</u>' % x.group(1).strip(), markdown)
+    markdown = re.sub(r'\[s\](.+?)\[/s\]', lambda x: r'<del>%s</del>' % x.group(1).strip(), markdown)
+    markdown = re.sub(r'\[url\](.+?)\[/url\]', lambda x: r'[%s]' % x.group(1).strip(), markdown)
     markdown = re.sub(r'\[url=?(.*?)\](.+?)\[/url\]', r'[\g<2>](\g<1>)', markdown, flags=re.DOTALL)
     markdown = re.sub(r'\[img\](.+?)\[/img\]', r'!(\g<1>)[\g<1>]\n', markdown)
 
