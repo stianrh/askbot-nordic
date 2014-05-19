@@ -2783,45 +2783,22 @@ body.main-page ins {
 }
 /* ----- Red Popup notification ----- */
 .vote-notification {
+  padding: 5px;
   z-index: 1;
   background-color: #8e0000;
   color: white;
   cursor: pointer;
   display: none;
-  font-size: 14px;
-  font-weight: normal;
-  padding-bottom: 10px;
   position: absolute;
   text-align: center;
   -webkit-box-shadow: 0px 2px 4px #370000;
   -moz-box-shadow: 0px 2px 4px #370000;
   box-shadow: 0px 2px 4px #370000;
-  border-radius: 4px;
-  -ms-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -khtml-border-radius: 4px;
-}
-.vote-notification h3 {
-  background: url(../images/notification.png) repeat-x top;
-  padding: 10px 10px 10px 10px;
-  font-size: 13px;
-  margin-bottom: 5px;
-  border-top: #8e0000 1px solid;
-  color: #fff;
-  line-height: 20px;
-  font-weight: normal;
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
-  -moz-border-radius-topright: 4px;
-  -moz-border-radius-topleft: 4px;
-  -webkit-border-top-left-radius: 4px;
-  -webkit-border-top-right-radius: 4px;
-}
-.vote-notification a {
-  color: #fb7321;
-  text-decoration: underline;
-  font-weight: bold;
+  border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
 }
 /* ----- Footer links , check blocks/footer.html----- */
 #ground {
