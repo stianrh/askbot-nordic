@@ -164,15 +164,6 @@ html {
     width: 1px;
 }
 
-.badges a {
-    color: #763333;
-    text-decoration: underline;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
 .avatar-box {
     text-decoration: none;
     width: 32px;
@@ -181,7 +172,6 @@ a:hover {
 
 .badge-context-toggle.active {
     cursor: pointer;
-    text-decoration: underline;
 }
 
 h1 {
@@ -2681,22 +2671,13 @@ a.medal {
     margin-right:5px;
     color: #333;
     text-decoration: none;
-    background: url(../images/medala.gif) no-repeat;
-    border-left: 1px solid #EEE;
-    border-top: 1px solid #EEE;
-    border-bottom: 1px solid #CCC;
-    border-right: 1px solid #CCC;
+    background: @background-color-light;
     padding: 4px 12px 4px 6px;
 }
 
 a:hover.medal {
-    color: #333;
     text-decoration: none;
-    background: url(../images/medala_on.gif) no-repeat;
-    border-left: 1px solid #E7E296;
-    border-top: 1px solid #E7E296;
-    border-bottom: 1px solid #D1CA3D;
-    border-right: 1px solid #D1CA3D;
+    background: @highlight-color;
 }
 
 #award-list{
