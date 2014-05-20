@@ -654,6 +654,11 @@ FullTextSearch.prototype.updateQueryString = function(query_text) {
         'query:' + encodeURIComponent(query_text),
         query_text === ''   // remove if empty
     );
+    newUrl = QSutils.patch_query_string(
+        newUrl,
+        'sort:relevance-desc',
+        false
+    );
     this.setSearchUrl(newUrl);
     return query_text;
 };
