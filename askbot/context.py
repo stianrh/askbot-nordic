@@ -117,3 +117,8 @@ def application_settings(request):
         context['group_list'] = simplejson.dumps(group_list)
 
     return context
+
+def recent_questions(request):
+    return {
+        'recent_questions': models.Post.objects.filter(post_type='question').order_by('added_at').reverse()[:5]
+    }
