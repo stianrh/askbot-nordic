@@ -83,6 +83,7 @@ textarea,
 .wmd-container,
 .folded-editor {
   border: #f1f1f2 2px solid;
+  height: 22px;
   padding: 0 5px;
 }
 iframe {
