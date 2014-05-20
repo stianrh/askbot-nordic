@@ -7,11 +7,11 @@ from askbot.models import Thread, Post, User
 
 class ThreadIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
+    title = indexes.CharField(model_attr='title')
     added_at = indexes.DateTimeField(model_attr='added_at')
     last_activity_at = indexes.DateTimeField(model_attr='last_activity_at')
     answer_count = indexes.IntegerField(model_attr='answer_count')
     points = indexes.IntegerField(model_attr='points')
-    #title = indexes.CharField(model_attr='title')
     #tags = indexes.MultiValueField()
 
     def get_model(self):
