@@ -128,18 +128,16 @@ def feedback(request):
             subject = _('Q&A forum feedback')
             if askbot_settings.FEEDBACK_EMAILS:
                 recipients = re.split('\s*,\s*', askbot_settings.FEEDBACK_EMAILS)
-                send_mail(
-                    subject_line=subject,
-                    body_text=message,
-                    headers=headers,
-                    recipient_list=recipients,
-                )
             else:
-                mail_moderators(
-                    subject_line=subject,
-                    body_text=message,
-                    headers=headers
-                )
+                from django.conf import settings
+                recipients = [email for name, email in settings.ADMINS]
+
+            send_mail(
+                subject_line=subject,
+                body_text=message,
+                headers=headers,
+                recipient_list=recipients,
+            )
             msg = _('Thanks for the feedback!')
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(get_next_url(request))
