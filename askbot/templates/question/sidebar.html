@@ -6,6 +6,7 @@
 {% endif %}
 <div class="box vote-buttons">
   <h2>{{ settings.WORDS_QUESTION_TOOLS|escape }}</h2>
+    {% if request.user.is_authenticated() %}
     {% if favorited %}
         <a class="button followed" 
             alt="{% trans %}click to unfollow {% endtrans %}">
@@ -16,6 +17,7 @@
             alt="{% trans %}click to follow {% endtrans %}">
             {%trans %}Follow{%endtrans%}
         </a>
+    {% endif %}
     {% endif %}
     <div class="clearfix"></div>
     <div id="favorite-number" class="favorite-number{% if favorited %} my-favorite-number{% endif %}">
