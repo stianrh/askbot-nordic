@@ -10,34 +10,16 @@
 {%endif%}
 <form method="post" action="{% url feedback %}" accept-charset="utf-8">{% csrf_token %}
     {% if user.is_authenticated() %}
-        <p class="message">
-        {% trans user_name=user.username|escape %}
-        <span class='big strong'>Dear {{user_name}}</span>, we look forward to hearing your feedback. 
-        Please type and send us your message below.
-        {% endtrans %}
-        <p>
+        <p class="message">Please enter your message in the text field below. It will be sent to the site administrators, which will also get your registered e-mail address, enabling them to get back to you if needed.</p>
     {% else %}
-        <p class="message">
-        {% trans %}
-        <span class='big strong'>Dear visitor</span>, we look forward to hearing your feedback.
-        Please type and send us your message below.
-        {% endtrans %}
-        </p>
+        <p class="message">Please fill out the form below. It will be sent to the site administrators, which will get back to you if needed.</p>
         <div class="form-row"><label>{{form.name.label}}</label><br/>{{form.name}}</div>
         <div class="form-row">
             <label>{{form.email.label}} 
                 {% if form.errors.email %}
-                    <span class='error'>{% trans %}(to hear from us please enter a valid email or check the box below){% endtrans %}</span>
+                    <span class='error'>{% trans %}(to hear from us please enter a valid email){% endtrans %}</span>
                 {% endif %}
             </label><br/>{{form.email}}
-        </div>
-        <div class="form-row">
-        <label>{{form.no_email.label}}
-        {% if form.errors.no_email %}
-        <span class="error">{% trans %}(this field is required){% endtrans %}</span>
-        {% endif %}
-        {{form.no_email}}
-        </label>
         </div>
     {% endif %}
     <div class="form-row">
