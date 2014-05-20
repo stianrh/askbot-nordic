@@ -72,7 +72,7 @@
     {% endif %}
 
     {% if request.user.is_authenticated() or settings.USE_RECAPTCHA and form.recaptcha %}
-      <input type="submit" name="post" value="{{ settings.WORDS_ASK_YOUR_QUESTION|escape }}" class="submit" />
+      <input type="submit" name="post" value="Post question" class="submit" />
     {% else %}
       <input type="submit" name="post_anon" value="{% trans %}Login/Signup to Post{% endtrans %}" class="submit" />
     {% endif %}
