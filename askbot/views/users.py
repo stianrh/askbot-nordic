@@ -430,7 +430,7 @@ def user_stats(request, user, context):
                     'page_object': a_paginator.page(1),
                     'base_url' : '?' #this paginator will be ajax
                 })
-    accepted_answer_count = models.Post.objects.filter(author=580, post_type='answer', thread__accepted_answer_id=F('id')).count()
+    accepted_answer_count = models.Post.objects.filter(author=request.user, post_type='answer', thread__accepted_answer_id=F('id')).count()
     #
     # Votes
     #
