@@ -120,5 +120,5 @@ def application_settings(request):
 
 def recent_questions(request):
     return {
-        'recent_questions': models.Post.objects.filter(post_type='question').order_by('added_at').reverse()[:5]
+        'recent_questions': models.Post.objects.filter(deleted=False, post_type='question').order_by('added_at').reverse()[:5]
     }
