@@ -348,20 +348,20 @@ class ThreadManager(BaseQuerySetManager):
             meta_data['non_existing_tags'] = list()
 
         if search_state.scope == 'unanswered':
-            qs = qs.filter(closed = False) # Do not show closed questions in unanswered section
+            qs = qs.filter(closed = 'false') # Do not show closed questions in unanswered section
             if askbot_settings.UNANSWERED_QUESTION_MEANING == 'NO_ANSWERS' and askbot_settings.SEPARATE_UNANSWERED_UNRESOLVED:
                 # todo: this will introduce a problem if there are private answers
                 # which are counted here
                 qs = qs.filter(answer_count=0) # TODO: expand for different meanings of this
             elif askbot_settings.UNANSWERED_QUESTION_MEANING == 'NO_ACCEPTED_ANSWERS':
-                qs = qs.filter(accepted_answer__isnull=True)
+                qs = qs.filter(has_accepted_answer='false')
             elif askbot_settings.UNANSWERED_QUESTION_MEANING == 'NO_UPVOTED_ANSWERS':
                 raise NotImplementedError()
             else:
                 raise Exception('UNANSWERED_QUESTION_MEANING setting is wrong')
 
         if search_state.scope == 'unresolved' and askbot_settings.SEPARATE_UNANSWERED_UNRESOLVED:
-            qs = qs.filter(closed = False, accepted_answer__isnull=True)
+            qs = qs.filter(closed = 'false', has_accepted_answer='false')
 
         elif search_state.scope == 'followed':
             followed_filter = models.Q(favorited_by=request_user)
@@ -380,7 +380,7 @@ class ThreadManager(BaseQuerySetManager):
                     #here we mix in anything
                     followed_filter |= models.Q(deleted=False)
 
-            qs = qs.filter(followed_filter)
+            qs = qs.filter(followed_filter).distinct()
 
         #user contributed questions & answers
         if search_state.author:
