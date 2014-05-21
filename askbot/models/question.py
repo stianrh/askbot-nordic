@@ -463,7 +463,7 @@ class ThreadManager(BaseQuerySetManager):
             qs = qs.order_by(orderby)
 
         if search_state.stripped_query and getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
-            qs = [result.object for result in qs]
+            qs = [result.object for result in qs if result.object is not None]
 
         return qs, meta_data
 
