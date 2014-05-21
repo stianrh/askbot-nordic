@@ -21,7 +21,7 @@ URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-
 def get_parser():
     """returns an instance of configured ``markdown2`` parser
     """
-    extras = ['link-patterns', 'video']
+    extras = ['fenced-code-blocks', 'link-patterns', 'video']
 
     if askbot_settings.ENABLE_MATHJAX or \
         askbot_settings.MARKUP_CODE_FRIENDLY:

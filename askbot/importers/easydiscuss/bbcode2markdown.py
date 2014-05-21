@@ -20,14 +20,8 @@ def convert(bbcode):
         lines = ['>    %s' % line.strip() for line in lines]
         markdown = markdown.replace(bb_code, '\n'.join(lines))
 
-    markdown = re.sub(r'\[code.*?\](.+?)\[/code\]', r'    \g<1>\n', markdown)
-
-    bb_codes = re.findall(r'\[code.*?\].*?\[/code\]', markdown, flags=re.DOTALL | re.IGNORECASE)
-    for bb_code in bb_codes:
-        cleaned = re.sub(r'\[code.*?\](.+?)\[/code\]', r'\g<1>', bb_code, flags=re.DOTALL | re.IGNORECASE)
-        lines = cleaned.split('\n')
-        lines = ['    %s' % line.rstrip() for line in lines]
-        markdown = markdown.replace(bb_code, '\n'.join(lines))
+    markdown = re.sub(r'\[code.*?\](.+?)\[/code\]', r'```\g<1>```', markdown, flags=re.DOTALL)
+    markdown = re.sub(r'\[code.*?\](.+?)\[/code\]', r'\n\n```\n\g<1>\n```\n', markdown, flags=re.DOTALL | re.IGNORECASE)
 
     bb_lists = re.findall(r'\[list\].*?\[/list\]', markdown, flags=re.DOTALL | re.IGNORECASE)
     for bb_list in bb_lists:
