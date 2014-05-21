@@ -137,6 +137,10 @@ pre {
   margin-bottom: 10px;
   background-color: #f1f1f2;
   font-size: 90%;
+  width: 673px;
+  overflow-wrap: normal;
+  overflow-x: scroll;
+  white-space: pre;
 }
 blockquote {
   margin-bottom: 10px;
