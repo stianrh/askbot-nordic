@@ -442,7 +442,7 @@ settings.register(
     livesettings.IntegerValue(
         FORUM_DATA_RULES,
         'MAX_TAGS_PER_POST',
-        default=5,
+        default=10,
         description=_('Maximum number of tags per question')
     )
 )
