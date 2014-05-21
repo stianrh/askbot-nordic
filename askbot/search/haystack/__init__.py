@@ -13,6 +13,8 @@ class ThreadIndex(indexes.SearchIndex, indexes.Indexable):
     answer_count = indexes.IntegerField(model_attr='answer_count')
     points = indexes.IntegerField(model_attr='points')
     #tags = indexes.MultiValueField()
+    closed = indexes.BooleanField(model_attr='closed')
+    has_accepted_answer = indexes.BooleanField(model_attr='has_accepted_answer')
 
     def get_model(self):
         return Thread
