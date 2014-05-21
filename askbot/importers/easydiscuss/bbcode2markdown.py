@@ -10,7 +10,7 @@ def convert(bbcode):
     markdown = re.sub(r'\[s\](.+?)\[/s\]', lambda x: r'<del>%s</del>' % x.group(1).strip(), markdown)
     markdown = re.sub(r'\[url\](.+?)\[/url\]', lambda x: r'[%s]' % x.group(1).strip(), markdown)
     markdown = re.sub(r'\[url=?(.*?)\](.+?)\[/url\]', r'[\g<2>](\g<1>)', markdown, flags=re.DOTALL)
-    markdown = re.sub(r'\[img\](.+?)\[/img\]', r'!(\g<1>)[\g<1>]\n', markdown)
+    markdown = re.sub(r'\[img\](.+?)\[/img\]', r'![\g<1>](\g<1>)\n', markdown)
 
     markdown = re.sub(r'\[quote.*?\](.+?)\[/quote\]', r'> \g<1>\n', markdown)
     bb_codes = re.findall(r'\[quote.*?\].*?\[/quote\]', markdown, flags=re.DOTALL)
