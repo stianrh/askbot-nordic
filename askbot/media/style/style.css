@@ -3066,7 +3066,7 @@ button::-moz-focus-inner {
   background-color: #AE0000;
 }
 .big {
-  font-size: 14px;
+  font-size: 1.1em;
 }
 .strong {
   font-weight: bold;
