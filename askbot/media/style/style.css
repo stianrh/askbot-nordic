@@ -3330,11 +3330,17 @@ p.signup_p {
   margin: 5px 10px 15px 0;
   display: inline-block;
 }
+.user-list .user-card {
+  float: left;
+  min-height: 54px;
+  width: 200px;
+}
 .user-card {
   background-color: #f1f1f2;
   padding-left: 4px;
   display: inline-block;
   width: 100%;
+  min-width: 150px;
 }
 .user-card .avatar-box {
   float: right;

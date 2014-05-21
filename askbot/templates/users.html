@@ -30,6 +30,14 @@
         {#% endif %#}
             {% if settings.KARMA_MODE == 'public' %}
             <a 
+                id="sort_reputation_non_nordicers"
+                href="{{ request.path|escape }}?sort=reputation&non_nordicers=1"
+                {% if tab_id == 'reputation_non_nordicers' %}class="on"{% endif %}
+                title="{% trans %}see non-nordicers with the highest reputation{% endtrans %}"
+            ><span>{% trans %}reputation (non-nordicers){% endtrans %}</span></a>
+            {% endif %}
+            {% if settings.KARMA_MODE == 'public' %}
+            <a 
                 id="sort_reputation"
                 href="{{ request.path|escape }}?sort=reputation"
                 {% if tab_id == 'reputation' %}class="on"{% endif %}

@@ -74,6 +74,10 @@ def show_users(request, by_group=False, group_id=None, group_slug=None):
         return HttpResponseRedirect(new_url)
 
     users = models.User.objects.exclude(status = 'b')
+    non_nordicers = request.GET.get('non_nordicers', '0') == '1'
+    if non_nordicers:
+        users = users.exclude(id__in=models.Group.objects.get(name='Nordic employees').user_set.all())
+
     group = None
     group_email_moderation_enabled = False
     user_acceptance_level = 'closed'
@@ -191,7 +195,7 @@ def show_users(request, by_group=False, group_id=None, group_slug=None):
         'users' : users_page,
         'group': group,
         'search_query' : search_query,
-        'tab_id' : sortby,
+        'tab_id' : sortby if not non_nordicers else sortby+"_non_nordicers",
         'paginator_context' : paginator_context,
         'group_email_moderation_enabled': group_email_moderation_enabled,
         'user_acceptance_level': user_acceptance_level,
