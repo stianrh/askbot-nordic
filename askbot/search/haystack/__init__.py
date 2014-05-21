@@ -2,10 +2,12 @@ from django.conf import settings
 from django.utils.translation import get_language
 
 from haystack import indexes
+from celery_haystack.indexes import CelerySearchIndex
+
 from askbot.models import Thread, Post, User
 
 
-class ThreadIndex(indexes.SearchIndex, indexes.Indexable):
+class ThreadIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     title = indexes.CharField(model_attr='title')
     added_at = indexes.DateTimeField(model_attr='added_at')
@@ -31,7 +33,7 @@ class ThreadIndex(indexes.SearchIndex, indexes.Indexable):
         return [tag.name for tag in obj.tags.all()]
 
 
-class UserIndex(indexes.SearchIndex, indexes.Indexable):
+class UserIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
 
     def get_model(self):
