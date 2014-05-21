@@ -184,6 +184,10 @@ class Command(BaseCommand):
             if not ab_post.revisions.exists():
                 revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at or ab_post.created_at)
                 revision.save()
+            else:
+                rev = ab_post.revisions.latest('revised_at')
+                rev.text = ab_post.text
+                rev.save()
 
             post_tags = EfsqtDiscussPostsTags.objects.using('old-devzone').filter(post_id=ab_post.id).values_list('tag_id', flat=True)
             tags = EfsqtDiscussTags.objects.using('old-devzone').filter(id__in=post_tags).values_list('title', flat=True)
@@ -236,6 +240,10 @@ class Command(BaseCommand):
             if not ab_post.revisions.exists():
                 revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at or ab_post.created_at)
                 revision.save()
+            else:
+                rev = ab_post.revisions.latest('revised_at')
+                rev.text = ab_post.text
+                rev.save()
 
         transaction.commit()
 
@@ -282,6 +290,10 @@ class Command(BaseCommand):
             if not ab_post.revisions.exists():
                 revision = ab_post.add_revision(author=ab_post.author, text=ab_post.text, revised_at=ab_post.last_edited_at or ab_post.created_at)
                 revision.save()
+            else:
+                rev = ab_post.revisions.latest('revised_at')
+                rev.text = ab_post.text
+                rev.save()
 
         transaction.commit()
 
