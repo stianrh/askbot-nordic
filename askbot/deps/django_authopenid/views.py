@@ -1114,6 +1114,7 @@ def verify_email_and_register(request):
             assert(email_verifier.has_expired() == False)
 
             username = email_verifier.value['username']
+            real_name = email_verifier.value['real_name']
             email = email_verifier.value['email']
             password = email_verifier.value.get('password', None)
             user_identifier = email_verifier.value.get('user_identifier', None)
@@ -1122,6 +1123,7 @@ def verify_email_and_register(request):
             if password:
                 user = create_authenticated_user_account(
                     username=username,
+                    real_name=real_name,
                     email=email,
                     password=password,
                 )
@@ -1204,6 +1206,7 @@ def signup_with_password(request):
             else:
                 email_verifier = UserEmailVerifier(key=generate_random_key())
                 email_verifier.value = {'username': username,
+                                        'real_name': real_name,
                                         'login_provider_name': provider_name,
                                         'email': email, 'password': password}
                 email_verifier.save()
