@@ -36,6 +36,7 @@
         {% endif %}
         <div class="footer-links" >
             <a href="{% url faq %}">{% trans %}faq{% endtrans %}</a><span class="link-separator"> |</span>
+            <a href="/terms">{% trans %}terms and conditions{% endtrans %}</a><span class="link-separator"> |</span>
             {% spaceless %}
             <a href=
                         {% if settings.FEEDBACK_SITE_URL %}
