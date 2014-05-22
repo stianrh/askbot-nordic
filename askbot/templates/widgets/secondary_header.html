@@ -19,26 +19,13 @@
             {% endif %}
             class="{{ enabled_scopes_class }}"
             method="get">
-            {# 
-                A single row table to help the semi-fixed width layout where:
-                * all cells have "tight width" without linebreaks
-                * except that the search bar cell takes the remaining width
-                We had hard time making this layout work without tables.
-                Please suggest if there is a better way.
-            #}
-            <table width="100%">
-                <tr>
-                    {# width 1 means that cell will expand just enough to fit the contents #}
-                    <td width="1">{% include "widgets/scope_nav.html" %}</td>
-                    {# width * means that the cell takes the remaining table width #}
-                    <td width="*" class="search-bar">{% include "widgets/search_bar.html" %}</td> 
-                    {% if settings.ASK_BUTTON_ENABLED %}
-                    <td width="1">
-                        {% include "widgets/ask_button.html" %}            
-                    </td>
-                    {% endif %}
-                </tr>
-            </table>
+                {% include "widgets/scope_nav.html" %}</td>
+                {% if settings.ASK_BUTTON_ENABLED %}
+                <div class="action">
+                    {% include "widgets/ask_button.html" %}            
+                </div>
+                {% endif %}
+                {% include "widgets/search_bar.html" %}</td> 
         </form>
     </div>
 </div>

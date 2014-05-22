@@ -388,25 +388,19 @@ body.user-messages {
 }
 
 #secondaryHeader{ /* Div containing Home button, scope navigation, search form and ask button, check blocks/secondary_header.html */
-    height:55px;
     margin: 20px 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     .content-wrapper {
         background-color: @background-color-light;
+        height:50px;
         width: 960px;
-        padding: 0 10px;
+        padding: 10px 10px 0 10px;
     }
-    td {
-        padding: 0;
-        &.search-bar {
-            padding: 0 32px 0 15px;
-            position: relative;
-        }
-    }
-    form {
-        margin: 0;
+    #scopeNav {
+        float: left;
+        margin-right: 20px;
     }
 }
 
@@ -426,8 +420,8 @@ body.user-messages {
 .scope-selector {
     display: inline-block;
     color: @text-color-dark;
-    height: 55px;
-    line-height: 55px;
+    height: 50px;
+    line-height: 45px;
     margin-left: 12px;
     float: left;
     &.on {
@@ -457,26 +451,23 @@ body.user-messages {
 }
 
 #searchBar { /* Main search form , check widgets/search_bar.html */
-    width: 85%;
-    margin: 6px 0;
-    padding: 0 49px 0 8px;
+    margin: 0 auto;
+    overflow: hidden;
     background-color: white;
-    display: block;
-    height: 41px;
+    height: 40px;
     z-index: 1000;
-    position: relative;
 
     /* the guts are absolute-positioned */
     input.searchInput,
     div.input-tool-tip,
     input[type="submit"].searchBtn,
     input[type="button"].cancelSearchBtn {
-        position: absolute;
         z-index: 100;
     }
 
     input.searchInput {
         z-index: 99;/* just below the buttons and the hint */
+        margin-right: -90px;
     }
 
     input.searchInput {
@@ -487,15 +478,9 @@ body.user-messages {
         background: transparent;
         border:0px;
         color:#484848;
-        width: 100%;
         margin: 8px 0 6px 0;
-        padding: 0 60px 0 8px;
-        top: 0;
-        left: 0;
+        margin-right: -100px;
         .box-shadow(0, 0, 0);
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
     }
 
     div.input-tool-tip {
@@ -512,13 +497,11 @@ body.user-messages {
     }
 
     input[type="submit"].searchBtn {
-        right: 0;
-        top: 0;
+        float: right;
     }
     input[type="button"].cancelSearchBtn {
-        right: 35px;
-        top: 0;
         background: url(../images/close-small.png) center no-repeat;
+        float: right;
         text-indent: -9999px;
         overflow: hidden;
     }
@@ -530,8 +513,9 @@ body.user-messages {
     -webkit-box-sizing: border-box;
     background: whitesmoke;
     border: 1px solid #c9c9b5;
-    position: relative;
-    top: 2.5em;
+    position: absolute;
+    top: 50px;
+    width: 400px;
     z-index: 10000;
 
     ul {
@@ -633,7 +617,7 @@ input[type="button"].cancelSearchBtn {
     box-shadow: none;
     border: 0px;
     text-align: center;
-    width: 35px !important;
+    width: 20px !important;
     cursor:pointer;
     z-index: 10001;
 }
@@ -743,11 +727,6 @@ form.ajax-file-upload {
 body.anon.ask-page .search-drop-menu {
     padding: 7px 10px 1px 0;
 }
-#scopeNav {
-    height: 41px;
-    width: 300px;
-}
-
 /* ----- Content layout, check two_column_body.html or one_column_body.html ----- */
 
 #ContentLeft {
