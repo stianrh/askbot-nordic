@@ -139,7 +139,7 @@ pre {
   font-size: 90%;
   width: 673px;
   overflow-wrap: normal;
-  overflow-x: scroll;
+  overflow-x: auto;
   white-space: pre;
 }
 blockquote {
