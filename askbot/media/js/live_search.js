@@ -889,7 +889,7 @@ FullTextSearch.prototype.decorate = function(element) {
         element.focus();
     });
 
-    element.after(toolTip.getElement());
+    element.parent().append(toolTip.getElement());
 
     //below is called after getElement, b/c element must be defined
     if (this._prevText !== '') {
