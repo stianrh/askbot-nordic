@@ -364,7 +364,7 @@ class Command(BaseCommand):
             message_index.user_id = ed_messagemap.user_id
             message_index.new = (ed_messagemap.isread == 0)
             message_index.created_at = Message.objects.get(id=ed_messagemap.message_id).created_at
-            message_index.save()
+            message_index.save(bulk_save=True)
 
         transaction.commit()
 
