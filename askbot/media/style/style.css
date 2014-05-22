@@ -2399,19 +2399,6 @@ ul#related-tags li {
   font-weight: normal;
   margin: 5px 0px;
 }
-.meta .cancel,
-.users-page .cancel,
-.user-profile-edit-page .cancel,
-.user-profile-page .cancel {
-  background: url(../images/small-button-cancel.png) repeat-x top !important;
-  color: #525252 !important;
-}
-.meta .cancel:hover,
-.users-page .cancel:hover,
-.user-profile-edit-page .cancel:hover,
-.user-profile-page .cancel:hover {
-  background: url(../images/small-button-cancel.png) repeat-x bottom !important;
-}
 .meta .re,
 .users-page .re,
 .user-profile-edit-page .re,
