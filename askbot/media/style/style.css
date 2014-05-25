@@ -1024,7 +1024,9 @@ ul#searchTags {
   margin-bottom: 7px;
   display: block;
 }
-.short-summary p {
+.short-summary p,
+.short-summary ul,
+.short-summary ol {
   font-size: 14px;
 }
 .short-summary .userinfo {
