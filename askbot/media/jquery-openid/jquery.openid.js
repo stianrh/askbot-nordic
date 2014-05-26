@@ -192,7 +192,6 @@ $.fn.authenticator = function() {
         if (askbot['settings']['signin_always_show_local_login'] === false){
             password_input_fields.hide();
         }
-        reset_password_input_fields();
         if (userIsAuthenticated === false){
             email_input_fields.hide();
             account_recovery_heading.hide();
