@@ -157,7 +157,7 @@ settings.register(
     livesettings.IntegerValue(
         FORUM_DATA_RULES,
         'MAX_TAG_LENGTH',
-        default=20,
+        default=30,
         description=_('Maximum length of tag (number of characters)')
     )
 )
