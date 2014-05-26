@@ -40,7 +40,7 @@ def clean_tagnames(tagnames):
     text_field
     """
     original = tagnames
-    tagnames = tagnames.strip().split()
+    tagnames = re.split(const.TAG_SPLIT_REGEX, tagnames.strip())
     #see if the tagnames field fits into 125 bytes
     while True:
         encoded_tagnames = ', '.join(tagnames).encode('utf-8')
