@@ -17,6 +17,7 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
     #tags = indexes.MultiValueField()
     closed = indexes.BooleanField(model_attr='closed')
     has_accepted_answer = indexes.BooleanField(model_attr='has_accepted_answer')
+    followed_by = indexes.MultiValueField()
 
     def get_model(self):
         return Thread
@@ -31,6 +32,9 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
 
     def prepare_tags(self, obj):
         return [tag.name for tag in obj.tags.all()]
+
+    def prepare_followed_by(self, obj):
+        return [user.id for user in obj.followed_by.all()]
 
 
 class UserIndex(CelerySearchIndex, indexes.Indexable):
