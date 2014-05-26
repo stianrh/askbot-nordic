@@ -352,7 +352,7 @@ def retag_question(request, id):
                 if request.is_ajax():
                     response_data = {
                         'success': True,
-                        'new_tags': question.thread.tagnames
+                        'new_tags': [tag.name for tag in question.thread.tags.all()],
                     }
 
                     if request.user.message_set.count() > 0:

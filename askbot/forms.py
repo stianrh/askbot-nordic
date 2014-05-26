@@ -907,7 +907,10 @@ class AskForm(PostAsSomeoneForm, PostPrivatelyForm):
     in the cleaned data, and will evaluate to False if the
     settings forbids anonymous asking
     """
+    example_tags = ['nrf51822', 'keil', 's110', 'bluetooth low energy', 'adc']
+    tag_list = ['<li class="tag-left"><a href=\'javascript:addExampleTag("%(tag)s")\'>%(tag)s</a></li>' % {'tag': tag} for tag in example_tags]
     tags = TagNamesField()
+    tags.help_text = '<script>function addExampleTag(tag) { var value = $("#id_tags").val(); $("#id_tags").val(value + ((value.trim().slice(-1) == "," || value.trim() == "") ? "" : ", ") + tag); $("#id_tags").focus() }</script><p>Use tags to describe the chip and/or softdevice used, IDE, peripherals in play and similar. Good examples include <ul class="tags">%s</ul> or similar.</p>' % (''.join(tag_list), )
     wiki = WikiField()
     group_id = forms.IntegerField(required = False, widget = forms.HiddenInput)
     openid = forms.CharField(

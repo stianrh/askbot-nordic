@@ -1173,7 +1173,6 @@ var questionRetagger = function(){
         if (new_tags === ''){
             return;
         }
-        new_tags = new_tags.split(/\s+/);
         var tags_html = ''
         $.each(new_tags, function(index, name){
             var tag = new Tag();
@@ -1187,13 +1186,13 @@ var questionRetagger = function(){
             type: "POST",
             url: retagUrl,//todo add this url to askbot['urls']
             dataType: "json",
-            data: { tags: getUniqueWords(tagInput.val()).join(' ') },
+            data: { tags: tagInput.val() },
             success: function(json) {
                 if (json['success'] === true){
-                    new_tags = getUniqueWords(json['new_tags']);
+                    new_tags = json['new_tags'];
                     oldTagsHtml = '';
                     cancelRetag();
-                    drawNewTags(new_tags.join(' '));
+                    drawNewTags(new_tags);
                     if (json['message']) {
                         notify.show(json['message']);
                     }
@@ -1277,7 +1276,7 @@ var questionRetagger = function(){
                 tags_str = $(element).data('tagName');
             }
             else {
-                tags_str += ' ' + $(element).data('tagName');
+                tags_str += ',  ' + $(element).data('tagName');
             }
         });
         return tags_str;
