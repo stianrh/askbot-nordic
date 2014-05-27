@@ -292,7 +292,7 @@ class ThreadManager(BaseQuerySetManager):
 
         #run text search while excluding any modifier in the search string
         #like #tag [title: something] @user
-        if search_state.stripped_query:
+        if search_state.stripped_query or search_state.scope != 'all':
             qs = self.get_for_query(search_query=search_state.stripped_query, qs=qs)
 
         #we run other things after full text search, because
@@ -348,7 +348,7 @@ class ThreadManager(BaseQuerySetManager):
             meta_data['non_existing_tags'] = list()
 
         if search_state.scope == 'unanswered':
-            qs = qs.filter(closed = 'false') # Do not show closed questions in unanswered section
+            qs = qs.filter(closed = 'false', answer_count = 0) # Do not show closed questions in unanswered section
             if askbot_settings.UNANSWERED_QUESTION_MEANING == 'NO_ANSWERS' and askbot_settings.SEPARATE_UNANSWERED_UNRESOLVED:
                 # todo: this will introduce a problem if there are private answers
                 # which are counted here
@@ -364,7 +364,7 @@ class ThreadManager(BaseQuerySetManager):
             qs = qs.filter(closed = 'false', has_accepted_answer='false')
 
         elif search_state.scope == 'followed':
-            if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
+            if isinstance(qs, SearchQuerySet):
                 qs = qs.filter(followed_by__contains=request_user.id)
             else:
                 followed_filter = models.Q(favorited_by=request_user)
@@ -465,7 +465,7 @@ class ThreadManager(BaseQuerySetManager):
         ):
             qs = qs.order_by(orderby)
 
-        if search_state.stripped_query and getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
+        if isinstance(qs, SearchQuerySet):
             qs = [result.object for result in qs if result.object is not None]
 
         return qs, meta_data
