@@ -303,7 +303,10 @@ class ThreadManager(BaseQuerySetManager):
 
         #search in titles, if necessary
         if search_state.query_title:
-            qs = qs.filter(title__icontains = search_state.query_title)
+            if isinstance(qs, SearchQuerySet):
+                qs = qs.filter(title = search_state.query_title)
+            else:
+                qs = qs.filter(title__icontains = search_state.query_title)
 
         #search user names if @user is added to search string
         #or if user name exists in the search state
