@@ -234,7 +234,11 @@ class ThreadManager(BaseQuerySetManager):
         todo: move to query set
         """
         if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
-            return SearchQuerySet().models(self.model).auto_query(search_query)
+            qs = SearchQuerySet().models(self.model)
+            if search_query:
+                return qs.auto_query(search_query)
+            else:
+                return qs
         else:
             if not qs:
                 qs = self.all()
