@@ -234,11 +234,7 @@ class ThreadManager(BaseQuerySetManager):
         todo: move to query set
         """
         if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
-            qs = SearchQuerySet().models(self.model)
-            if search_query:
-                return qs.auto_query(search_query)
-            else:
-                return qs
+            return qs.auto_query(search_query)
         else:
             if not qs:
                 qs = self.all()
@@ -293,10 +289,12 @@ class ThreadManager(BaseQuerySetManager):
             #get group names
             qs = qs.get_visible(user=request_user)
 
+        if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
+            qs = SearchQuerySet().models(self.model)
 
         #run text search while excluding any modifier in the search string
         #like #tag [title: something] @user
-        if search_state.stripped_query or search_state.scope != 'all':
+        if search_state.stripped_query:
             qs = self.get_for_query(search_query=search_state.stripped_query, qs=qs)
 
         #we run other things after full text search, because
