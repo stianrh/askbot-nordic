@@ -370,7 +370,7 @@ settings.register(
     livesettings.IntegerValue(
         FORUM_DATA_RULES,
         'MAX_COMMENT_LENGTH',
-        default=300,
+        default=900,
         description=_(
                 'Maximum comment length, must be < %(max_len)s'
             ) % {'max_len': const.COMMENT_HARD_MAX_LENGTH }
