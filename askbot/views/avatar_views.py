@@ -18,7 +18,6 @@ from django.contrib.auth.decorators import login_required
 
 from avatar.forms import PrimaryAvatarForm, DeleteAvatarForm, UploadAvatarForm
 from avatar.models import Avatar
-from avatar.settings import AVATAR_MAX_AVATARS_PER_USER, AVATAR_DEFAULT_SIZE
 from avatar.util import get_primary_avatar, get_default_avatar_url
 from avatar.views import render_primary as django_avatar_render_primary
 
@@ -74,11 +73,6 @@ def _get_avatars(user):
     else:
         avatar = None
     
-    if AVATAR_MAX_AVATARS_PER_USER == 1:
-        avatars = primary_avatar
-    else:
-        # Slice the default set now that we used the queryset for the primary avatar
-        avatars = avatars[:AVATAR_MAX_AVATARS_PER_USER]
     return (avatar, avatars)    
 
 @login_required
