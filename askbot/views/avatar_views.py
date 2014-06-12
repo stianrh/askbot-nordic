@@ -32,6 +32,19 @@ if 'friends' in settings.INSTALLED_APPS:
     friends = True
     from friends.models import Friendship
 
+class DefaultAvatar:
+    def __init__(self):
+        self.id = 'default'
+
+    def __unicode__(self):
+        return u'Default avatar'
+    
+    def thumbnail_exists(self, size):
+        return True  
+
+    def avatar_url(self, size):
+        return models.user_get_default_avatar_url(None, size)
+
 def _get_next(request):
     """
     The part that's the least straightforward about views in this module is how they 
@@ -65,14 +78,16 @@ def _notification_updated(request, avatar):
 def _get_avatars(user):
     # Default set. Needs to be sliced, but that's it. Keep the natural order.
     avatars = user.avatar_set.all()
-    
+
     # Current avatar
     primary_avatar = avatars.order_by('-primary')[:1]
-    if primary_avatar:
+    if primary_avatar and user.avatar_type != 'n':
         avatar = primary_avatar[0]
     else:
         avatar = None
     
+    avatars = list(avatars)
+    avatars.append(DefaultAvatar())
     return (avatar, avatars)    
 
 @login_required
@@ -129,10 +144,14 @@ def change(request, extra_context=None, next_override=None,
     if request.method == "POST":
         updated = False
         if 'choice' in request.POST and primary_avatar_form.is_valid():
-            avatar = Avatar.objects.get(id=
-                primary_avatar_form.cleaned_data['choice'])
-            avatar.primary = True
-            avatar.save()
+            if primary_avatar_form.cleaned_data['choice'] == 'default':
+                request.user.avatar_type = 'n'
+                request.user.save()
+            else:
+                avatar = Avatar.objects.get(id=
+                    primary_avatar_form.cleaned_data['choice'])
+                avatar.primary = True
+                avatar.save()
             updated = True
             request.user.message_set.create(
                 message=_("Successfully updated your avatar."))
