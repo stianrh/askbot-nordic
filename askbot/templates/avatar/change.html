@@ -14,7 +14,7 @@
             <ul>
                 {{ primary_avatar_form.as_ul() }}
             </ul>
-            <p><input type="submit" value="{% trans %}Choose new Default{% endtrans %}" /></p>
+            <p><input type="submit" value="{% trans %}Choose this avatar{% endtrans %}" /></p>
         </form>
     {% endif %}
     <form enctype="multipart/form-data" method="POST" action="{% url avatar_add %}">{% csrf_token %}
