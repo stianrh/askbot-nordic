@@ -310,8 +310,11 @@ class Command(BaseCommand):
             except:
                 continue
 
-            a = Attachment(filename=ed_attachment.title, filehash=ed_attachment.path)
-            a.save()
+            try:
+                a = Attachment.objects.get(filehash=ed_attachment.path)
+            except DoesNotExist:
+                a = Attachment(filename=ed_attachment.title, filehash=ed_attachment.path)
+                a.save()
 
             ab_post.text = ab_post.text + '\n\n%s[%s](%s)' % (
                 '!' if ed_attachment.title.split('.')[-1] in image_exts else '',
