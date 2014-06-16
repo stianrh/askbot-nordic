@@ -100,9 +100,13 @@ class Command(BaseCommand):
 
             for ug in jm_usergroups:
                 if ug.group_id == 13:
-                    user.GroupMembership.objects.get_or_create(
-                        user=ab_user, group=nordic_group, level=user.GroupMembership.FULL
-                    )
+                    try:
+                        user.GroupMembership.objects.get_or_create(
+                            user=ab_user, group=nordic_group, level=user.GroupMembership.FULL
+                        )
+                    except Exception:
+                        pass
+
 
         transaction.commit()
 
