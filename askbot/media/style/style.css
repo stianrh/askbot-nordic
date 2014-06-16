@@ -2550,6 +2550,13 @@ a:hover.medal {
 .user-profile-page #ContentLeft .users-questions {
   margin-top: -10px;
 }
+form#avatar-change label {
+  display: block;
+  margin-bottom: 5px;
+}
+form#avatar-change label input {
+  display: inline;
+}
 .user-details {
   font-size: 13px;
 }
