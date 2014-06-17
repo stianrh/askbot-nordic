@@ -470,9 +470,6 @@ class ThreadManager(BaseQuerySetManager):
         ):
             qs = qs.order_by(orderby)
 
-        if isinstance(qs, SearchQuerySet):
-            qs = [result.object for result in qs if result.object is not None]
-
         return qs, meta_data
 
     def precache_view_data_hack(self, threads):
