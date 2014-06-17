@@ -155,9 +155,9 @@ def show_users(request, by_group=False, group_id=None, group_slug=None):
         base_url = request.path + '?sort=%s&amp;' % sortby
     else:
         sortby = "reputation"
-        matching_users = models.get_users_by_text_query(search_query, users)
+        matching_users = models.get_users_by_text_query(search_query, users).order_by('-reputation')
         objects_list = Paginator(
-                            matching_users.order_by('-reputation'),
+                            [u.object for u in matching_users],
                             const.USERS_PAGE_SIZE
                         )
         base_url = request.path + '?name=%s&amp;sort=%s&amp;' % (search_query, sortby)

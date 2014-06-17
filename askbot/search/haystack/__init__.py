@@ -42,6 +42,7 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
 
 class UserIndex(CelerySearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
+    reputation = indexes.IntegerField(model_attr='reputation')
 
     def get_model(self):
         return User
