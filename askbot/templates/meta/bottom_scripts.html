@@ -73,8 +73,7 @@
 
         var haveFullTextSearchTab = inArray(activeTab, ['questions', 'badges', 'ask']);
         var haveUserProfilePage = $('body').hasClass('user-profile-page');
-        if (true) {
-        //if ((haveUserProfilePage || haveFullTextSearchTab) && searchInput.length) {
+        if ((haveUserProfilePage || haveFullTextSearchTab) && searchInput.length) {
             var search = new FullTextSearch();
             askbot['controllers'] = askbot['controllers'] || {};
             askbot['controllers']['fullTextSearch'] = search;
