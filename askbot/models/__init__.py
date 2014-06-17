@@ -343,13 +343,10 @@ def user_update_avatar_type(self):
     Saves the object.
     """
 
-    if 'avatar' in django_settings.INSTALLED_APPS:
-        if self.avatar_set.count() > 0:
-            self.avatar_type = 'a'
-        else:
-            self.avatar_type = _check_gravatar(self.gravatar)
+    if 'avatar' in django_settings.INSTALLED_APPS and self.avatar_set.count() > 0:
+        self.avatar_type = 'a'
     else:
-            self.avatar_type = _check_gravatar(self.gravatar)
+        self.avatar_type = 'n'
     self.save()
 
 def user_strip_email_signature(self, text):
