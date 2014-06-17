@@ -102,7 +102,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_UPLOAD_FILES',
-        default=10,
+        default=1,
         description=_('Upload files')
     )
 )
