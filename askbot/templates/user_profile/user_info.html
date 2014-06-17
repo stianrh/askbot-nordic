@@ -13,7 +13,7 @@
             {{ macros.follow_user_toggle(visitor = request.user, subject = view_user) }}
         {% endif %}
         {% if request.user != view_user %}
-            <div class="button"><a href="{{ url('threads') }}">Send message</a></div>
+            <div class="button"><a href="{{ url('new_thread_with_user', username=view_user.username) }}">Send message</a></div>
         {% endif %}
         <div class="button"><a href="{{ url('user_index', subindex='users', subindex_id=view_user.id) }}">View blog</a></div>
     </div>
