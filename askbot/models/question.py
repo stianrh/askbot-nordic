@@ -62,16 +62,16 @@ class ThreadQuerySet(models.query.QuerySet):
             groups = [Group.objects.get_global_group()]
         return self.filter(groups__in=groups).distinct()
 
-    def get_for_title_query(self, search_query):
+    def get_for_title_query(self, search_query, limit=30):
         """returns threads matching title query
         todo: possibly add tags
         todo: implement full text search on relevant fields
         """
 
         if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
-            from askbot.search.haystack.searchquery import AskbotSearchQuerySet
-            hs_qs = AskbotSearchQuerySet().filter(content=search_query).models(self.model)
-            return hs_qs.get_django_queryset()
+            from haystack.query import SearchQuerySet
+            qs = SearchQuerySet().filter(content=search_query).models(self.model)
+            return [r.object for r in qs[:limit]]
         else:
             db_engine_name = askbot.get_database_engine_name()
             filter_parameters = {'deleted': False}

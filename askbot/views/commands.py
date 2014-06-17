@@ -833,10 +833,9 @@ def api_get_questions(request):
         threads = threads.filter(tags__name=tag_name)
 
     if query:
-        threads = threads.get_for_title_query(query)
+        threads = threads.get_for_title_query(query, 30)
 
     #todo: filter out deleted threads, for now there is no way
-    threads = threads.distinct()[:30]
 
     thread_list = list()
     for thread in threads:#todo: this is a temp hack until thread model is fixed
