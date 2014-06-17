@@ -271,7 +271,7 @@ class ThreadManager(BaseQuerySetManager):
 
         primary_filter = {
             'posts__post_type': 'question',
-            'posts__deleted': False
+            'deleted': False
         }
 
         if getattr(django_settings, 'ASKBOT_MULTILINGUAL', False):
