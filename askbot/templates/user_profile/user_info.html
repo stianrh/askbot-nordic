@@ -36,12 +36,6 @@
                         href="{% url faq %}#gravatar"
                     {% endif %}
                 >{% trans %}Change avatar{% endtrans %}</a></p>
-                {% if support_custom_avatars %}
-                <p><a
-                    href="{% url avatar_delete %}"
-                    >{% trans %}remove{% endtrans %}</a>
-                </li>
-                {% endif %}
             </ul>
         {% endif %}
         <table>
