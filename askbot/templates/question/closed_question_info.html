@@ -1,7 +1,6 @@
 {% import "macros.html" as macros %}
 <div class="question-status">
     <h3>{% trans %}Closed as {% endtrans %}
-      <b>{{ thread.get_close_reason_display() }}</b> {% trans %}by{% endtrans %}
-      <a href="{{ thread.closed_by.get_profile_url() }}">{{ thread.closed_by.real_name|escape }}</a> </i><br>
-      {{ macros.timeago(thread.closed_at) }}</h3>
+      <b>"{{ thread.get_close_reason_display() }}"</b> {% trans %}by{% endtrans %}
+      <a href="{{ thread.closed_by.get_profile_url() }}">{{ thread.closed_by.real_name|escape }}</a> at  {{ macros.timeago(thread.closed_at) }}</h3>
 </div>
