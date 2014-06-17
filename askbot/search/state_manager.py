@@ -147,6 +147,12 @@ class SearchState(object):
     def __str__(self):
         return self.query_string()
 
+    def needs_haystack(self):
+        if self.stripped_query or self.tags or self.scope != 'all':
+            return True
+        else:
+            return False
+
     def full_url(self):
         return self._questions_url + self.query_string()
 

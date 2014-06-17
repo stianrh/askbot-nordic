@@ -289,7 +289,7 @@ class ThreadManager(BaseQuerySetManager):
             #get group names
             qs = qs.get_visible(user=request_user)
 
-        if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
+        if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False) and search_state.needs_haystack():
             qs = SearchQuerySet().models(self.model)
 
         #run text search while excluding any modifier in the search string
