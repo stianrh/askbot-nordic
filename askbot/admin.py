@@ -37,6 +37,13 @@ class PostAdmin(admin.ModelAdmin):
             return obj.parent.text[:50] + '...'
         return None
 
+class ThreadAdmin(admin.ModelAdmin):
+    exclude = [
+        'tags',
+        'tagnames',
+        'followed_by',
+    ]
+
 class TagAdmin(admin.ModelAdmin):
     """Tag admin class"""
     list_display = [
@@ -69,6 +76,7 @@ class AttachmentAdmin(admin.ModelAdmin):
     search_fields = ['filehash']
 
 admin.site.register(models.Post, PostAdmin)
+admin.site.register(models.Thread, ThreadAdmin)
 admin.site.register(models.Tag, TagAdmin)
 admin.site.register(models.Vote, VoteAdmin)
 admin.site.register(models.FavoriteQuestion, FavoriteQuestionAdmin)
@@ -79,4 +87,3 @@ admin.site.register(models.Activity, ActivityAdmin)
 admin.site.register(models.Attachment, AttachmentAdmin)
 
 admin.site.register(models.BulkTagSubscription)
-admin.site.register(models.Thread)
