@@ -79,3 +79,4 @@ admin.site.register(models.Activity, ActivityAdmin)
 admin.site.register(models.Attachment, AttachmentAdmin)
 
 admin.site.register(models.BulkTagSubscription)
+admin.site.register(models.Thread)
