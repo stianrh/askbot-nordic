@@ -611,6 +611,9 @@ class Thread(models.Model):
     class Meta:
         app_label = 'askbot'
 
+    def __unicode__(self):
+        return "Thread: %s" % (self.title,)
+
     #property to support legacy themes in case there are.
     @property
     def score(self):
