@@ -43,6 +43,7 @@ class ThreadAdmin(admin.ModelAdmin):
         'tagnames',
         'followed_by',
     ]
+    search_fields = ['title']
 
 class TagAdmin(admin.ModelAdmin):
     """Tag admin class"""
