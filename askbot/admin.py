@@ -64,6 +64,10 @@ class ReputeAdmin(admin.ModelAdmin):
 class ActivityAdmin(admin.ModelAdmin):
     """ActivityAdmin admin class"""
 
+class AttachmentAdmin(admin.ModelAdmin):
+    list_display = ['filename', 'filehash']
+    search_fields = ['filehash']
+
 admin.site.register(models.Post, PostAdmin)
 admin.site.register(models.Tag, TagAdmin)
 admin.site.register(models.Vote, VoteAdmin)
@@ -72,4 +76,6 @@ admin.site.register(models.PostRevision, PostRevisionAdmin)
 admin.site.register(models.Award, AwardAdmin)
 admin.site.register(models.Repute, ReputeAdmin)
 admin.site.register(models.Activity, ActivityAdmin)
+admin.site.register(models.Attachment, AttachmentAdmin)
+
 admin.site.register(models.BulkTagSubscription)

@@ -28,4 +28,3 @@ class Attachment(models.Model):
     class Meta:
         app_label = 'askbot'
 
-admin.site.register(Attachment)
