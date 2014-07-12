@@ -1024,6 +1024,11 @@ ul#searchTags {
   margin-bottom: 7px;
   display: block;
 }
+.short-summary img {
+  display: block;
+  max-width: 400px;
+  max-height: 300px;
+}
 .short-summary p,
 .short-summary ul,
 .short-summary ol {
