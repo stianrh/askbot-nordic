@@ -362,7 +362,7 @@ util.prompt = function(text, defaultInputText, makeLinkMarkdown, dialogType){
             spinner.css('display', 'none');
 
             var startUploadHandler = function(){
-                localUploadFileName = $(this).val();//this is a local var
+                localUploadFileName = $(this).val().split(/[\\/]/).pop();//this is a local var
                 /* 
                  * startUploadHandler is passed into the ajaxFileUpload
                  * in order to re-install the onchange handler
