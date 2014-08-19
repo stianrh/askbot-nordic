@@ -60,6 +60,8 @@ POST_SORT_METHODS = (
     ('answers-asc', _('coldest')),
     ('votes-desc', _('most voted')),
     ('votes-asc', _('least voted')),
+    ('views-desc', _('most viewed')),
+    ('views-asc', _('least viewed')),
     ('relevance-desc', _('relevance')),
 )
 

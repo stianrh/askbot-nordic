@@ -459,6 +459,8 @@ class ThreadManager(BaseQuerySetManager):
             'answers-asc': 'answer_count',
             'votes-desc': '-points',
             'votes-asc': 'points',
+            'views-desc': '-view_count',
+            'views-asc': 'view_count',
             'relevance-desc': '-relevance',
         }
 
