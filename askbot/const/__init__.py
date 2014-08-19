@@ -125,6 +125,7 @@ DEFAULT_ANSWER_SORT_METHOD = 'votes'
 #of Q.run_advanced_search
 
 DEFAULT_POST_SORT_METHOD = 'activity-desc'
+DEFAULT_SEARCH_SORT_METHOD = 'views-desc'
 #todo: customize words
 POST_SCOPE_LIST = (
     ('all', _('all')),

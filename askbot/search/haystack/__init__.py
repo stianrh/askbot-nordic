@@ -13,6 +13,7 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
     added_at = indexes.DateTimeField(model_attr='added_at')
     last_activity_at = indexes.DateTimeField(model_attr='last_activity_at')
     answer_count = indexes.IntegerField(model_attr='answer_count')
+    view_count = indexes.IntegerField(model_attr='view_count')
     points = indexes.IntegerField(model_attr='points')
     #tags = indexes.MultiValueField()
     closed = indexes.BooleanField(model_attr='closed')

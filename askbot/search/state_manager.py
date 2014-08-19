@@ -118,6 +118,9 @@ class SearchState(object):
             self.query_users = None
             self.query_title = None
 
+        if not sort and self.stripped_query not in (None, ''):
+            self.sort = const.DEFAULT_SEARCH_SORT_METHOD
+
         if (sort not in zip(*const.POST_SORT_METHODS)[0]) or (sort == 'relevance-desc' and (not self.query or not askbot.conf.should_show_sort_by_relevance())):
             self.sort = const.DEFAULT_POST_SORT_METHOD
         else:
