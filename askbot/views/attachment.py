@@ -12,6 +12,6 @@ def get_attachment(request, filehash):
     
     response = HttpResponse() # 200 OK
     del response['content-type'] # We'll let the web server guess this.
-    response['Content-Disposition'] = 'attachment; filename=%s' % a.filename
+    response['Content-Disposition'] = 'attachment; filename=%s' % (a.filename.encode('ascii', 'ignore'), )
     response['X-Sendfile'] = abs_path
     return response
