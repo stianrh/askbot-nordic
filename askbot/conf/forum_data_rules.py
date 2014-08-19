@@ -37,7 +37,7 @@ settings.register(
     livesettings.StringValue(
         FORUM_DATA_RULES,
         'COMMENTS_EDITOR_TYPE',
-        default='plain-text',
+        default='rich-text',
         choices=COMMENTS_EDITOR_CHOICES,
         description=_('Editor for the comments')
     )
