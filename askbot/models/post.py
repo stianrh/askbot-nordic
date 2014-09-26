@@ -728,13 +728,13 @@ class Post(models.Model):
                 if updated_by.reputation < askbot_settings.MIN_REP_TO_TRIGGER_EMAIL:
                     notify_sets['for_email'] = \
                         [u for u in notify_sets['for_email'] if u.is_administrator()]
-
+                        
         if not django_settings.CELERY_ALWAYS_EAGER:
             cache_key = 'instant-notification-%d-%d' % (self.thread.id, updated_by.id)
             if cache.cache.get(cache_key):
                 return
             cache.cache.set(cache_key, True, django_settings.NOTIFICATION_DELAY_TIME)
-
+        
         from askbot.tasks import send_instant_notifications_about_activity_in_post
         send_instant_notifications_about_activity_in_post.apply_async((
                                 update_activity,
@@ -1295,6 +1295,20 @@ class Post(models.Model):
             #print 'answer subscribers: ', answer_subscribers
 
         #print 'exclude_list is ', exclude_list
+        
+        #5) questions/answers commented by me
+        comment_authors = set()
+        for comment in origin_post.thread.posts.get_comments().all():
+            authors = comment.get_author_list()
+            comment_authors.update(authors)
+        if comment_authors:
+            comment_subscribers = EmailFeedSetting.objects.filter_subscribers(
+                potential_subscribers = comment_authors,
+                frequency = 'i',
+                feed_type = 'm_and_c',
+            )
+            subscriber_set.update(comment_subscribers)
+        
         return subscriber_set - set(exclude_list)
 
     def _comment__get_instant_notification_subscribers(
@@ -1421,6 +1435,8 @@ class Post(models.Model):
             #todo: weird thing is that only comments need the recipients
             #todo: debug these calls and then uncomment in the repo
             #argument to this call
+            
+            
             result['for_email'] = self.get_instant_notification_subscribers(
                                             potential_subscribers=result['for_inbox'],
                                             mentioned_users=result['for_mentions'],
