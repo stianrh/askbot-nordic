@@ -18,6 +18,8 @@ CLOSE_REASONS = (
     (7, _('question contains offensive or malicious remarks')),
     (8, _('spam or advertising')),
     (9, _('too localized')),
+    (10, _('the question is not suited for Nordic Developer Zone, moved to MyPage support portal')),
+    (11, _('no response from original poster')),
 )
 
 LONG_TIME = 60*60*24*30 #30 days is a lot of time
