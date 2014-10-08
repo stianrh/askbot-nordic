@@ -12,6 +12,10 @@
         {% if user.is_nordic_employee() %}
             Nordic employee<br />
         {% endif %}
+        
+        {% if user.is_ant_employee() %}
+            ANT employee<br />
+        {% endif %}
 
         {% if karma_mode == 'public' %}
         <span class="reputation-score">{{ user.reputation }}</span>
