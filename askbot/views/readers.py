@@ -248,7 +248,7 @@ def questions(request, **kwargs):
             'page_size': search_state.page_size,
             'query': search_state.query,
             'threads' : page,
-            'questions_count' : paginator.count,
+            'questions_count' : len(page.object_list),
             'reset_method_count': reset_method_count,
             'scope': search_state.scope,
             'show_sort_by_relevance': conf.should_show_sort_by_relevance(),
@@ -265,7 +265,7 @@ def questions(request, **kwargs):
             'search_state': search_state,
             'feed_url': context_feed_url,
             'statistics': {
-                'total_questions': models.Thread.objects.count(),
+                'total_questions': models.Thread.objects.filter(deleted=False).count(),
                 'unanswered_questions': models.Thread.objects.filter(answer_count=0, closed=False, deleted=False).count(),
                 'resolved_questions': models.Thread.objects.filter(accepted_answer__isnull=False).count(),
                 'total_users': models.User.objects.count(),
