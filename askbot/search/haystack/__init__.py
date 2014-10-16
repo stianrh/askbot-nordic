@@ -17,6 +17,7 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
     points = indexes.IntegerField(model_attr='points')
     #tags = indexes.MultiValueField()
     closed = indexes.BooleanField(model_attr='closed')
+    deleted = indexes.BooleanField(model_attr='deleted')
     has_accepted_answer = indexes.BooleanField()
     followed_by = indexes.MultiValueField()
 
@@ -29,7 +30,7 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
             return self.get_model().objects.filter(language_code__startswith=lang_code,
                                                    deleted=False)
         else:
-            return self.get_model().objects.filter(deleted=False)
+            return self.get_model().objects.all()
 
     def prepare_tags(self, obj):
         return [tag.name for tag in obj.tags.all()]

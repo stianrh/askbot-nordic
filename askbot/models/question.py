@@ -353,7 +353,7 @@ class ThreadManager(BaseQuerySetManager):
             meta_data['non_existing_tags'] = list()
 
         if search_state.scope == 'unanswered':
-            qs = qs.filter(closed = 'false', answer_count = 0) # Do not show closed questions in unanswered section
+            qs = qs.filter(closed = 'false', deleted = 'false', answer_count = 0) # Do not show closed questions in unanswered section
             if askbot_settings.UNANSWERED_QUESTION_MEANING == 'NO_ANSWERS' and askbot_settings.SEPARATE_UNANSWERED_UNRESOLVED:
                 # todo: this will introduce a problem if there are private answers
                 # which are counted here
