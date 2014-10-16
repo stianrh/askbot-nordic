@@ -32,6 +32,9 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
         else:
             return self.get_model().objects.all()
 
+    def read_queryset(self, using=None):
+        return self.get_model().objects.filter(deleted=False)
+
     def prepare_tags(self, obj):
         return [tag.name for tag in obj.tags.all()]
 
