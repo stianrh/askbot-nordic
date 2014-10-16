@@ -834,8 +834,8 @@ settings.register(
     values.StringValue(
         WORDS,
         'WORDS_ADD_ANSWER',
-        default=_('Add Answer'),
-        description=_('Add Answer'),
+        default=_('Add Answer. Do not ask a new question here'),
+        description=_('Add Answer. Do not ask a new question here'),
     )
 )
 
