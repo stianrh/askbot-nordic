@@ -2166,7 +2166,7 @@ ul#related-tags li {
   line-height: 50%;
 }
 .question-page .comments pre {
-  width: 100%;
+  width: 615px;
 }
 .question-page #questionTools {
   font-size: 22px;
@@ -2944,17 +2944,17 @@ label.retag-error {
   width: 100%;
 }
 .user-activity pre {
-  width: 100%
+  width: 490px
 }
 .user-activity td {
   padding: 3px 11px;
   vertical-align: top;
 }
 .user-activity .timestamp {
-  width: 80px;
+  width: 100px;
 }
 .user-activity .action-type {
-  width: 150px;
+  width: auto;
   font-size: 13px;
 }
 .user-activity .description {
