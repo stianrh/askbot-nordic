@@ -2946,6 +2946,9 @@ label.retag-error {
 .user-activity pre {
   width: 490px
 }
+.user-activity img {
+  max-width: 509px
+}
 .user-activity td {
   padding: 3px 11px;
   vertical-align: top;
