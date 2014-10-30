@@ -27,6 +27,10 @@ def get_user_data(user):
 
 def get_question_data(thread):
     """returns data dictionary for a given thread"""
+    if thread.accepted_answer is not None:
+        accepted = True
+    else:
+        accepted = False
     datum = {
         'added_at': thread.added_at.strftime('%s'),
         'id': thread._question_post().id,
@@ -37,6 +41,8 @@ def get_question_data(thread):
         'title': thread.title,
         'tags': thread.tagnames.strip().split(),
         'url': site_url(thread.get_absolute_url()),
+        'closed': thread.closed,
+        'accepted': accepted,
     }
     datum['author'] = {
         'id': thread._question_post().author.id,
