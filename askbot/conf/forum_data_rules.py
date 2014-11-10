@@ -74,7 +74,7 @@ settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
         'WIKI_ON',
-        default = True,
+        default = False,
         description = _('Check to enable community wiki feature')
     )
 )
@@ -83,7 +83,7 @@ settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
         'ALLOW_ASK_ANONYMOUSLY',
-        default=True,
+        default=False,
         description=_('Allow asking questions anonymously'),
         help_text=_(
             'Users do not accrue reputation for anonymous questions '
