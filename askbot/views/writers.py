@@ -297,7 +297,6 @@ def ask(request):#view used to ask a new question
                             word = word.replace("\n", "")
                             if word in title or word in text:
                                 request.user.delete_post(question)
-                                request.user.set_status('b')
                                 spam_recipient = set(User.objects.filter(username='spamfilter'))
                                 from askbot.tasks import send_instant_notifications_about_spam
                                 send_instant_notifications_about_spam.apply_async((question,spam_recipient),countdown = 1)
@@ -306,6 +305,7 @@ def ask(request):#view used to ask a new question
                                     request.user.delete_post(models.Post.objects.get(id = recent_post_id_1))
                                     send_instant_notifications_about_spam.apply_async((models.Post.objects.get(id = recent_post_id_1),spam_recipient),countdown = 1)
 
+                                request.user.set_status('b')
                                 return HttpResponseRedirect(reverse('index'))
 
                     with open("/var/www/nordic-devzone/extras/spamfilter2.txt") as spam_filter:
@@ -317,7 +317,6 @@ def ask(request):#view used to ask a new question
 
                         if count >= 2:
                             request.user.delete_post(question)
-                            request.user.set_status('b')
                             spam_recipient = set(User.objects.filter(username='spamfilter'))
                             from askbot.tasks import send_instant_notifications_about_spam
                             send_instant_notifications_about_spam.apply_async((question,spam_recipient),countdown = 1)
@@ -326,6 +325,7 @@ def ask(request):#view used to ask a new question
                                 request.user.delete_post(models.Post.objects.get(id = recent_post_id_1))
                                 send_instant_notifications_about_spam.apply_async((models.Post.objects.get(id = recent_post_id_1),spam_recipient),countdown = 1)
 
+                            request.user.set_status('b')
                             return HttpResponseRedirect(reverse('index'))
 
                     return HttpResponseRedirect(question.get_absolute_url())
