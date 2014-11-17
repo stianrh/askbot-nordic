@@ -282,6 +282,71 @@ def send_instant_notifications_about_activity_in_post(
             logger.debug('success %s, logId=%s' % (user.email, log_id))
 
 @task()
+def send_instant_notifications_about_spam(
+                                                post = None,
+                                                recipients = None,
+                                            ):
+    #reload object from the database
+    post = Post.objects.get(id=post.id)
+    if post.is_approved() is False:
+        return
+
+    if recipients is None:
+        return
+
+    #calculate some variables used in the loop below
+    origin_post = post.get_origin_post()
+    headers = askbot.mail.thread_headers(
+                            post,
+                            origin_post,
+                            'new_question'
+                        )
+
+    logger = logging.getLogger()
+    if logger.getEffectiveLevel() <= logging.DEBUG:
+        log_id = uuid.uuid1()
+        message = 'email-alert %s, logId=%s' % (post.get_absolute_url(), log_id)
+        logger.debug(message)
+    else:
+        log_id = None
+
+
+    for user in recipients:
+        if user.is_blocked():
+            continue
+
+        reply_address, alt_reply_address = get_reply_to_addresses(user, post)
+
+        activate_language(post.language_code)
+        subject_line, body_text = format_instant_notification_email(
+                            to_user = user,
+                            from_user = post.author,
+                            post = post,
+                            reply_address = reply_address,
+                            alt_reply_address = alt_reply_address,
+                            update_type = 'new_question',
+                            template = get_template('email/instant_notification.html')
+                        )
+
+        headers['Reply-To'] = reply_address
+        try:
+            askbot.mail.send_mail(
+                subject_line="SPAM: ",
+                body_text=body_text,
+                recipient_list=[user.email],
+                related_object=origin_post,
+                activity_type='new_question',
+                headers=headers,
+                raise_on_failure=True
+            )
+        except askbot_exceptions.EmailNotSent, error:
+            logger.debug(
+                '%s, error=%s, logId=%s' % (user.email, error, log_id)
+            )
+        else:
+            logger.debug('success %s, logId=%s' % (user.email, log_id))
+
+@task()
 def delete_unanswered_questions(age_in_days=None):
     if not age_in_days:
         return

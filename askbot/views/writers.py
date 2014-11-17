@@ -272,6 +272,62 @@ def ask(request):#view used to ask a new question
                         user=user,
                         form_data=form.cleaned_data
                     )
+
+                    #SPAMFILTER QUICK FIX:
+                    recent_posts = models.Post.objects.filter(deleted=False, post_type='question').order_by('added_at').reverse()[:3]
+                    recent_post_id_0 = recent_posts[0].id
+                    recent_post_id_1 = recent_posts[1].id
+                    recent_post_id_2 = recent_posts[2].id
+
+                    if models.Post.objects.get(id = recent_post_id_0).author == models.Post.objects.get(id = recent_post_id_1).author == models.Post.objects.get(id = recent_post_id_2).author:
+
+                        request.user.delete_post(models.Post.objects.get(id = recent_post_id_0))
+                        request.user.delete_post(models.Post.objects.get(id = recent_post_id_1))
+                        request.user.delete_post(models.Post.objects.get(id = recent_post_id_2))
+                        request.user.set_status('b')
+                        spam_recipient = set(User.objects.filter(username='spamfilter'))
+                        from askbot.tasks import send_instant_notifications_about_spam
+                        send_instant_notifications_about_spam.apply_async((models.Post.objects.get(id = recent_post_id_0),spam_recipient),countdown = 1)                
+                        send_instant_notifications_about_spam.apply_async((models.Post.objects.get(id = recent_post_id_1),spam_recipient),countdown = 1)
+                        send_instant_notifications_about_spam.apply_async((models.Post.objects.get(id = recent_post_id_2),spam_recipient),countdown = 1)
+                        return HttpResponseRedirect(reverse('index'))
+
+                    with open("extras/spamfilter1.txt") as spam_filter:
+                        for word in spam_filter:
+                            word = word.replace("\n", "")
+                            if word in title or word in text:
+                                request.user.delete_post(question)
+                                request.user.set_status('b')
+                                spam_recipient = set(User.objects.filter(username='spamfilter'))
+                                from askbot.tasks import send_instant_notifications_about_spam
+                                send_instant_notifications_about_spam.apply_async((question,spam_recipient),countdown = 1)
+
+                                if models.Post.objects.get(id = recent_post_id_1).author == question.author:
+                                    request.user.delete_post(models.Post.objects.get(id = recent_post_id_1))
+                                    send_instant_notifications_about_spam.apply_async((models.Post.objects.get(id = recent_post_id_1),spam_recipient),countdown = 1)
+
+                                return HttpResponseRedirect(reverse('index'))
+
+                    with open("extras/spamfilter2.txt") as spam_filter:
+                        count = 0
+                        for word in spam_filter:
+                            word = word.replace("\n", "")
+                            if word in title or word in text:
+                                count = count + 1
+
+                        if count >= 2:
+                            request.user.delete_post(question)
+                            request.user.set_status('b')
+                            spam_recipient = set(User.objects.filter(username='spamfilter'))
+                            from askbot.tasks import send_instant_notifications_about_spam
+                            send_instant_notifications_about_spam.apply_async((question,spam_recipient),countdown = 1)
+
+                            if models.Post.objects.get(id = recent_post_id_1).author == question.author:
+                                request.user.delete_post(models.Post.objects.get(id = recent_post_id_1))
+                                send_instant_notifications_about_spam.apply_async((models.Post.objects.get(id = recent_post_id_1),spam_recipient),countdown = 1)
+
+                            return HttpResponseRedirect(reverse('index'))
+
                     return HttpResponseRedirect(question.get_absolute_url())
                 except exceptions.PermissionDenied, e:
                     request.user.message_set.create(message = unicode(e))
