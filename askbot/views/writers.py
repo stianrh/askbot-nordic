@@ -292,7 +292,7 @@ def ask(request):#view used to ask a new question
                         send_instant_notifications_about_spam.apply_async((models.Post.objects.get(id = recent_post_id_2),spam_recipient),countdown = 1)
                         return HttpResponseRedirect(reverse('index'))
 
-                    with open("extras/spamfilter1.txt") as spam_filter:
+                    with open("/var/www/nordic-devzone/extras/spamfilter1.txt") as spam_filter:
                         for word in spam_filter:
                             word = word.replace("\n", "")
                             if word in title or word in text:
@@ -308,7 +308,7 @@ def ask(request):#view used to ask a new question
 
                                 return HttpResponseRedirect(reverse('index'))
 
-                    with open("extras/spamfilter2.txt") as spam_filter:
+                    with open("/var/www/nordic-devzone/extras/spamfilter2.txt") as spam_filter:
                         count = 0
                         for word in spam_filter:
                             word = word.replace("\n", "")
