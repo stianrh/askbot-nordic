@@ -70,7 +70,7 @@ class ThreadQuerySet(models.query.QuerySet):
 
         if getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False):
             from haystack.query import SearchQuerySet
-            qs = SearchQuerySet().filter(content=search_query).models(self.model)
+            qs = SearchQuerySet().filter(deleted='false', content=search_query).models(self.model)
             return [r.object for r in qs[:limit]]
         else:
             db_engine_name = askbot.get_database_engine_name()
@@ -313,9 +313,16 @@ class ThreadManager(BaseQuerySetManager):
         if search_state.query_users:
             query_users = User.objects.filter(username__in=search_state.query_users)
             if query_users:
-                qs = qs.filter(
-                    posts__author__in=query_users
-                ).distinct() # TODO: unify with search_state.author ?
+                if isinstance(qs, SearchQuerySet):
+                    query_users = User.objects.get(username__in=search_state.query_users)
+                    qs = qs.filter(
+                        author = query_users.id,
+                        deleted = 'false'
+                    )
+                else:
+                    qs = qs.filter(
+                        posts__author__in = query_users
+                    ).distinct() # TODO: unify with search_state.author ?
 
         #unified tags - is list of tags taken from the tag selection
         #plus any tags added to the query string with #tag or [tag:something]
@@ -366,11 +373,11 @@ class ThreadManager(BaseQuerySetManager):
                 raise Exception('UNANSWERED_QUESTION_MEANING setting is wrong')
 
         if search_state.scope == 'unresolved' and askbot_settings.SEPARATE_UNANSWERED_UNRESOLVED:
-            qs = qs.filter(closed = 'false', has_accepted_answer='false')
+            qs = qs.filter(deleted = 'false', closed = 'false', has_accepted_answer='false')
 
         elif search_state.scope == 'followed':
             if isinstance(qs, SearchQuerySet):
-                qs = qs.filter(followed_by__contains=request_user.id)
+                qs = qs.filter(deleted = 'false', followed_by__contains=request_user.id)
             else:
                 followed_filter = models.Q(favorited_by=request_user)
                 if 'followit' in django_settings.INSTALLED_APPS:
@@ -471,6 +478,8 @@ class ThreadManager(BaseQuerySetManager):
             and orderby=='-relevance'
         ):
             qs = qs.order_by(orderby)
+        if isinstance(qs, SearchQuerySet):
+            qs = qs.filter(deleted = 'false')
 
         return qs, meta_data
 

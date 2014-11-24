@@ -20,6 +20,7 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
     deleted = indexes.BooleanField(model_attr='deleted')
     has_accepted_answer = indexes.BooleanField()
     followed_by = indexes.MultiValueField()
+    author = indexes.MultiValueField()
 
     def get_model(self):
         return Thread
@@ -43,6 +44,9 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
 
     def prepare_has_accepted_answer(self, obj):
         return obj.has_accepted_answer()
+
+    def prepare_author(self, obj):
+        return [post.author.id for post in Post.objects.filter(thread=obj)]
 
 
 class UserIndex(CelerySearchIndex, indexes.Indexable):
