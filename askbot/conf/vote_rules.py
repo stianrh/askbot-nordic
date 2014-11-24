@@ -20,7 +20,7 @@ settings.register(
     IntegerValue(
         VOTE_RULES,
         'MAX_VOTES_PER_USER_PER_DAY',
-        default=30,
+        default=100,
         description=_('Number of votes a user can cast per day')
     )
 )
@@ -83,7 +83,7 @@ settings.register(
     IntegerValue(
         VOTE_RULES,
         'MIN_DAYS_FOR_STAFF_TO_ACCEPT_ANSWER',
-        default=7,
+        default=0,
         description=_('Minimum days to accept an answer, '
             'if it has not been accepted by the question poster')
     )
