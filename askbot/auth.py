@@ -266,6 +266,9 @@ def onUpVoted(vote, post, user, timestamp=None):
     post.points = int(post.points) + 1
     post.save()
 
+    post.thread.set_total_votes()
+    post.thread.save()
+
     if post.post_type == 'comment':
         #reputation is not affected by the comment votes
         return
@@ -302,6 +305,8 @@ def onUpVotedCanceled(vote, post, user, timestamp=None):
 
     post.points = int(post.points) - 1
     post.save()
+    post.thread.set_total_votes()
+    post.thread.save()
 
     if post.post_type == 'comment':
         #comment votes do not affect reputation
@@ -335,6 +340,8 @@ def onDownVoted(vote, post, user, timestamp=None):
     post.vote_down_count = int(post.vote_down_count) + 1
     post.points = int(post.points) - 1
     post.save()
+    post.thread.set_total_votes()
+    post.thread.save()
 
     if not (post.wiki or post.is_anonymous):
         author = post.author
@@ -377,6 +384,8 @@ def onDownVotedCanceled(vote, post, user, timestamp=None):
         post.vote_down_count  = 0
     post.points = post.points + 1
     post.save()
+    post.thread.set_total_votes()
+    post.thread.save()
 
     if not (post.wiki or post.is_anonymous):
         author = post.author

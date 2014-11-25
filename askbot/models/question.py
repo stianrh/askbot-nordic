@@ -634,6 +634,13 @@ class Thread(models.Model):
         if number:
             self.points = int(number)
 
+    def set_total_votes(self):
+        votes = 0
+        from askbot.models import Post
+        for obj in Post.objects.filter(thread=self):
+            votes += obj.points
+        self.points = votes
+
     def _question_post(self, refresh=False):
         if refresh and hasattr(self, '_question_cache'):
             delattr(self, '_question_cache')

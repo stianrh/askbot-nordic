@@ -2552,7 +2552,7 @@ def _process_vote(user, post, timestamp=None, cancel=False, vote_type=None):
 
     if post.post_type == 'question':
         #denormalize the question post score on the thread
-        post.thread.points = post.points
+        #post.thread.points = post.points
         post.thread.save()
         post.thread.update_summary_html()
 
