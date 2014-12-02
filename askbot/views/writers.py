@@ -272,11 +272,11 @@ def ask(request):#view used to ask a new question
                         user=user,
                         form_data=form.cleaned_data
                     )
-
-                    from spamfilter.models import SpamPost
-                    if SpamPost.objects.check_spam(question):
-                        request.user.set_status('b')
-                        return HttpResponseRedirect(reverse('index'))
+                    if settings.USE_SPAMFILTER:
+                        from spamfilter.models import SpamPost
+                        if SpamPost.objects.check_spam(question):
+                            request.user.set_status('b')
+                            return HttpResponseRedirect(reverse('index'))
 
                     return HttpResponseRedirect(question.get_absolute_url())
                 except exceptions.PermissionDenied, e:
