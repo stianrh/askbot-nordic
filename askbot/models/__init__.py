@@ -72,6 +72,7 @@ from askbot.utils.url_utils import strip_path
 from askbot.models import signals
 import askbot.mail
 
+from devzone.settings import USE_CASES
 from django import VERSION
 
 #stores the 1.X version not the security release numbers
@@ -1423,6 +1424,11 @@ def user_accept_best_answer(
         auth.onAnswerAcceptCanceled(prev_accepted_answer, self)
 
     auth.onAnswerAccept(answer, self, timestamp = timestamp)
+
+    if USE_CASES == True:
+        from cases.models import Case
+        Case.objects.update_status(answer, 'accept', self)
+
     award_badges_signal.send(None,
         event = 'accept_best_answer',
         actor = self,
@@ -1440,6 +1446,11 @@ def user_unaccept_best_answer(
         self.assert_can_unaccept_best_answer(answer)
     if not answer.accepted():
         return
+
+    if USE_CASES == True:
+        from cases.models import Case
+        Case.objects.update_status(answer, 'unaccept', self)
+
     auth.onAnswerAcceptCanceled(answer, self)
 
 @auto_now_timestamp
@@ -1502,6 +1513,10 @@ def user_delete_question(
     question.thread.deleted = True
     question.thread.save()
 
+    if USE_CASES == True:
+        from cases.models import Case
+        Case.objects.update_status(question, 'delete', self)
+
     for tag in list(question.thread.tags.all()):
         if tag.used_count == 1:
             tag.deleted = True
@@ -1534,6 +1549,10 @@ def user_close_question(
     self.assert_can_close_question(question)
     question.thread.set_closed_status(closed=True, closed_by=self, closed_at=timestamp, close_reason=reason)
 
+    if USE_CASES == True:
+        from cases.models import Case
+        Case.objects.update_status(question, 'close', self)
+
 @auto_now_timestamp
 def user_reopen_question(
                     self,
@@ -1542,6 +1561,10 @@ def user_reopen_question(
                 ):
     self.assert_can_reopen_question(question)
     question.thread.set_closed_status(closed=False, closed_by=self, closed_at=timestamp, close_reason=None)
+
+    if USE_CASES == True:
+        from cases.models import Case
+        Case.objects.update_status(question, 'reopen', self)
 
 @auto_now_timestamp
 def user_delete_post(
@@ -1578,6 +1601,11 @@ def user_restore_post(
         if post.post_type == 'question':
             post.thread.deleted = False
             post.thread.save()
+
+            if USE_CASES == True:
+                from cases.models import Case
+                Case.objects.update_status(post, 'restore', self)
+
         post.thread.invalidate_cached_data()
         if post.post_type == 'answer':
             post.thread.update_answer_count()

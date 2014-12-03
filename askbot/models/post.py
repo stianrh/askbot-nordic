@@ -742,6 +742,16 @@ class Post(models.Model):
                                 notify_sets['for_email']),
                                 countdown = django_settings.NOTIFICATION_DELAY_TIME
                             )
+        from devzone.settings import USE_CASES
+        if USE_CASES == True:
+            from cases.models import Case
+            update_type_map = const.RESPONSE_ACTIVITY_TYPE_MAP_FOR_TEMPLATES
+            update_type = update_type_map[update_activity.activity_type]
+
+            if update_type == 'new_question':
+                Case.objects.create_new(self)
+            else:
+                Case.objects.update_post(self,update_activity)
 
     def make_private(self, user, group_id=None):
         """makes post private within user's groups
