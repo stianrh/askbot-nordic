@@ -646,6 +646,22 @@ def question(request, id):#refactor - long subroutine. display question body, an
     else:
         group_read_only = False
 
+    #Add Cases app to question
+    try:
+        from devzone.settings import USE_CASES
+        from cases.models import CaseUser, Case
+        if USE_CASES:
+            cases_user = CaseUser.objects.get(user=request.user)
+            cases_case = Case.objects.get(thread=thread)
+    except:
+        cases_use = False
+        cases_assigned = None
+        cases_case = None
+        cases_user = None
+    else:
+        cases_use = True
+        cases_assigned = cases_case.assigned_to
+
     data = {
         'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
         'long_time': const.LONG_TIME,#"forever" caching
@@ -676,6 +692,9 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'show_comment': show_comment,
         'show_comment_position': show_comment_position,
         'group_read_only': group_read_only,
+        'cases_use': cases_use,
+        'cases_assigned': cases_assigned,
+        'cases_case': cases_case,
     }
     #shared with ...
     if askbot_settings.GROUPS_ENABLED:
