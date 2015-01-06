@@ -45,7 +45,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_ACCEPT_OWN_ANSWER',
-        default=20,
+        default=1,
         description=_('Accept own answer')
     )
 )
