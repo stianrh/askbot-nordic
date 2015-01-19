@@ -323,6 +323,9 @@ class ClassicRegisterForm(SetPasswordForm):
     real_name = forms.CharField(label="Display name", required=True)
     email = UserEmailField()
     login_provider = PasswordLoginProviderField()
+    from captcha.fields import CaptchaField
+    captcha = CaptchaField()
+
     #fields password1 and password2 are inherited
 
 class SafeClassicRegisterForm(ClassicRegisterForm):
