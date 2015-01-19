@@ -16,7 +16,7 @@ settings.register(
         SPAM_AND_MODERATION,
         'USE_AKISMET',
         description=_('Enable Akismet spam detection(keys below are required)'),
-        default=False,
+        default=True,
         help_text = _(
                          'To get an Akismet key please visit '
                          '<a href="%(url)s">Akismet site</a>'
@@ -28,6 +28,7 @@ settings.register(
     livesettings.StringValue(
         SPAM_AND_MODERATION,
         'AKISMET_API_KEY',
+        default='f7d94ffc1c28',
         description=_('Akismet key for spam detection')
     )
 )
