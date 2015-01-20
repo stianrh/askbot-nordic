@@ -939,7 +939,7 @@ class AskForm(PostAsSomeoneForm, PostPrivatelyForm):
                 label='Are you human?', required=True)
 
         from captcha.fields import CaptchaField
-        self.fields['captcha'] = CaptchaField()
+        #self.fields['captcha'] = CaptchaField()
 
         #hide ask_anonymously field
         if getattr(django_settings, 'ASKBOT_MULTILINGUAL', False):
@@ -1130,7 +1130,7 @@ class AnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
         self.fields['text'] = AnswerEditorField(user=kwargs['user'])
 
         from captcha.fields import CaptchaField
-        self.fields['captcha'] = CaptchaField()
+        #self.fields['captcha'] = CaptchaField()
 
     def has_data(self):
         """True if form is bound or has inital data"""

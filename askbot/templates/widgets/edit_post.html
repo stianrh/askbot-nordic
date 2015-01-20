@@ -77,10 +77,7 @@
     <div id="previewer" class="wmd-preview"></div>
 {% endif %}
 
-<div>
-<p>Please type the characters you see in the picture below </p>
-{{ post_form.captcha }}
-</div>
+
 
 {% if user and user.is_authenticated() and user.is_administrator() %}
     {# admin can post answers or questions on behalf of anyone. #}
