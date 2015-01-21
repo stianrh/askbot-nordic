@@ -209,7 +209,7 @@ def import_data(request):
 #@login_required #actually you can post anonymously, but then must register
 @csrf.csrf_protect
 @decorators.check_authorization_to_post(ugettext_lazy('Please log in to make posts'))
-@decorators.check_spam('text')
+#@decorators.check_spam('text', 'question')
 def ask(request):#view used to ask a new question
     """a view to ask a new question
     gives space for q title, body, tags and checkbox for to post as wiki
@@ -274,8 +274,13 @@ def ask(request):#view used to ask a new question
                     )
                     if settings.USE_SPAMFILTER:
                         from spamfilter.models import SpamPost
-                        if SpamPost.objects.check_spam(question):
+                        if SpamPost.objects.check_spam(question, request, 'text', 'Q'):
                             request.user.set_status('b')
+                            spam_message = _(
+                                'Your post triggered our spam filter. Sorry if this is a mistake.'
+                                'The post will be moderated and reposted if not spam.'
+                            )
+                            request.user.message_set.create(message=spam_message)
                             return HttpResponseRedirect(reverse('index'))
 
                     return HttpResponseRedirect(question.get_absolute_url())
@@ -400,7 +405,7 @@ def retag_question(request, id):
 
 @login_required
 @csrf.csrf_protect
-@decorators.check_spam('text')
+#@decorators.check_spam('text', 'edit_question')
 def edit_question(request, id):
     """edit question view
     """
@@ -509,7 +514,7 @@ def edit_question(request, id):
 
 @login_required
 @csrf.csrf_protect
-@decorators.check_spam('text')
+#@decorators.check_spam('text', "edit_answer")
 def edit_answer(request, id):
     answer = get_object_or_404(models.Post, id=id)
 
@@ -604,7 +609,7 @@ def edit_answer(request, id):
 
 #todo: rename this function to post_new_answer
 @decorators.check_authorization_to_post(ugettext_lazy('Please log in to make posts'))
-@decorators.check_spam('text')
+#@decorators.check_spam('text', 'answer')
 def answer(request, id, form_class=forms.AnswerForm):#process a new answer
     """view that posts new answer
 
@@ -712,7 +717,7 @@ def __generate_comments_json(obj, user):#non-view generates json data for the po
     return HttpResponse(data, mimetype="application/json")
 
 @csrf.csrf_exempt
-@decorators.check_spam('comment')
+#@decorators.check_spam('comment', 'comment')
 def post_comments(request):#generic ajax handler to load comments to an object
     """todo: fixme: post_comments is ambigous:
     means either get comments for post or
