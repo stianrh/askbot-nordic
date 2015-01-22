@@ -225,6 +225,10 @@
                     removeNode(deleteBtn);
                 }
 
+                var spamBtn = document.getElementById('post-' + post_id + '-report_spam');
+                if( !data['userIsAdminOrMod'] ){
+                    removeNode(spamBtn);
+                }
                 var canFlagPosts = data['userReputation'] >= {{ settings.MIN_REP_TO_FLAG_OFFENSIVE }};
                 var flags = findChildrenByClassName(controls, 'question-flag');
                 if (flags.length > 0 && !canFlagPosts) {

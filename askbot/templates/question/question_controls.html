@@ -34,6 +34,12 @@
     id="post-{{question.id}}-delete"
     class="question-delete"
 >{% if question.deleted %}{% trans %}undelete{% endtrans %}{% else %}{% trans %}delete{% endtrans %}{% endif %}</a>
+<a
+	id="post-{{question.id}}-report_spam"
+	class="question-report_spam"
+	href="{% url report_spam question.id %}"
+>{% trans %}report spam{% endtrans %}</a>
+
 <script type="text/javascript">
     askbot['functions']['renderPostControls']('{{question.id}}');
 </script>

@@ -1884,6 +1884,9 @@ ul#related-tags li {
 .question-page .answer-controls .question-delete {
   background: url(../images/delete.png) no-repeat 10% -1px;
 }
+.question-page .post-controls .question-report_spam {
+  background: url(../images/dialog-warning-off.png) no-repeat center left;
+}
 .question-page .post-controls .question-flag,
 .question-page .answer-controls .question-flag {
   background: url(../images/flag.png) no-repeat 2px 0;

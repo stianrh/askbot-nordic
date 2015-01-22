@@ -272,9 +272,14 @@ def ask(request):#view used to ask a new question
                         user=user,
                         form_data=form.cleaned_data
                     )
+                    question.author_ip = request.META["REMOTE_ADDR"]
+                    question.author_referrer = request.META["HTTP_REFERER"]
+                    question.author_user_agent = request.environ['HTTP_USER_AGENT']
+                    question.save()
                     if settings.USE_SPAMFILTER:
                         from spamfilter.models import SpamPost
                         if SpamPost.objects.check_spam(question, request, 'text', 'Q'):
+                            request.user.delete_post(question)
                             request.user.set_status('b')
                             spam_message = _(
                                 'Your post triggered our spam filter. Sorry if this is a mistake.'

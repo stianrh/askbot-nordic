@@ -379,6 +379,10 @@ class Post(models.Model):
     text = models.TextField(null=True)#denormalized copy of latest revision
     language_code = models.CharField(max_length=16, default=django_settings.LANGUAGE_CODE)
 
+    author_ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=True, null=True, blank=True)
+    author_referrer = models.TextField(null=True, blank=True)
+    author_user_agent = models.TextField(null=True, blank=True)
+
     # Denormalised data
     summary = models.TextField(null=True)
 

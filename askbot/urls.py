@@ -263,6 +263,11 @@ urlpatterns = patterns('',
         name='retag_question'
     ),
     service_url(
+        r'^%s(?P<id>\d+)/%s$' % (MAIN_PAGE_BASE_URL, _('report_spam/')),
+        views.commands.report_spam,
+        name='report_spam'
+    ),
+    service_url(
         r'^%s(?P<id>\d+)/%s$' % (MAIN_PAGE_BASE_URL, _('close/')),
         views.commands.close,
         name='close'

@@ -873,6 +873,20 @@ def set_tag_filter_strategy(request):
     request.user.save()
     return HttpResponse('', mimetype = "application/json")
 
+@login_required
+@csrf.csrf_protect
+def report_spam(request, id):
+    question = get_object_or_404(models.Post, post_type='question', id=id)
+    if request.user.is_moderator():
+        from spamfilter.models import SpamPost
+        from spamfilter.spam_checks import report_spam
+        report_spam(question, 'question')
+        SpamPost.objects.create_new(question, 'Q', True)
+        request.user.delete_post(question)
+        question.author.set_status('b')
+        return HttpResponseRedirect(question.get_absolute_url())
+    else:
+        return HttpResponseRedirect(question.get_absolute_url())
 
 @login_required
 @csrf.csrf_protect
