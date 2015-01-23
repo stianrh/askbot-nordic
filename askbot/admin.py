@@ -52,12 +52,19 @@ class PostAdmin(admin.ModelAdmin):
     link_to_post.allow_tags = True
 
 class ThreadAdmin(admin.ModelAdmin):
-    exclude = [
-        'tags',
-        'tagnames',
-        'followed_by',
+    list_display = [
+        'added_at',
+        'title',
+        'excerpt',
+        'deleted',
     ]
     search_fields = ['title']
+
+    def excerpt(self, obj):
+        try:
+            return obj._question_post().text[:150] + '...'
+        except:
+            return '!!! NO POST !!!'
 
 class TagAdmin(admin.ModelAdmin):
     """Tag admin class"""
