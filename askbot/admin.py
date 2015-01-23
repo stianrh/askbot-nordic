@@ -9,6 +9,7 @@ exactly match name of the model used in the project
 """
 from django.contrib import admin
 from askbot import models
+from django.conf import settings
 
 class PostAdmin(admin.ModelAdmin):
     """Post admin class"""
@@ -26,6 +27,7 @@ class PostAdmin(admin.ModelAdmin):
         'offensive_flag_count',
         'last_edited_at',
         'last_edited_by',
+        'link_to_post',
     ]
     search_fields = ['author__username', 'text', 'parent__text']
 
@@ -36,6 +38,18 @@ class PostAdmin(admin.ModelAdmin):
         if obj.parent:
             return obj.parent.text[:50] + '...'
         return None
+
+    def link_to_post(self,obj):
+        QUESTION_PAGE_BASE_URL = getattr(
+                        settings,
+                        'ASKBOT_QUESTION_PAGE_BASE_URL',
+                        ('question')
+                    )
+        from askbot.models import Thread
+
+        return '<a href="/%s/%s">%s</a>' % (QUESTION_PAGE_BASE_URL,
+                                          obj.thread._question_post().id, "Link")
+    link_to_post.allow_tags = True
 
 class ThreadAdmin(admin.ModelAdmin):
     exclude = [
