@@ -358,6 +358,7 @@
         askbot['urls']['getComment'] = '{% url get_comment %}';
         askbot['urls']['saveDraftAnswer'] = '{% url save_draft_answer %}';
         askbot['urls']['vote_url'] = '{% url vote %}'
+        askbot['urls']['report_spam'] = '{% url report_spam question.id %}'
         askbot['urls']['user_signin'] = '{{ settings.LOGIN_URL }}';
         askbot['urls']['swap_question_with_answer'] = '{% url swap_question_with_answer %}';
         askbot['urls']['upvote_comment'] = '{% url upvote_comment %}';

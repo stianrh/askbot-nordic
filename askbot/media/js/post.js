@@ -513,6 +513,7 @@ var Vote = function(){
     var commentLinkIdPrefix = 'comment-';
     var voteNumberClass = "vote-number";
     var offensiveIdPrefixQuestionFlag = 'question-offensive-flag-';
+    var reportSpamIdPrefix = 'question-report-spam-';
     var removeOffensiveIdPrefixQuestionFlag = 'question-offensive-remove-flag-';
     var removeAllOffensiveIdPrefixQuestionFlag = 'question-offensive-remove-all-flag-';
     var offensiveIdPrefixAnswerFlag = 'answer-offensive-flag-';
@@ -540,6 +541,7 @@ var Vote = function(){
     var voteAnonymousMessage = gettext('anonymous users cannot vote') + pleaseLogin;
     //there were a couple of more messages...
     var offensiveConfirmation = gettext('please confirm offensive');
+    var reportSpamConfirmation = "Are you sure this is spam?"
     var removeOffensiveConfirmation = gettext('please confirm removal of offensive flag');
     var offensiveAnonymousMessage = gettext('anonymous users cannot flag offensive posts') + pleaseLogin;
     var removeConfirmation = gettext('confirm delete');
@@ -563,7 +565,8 @@ var Vote = function(){
         removeQuestion: 9,//deprecate
         removeAnswer:10,//deprecate
         questionSubscribeUpdates:11,
-        questionUnsubscribeUpdates:12
+        questionUnsubscribeUpdates:12,
+        reportSpamQuestion :13,
     };
 
     var getFavoriteButton = function(){
@@ -603,6 +606,11 @@ var Vote = function(){
     var getOffensiveQuestionFlag = function(){
         var offensiveQuestionFlag = 'div.question span[id^="'+ offensiveIdPrefixQuestionFlag +'"]';
         return $(offensiveQuestionFlag);
+    };
+    
+    var getReportSpamButton = function(){
+        var reportSpamButton = 'div.question span[id^="'+ reportSpamIdPrefix +'"]';
+        return $(reportSpamButton);
     };
 
     var getRemoveOffensiveQuestionFlag = function(){
@@ -704,6 +712,10 @@ var Vote = function(){
 
         getOffensiveQuestionFlag().unbind('click').click(function(event){
            Vote.offensive(this, VoteType.offensiveQuestion);
+        });
+        
+        getReportSpamButton().unbind('click').click(function(event){
+           Vote.report_spam(this, VoteType.reportSpamQuestion);
         });
 
         getRemoveOffensiveQuestionFlag().unbind('click').click(function(event){
@@ -1145,7 +1157,18 @@ var Vote = function(){
             if (do_proceed) {
                 submit($(object), voteType, callback_remove);
             }
-        }
+        },
+         //report spam
+        report_spam: function(object, voteType){
+            if (confirm(reportSpamConfirmation)){
+                $.ajax({
+		            type: "POST",
+		            cache: false,
+		            dataType: "json",
+		            url: askbot['urls']['report_spam'],
+            	});
+            }
+        },
     };
 } ();
 
