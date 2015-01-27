@@ -1166,6 +1166,9 @@ var Vote = function(){
 		            cache: false,
 		            dataType: "json",
 		            url: askbot['urls']['report_spam'],
+		            success : function(data){
+		            	$(location).attr('href',"/questions");
+		            }
             	});
             }
         },

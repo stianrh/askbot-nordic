@@ -884,7 +884,10 @@ def report_spam(request, id):
         SpamPost.objects.create_new(question, 'Q', True)
         request.user.delete_post(question)
         question.author.set_status('b')
-        return HttpResponseRedirect(question.get_absolute_url())
+        response_dict = {
+            'success': True,
+        }
+        return HttpResponse(simplejson.dumps(response_dict), content_type='application/json')
     else:
         return HttpResponseRedirect(question.get_absolute_url())
 
