@@ -881,7 +881,7 @@ def report_spam(request, id):
         from spamfilter.models import SpamPost
         from spamfilter.spam_checks import report_spam
         report_spam(question, 'question')
-        SpamPost.objects.create_new(question, 'Q', True)
+        SpamPost.objects.create_new(question, 'Q', True, True)
         request.user.delete_post(question)
         question.author.set_status('b')
         response_dict = {
