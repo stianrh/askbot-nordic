@@ -822,6 +822,7 @@ def delete_bulk_tag_subscription(request):
 def api_get_questions(request):
     """json api for retrieving questions by title match"""
     query = request.GET.get('query_text', '').strip()
+    query = query.replace('/',' ')
     tag_name = request.GET.get('tag_name', None)
 
     if askbot_settings.GROUPS_ENABLED:

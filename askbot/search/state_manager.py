@@ -54,6 +54,7 @@ def parse_query(query):
     the original query will still all be shown in the search
     query input box
     """
+    query = query.replace('/',' ')
     title_re1 = re.compile(r'\[title:(.+?)\]')
     title_re2 = re.compile(r'title:"([^"]+?)"')
     title_re3 = re.compile(r"title:'([^']+?)'")
