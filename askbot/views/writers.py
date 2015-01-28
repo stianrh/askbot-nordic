@@ -272,10 +272,19 @@ def ask(request):#view used to ask a new question
                         user=user,
                         form_data=form.cleaned_data
                     )
-                    question.author_ip = request.META["REMOTE_ADDR"]
-                    question.author_referrer = request.META["HTTP_REFERER"]
-                    question.author_user_agent = request.environ['HTTP_USER_AGENT']
-                    question.save()
+                    try:
+                        if request.META["REMOTE_ADDR"] == '192.9.202.136':
+                            try:
+                                question.author_ip = request.META["HTTP_X_FORWARDED_FOR"]
+                            except:
+                                pass
+                        else:
+                            question.author_ip = request.META["REMOTE_ADDR"]
+                        question.author_referrer = request.META["HTTP_REFERER"]
+                        question.author_user_agent = request.environ['HTTP_USER_AGENT']
+                        question.save()
+                    except:
+                        pass
                     if settings.USE_SPAMFILTER:
                         from spamfilter.models import SpamPost
                         if SpamPost.objects.check_spam(question, request, 'text', 'Q'):
