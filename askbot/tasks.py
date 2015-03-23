@@ -278,6 +278,7 @@ def send_instant_notifications_about_activity_in_post(
             logger.debug(
                 '%s, error=%s, logId=%s' % (user.email, error, log_id)
             )
+            return '%s, error=%s, logId=%s' % (user.email, error, log_id)
         else:
             logger.debug('success %s, logId=%s' % (user.email, log_id))
 
