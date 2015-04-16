@@ -731,7 +731,7 @@ class Post(models.Model):
             if not (updated_by.is_administrator() or updated_by.is_moderator()):
                 if updated_by.reputation < askbot_settings.MIN_REP_TO_TRIGGER_EMAIL:
                     notify_sets['for_email'] = \
-                        [u for u in notify_sets['for_email'] if u.is_administrator()]
+                        [u for u in notify_sets['for_email'] if u.is_administrator() or u.is_nordic_employee]
                         
         if not django_settings.CELERY_ALWAYS_EAGER:
             cache_key = 'instant-notification-%d-%d' % (self.thread.id, updated_by.id)
@@ -2038,6 +2038,17 @@ class Post(models.Model):
                     include_comments = True,
                 )
         )
+        """Add question author. Add all receivers if parent is question
+        """
+        if self.parent.is_question():
+            for a in self.thread.posts.get_answers().all():
+                users.update(a.get_author_list(
+                    include_comments = True
+                ))
+        else:
+            question = self.get_origin_post()
+            users.update(question.get_author_list())
+
         return users - set(exclude_list)
 
     def get_response_receivers(self, exclude_list = None):
