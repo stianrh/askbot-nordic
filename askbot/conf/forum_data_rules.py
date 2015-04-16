@@ -359,7 +359,7 @@ settings.register(
     livesettings.IntegerValue(
         FORUM_DATA_RULES,
         'MAX_COMMENTS_TO_SHOW',
-        default=5,
+        default=30,
         description=_(
             'Default max number of comments to display under posts'
         )
