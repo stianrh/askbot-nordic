@@ -1759,6 +1759,9 @@ ul#related-tags li {
 .question-page .comment-body a {
   color: #1b79bd;
 }
+.question-page .comment-body img {
+  max-width: 600px;
+}
 .question-page .post-body img {
   max-width: 685px;
 }
