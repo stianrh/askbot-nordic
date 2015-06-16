@@ -84,7 +84,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_DELETE_OTHERS_COMMENTS',
-        default=200,
+        default=500,
         description=_('Delete comments posted by others')
     )
 )

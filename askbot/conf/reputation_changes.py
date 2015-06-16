@@ -84,7 +84,7 @@ settings.register(
     IntegerValue(
         REP_CHANGES,
         'REP_LOSS_FOR_RECEIVING_CANCELATION_OF_ANSWER_ACCEPTANCE',
-        default=-5,
+        default=-15,
         description=_('Loss for author whose answer was "un-accepted"')
     )
 )
