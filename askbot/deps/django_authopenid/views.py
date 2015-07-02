@@ -1213,7 +1213,7 @@ def signup_with_password(request):
                 send_email_key(email, email_verifier.key,
                                handler_url_name='verify_email_and_register')
                 redirect_url = reverse('verify_email_and_register') + \
-                                '?next=' + get_next_url(request)
+                                '?next=/tour/'
                 return HttpResponseRedirect(redirect_url)
 
         else:

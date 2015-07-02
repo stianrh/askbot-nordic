@@ -112,7 +112,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'GREETING_FOR_ANONYMOUS_USER',
-        default='First time here? <a href="/faq">Check out the FAQ</a>!',
+        default='First time here? <a href="/tour">Check out the Tour</a>!',
         hidden=False,
         description=_(
                 'Text shown in the greeting message '
