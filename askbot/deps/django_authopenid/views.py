@@ -1299,7 +1299,7 @@ def send_email_key(email, key, handler_url_name='user_account_recover'):
     data = {
         'site_name': askbot_settings.APP_SHORT_NAME,
         'validation_link': site_url(reverse(handler_url_name)) + \
-                            '?validation_code=' + key
+                            '?validation_code=' + key + '&next=/tour/'
     }
     template = get_template('authopenid/email_validation.html')
     message = template.render(data)#todo: inject language preference
