@@ -653,6 +653,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         if USE_CASES:
             cases_user = CaseUser.objects.get(user=request.user)
             cases_case = Case.objects.get(thread=thread)
+            cases_case.following = cases_case.follow_caseuser.filter(id = cases_user.id).exists() or cases_case.follow_wait_caseuser.filter(id = cases_user.id).exists()
     except:
         cases_use = False
         cases_assigned = None
@@ -695,6 +696,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'cases_use': cases_use,
         'cases_assigned': cases_assigned,
         'cases_case': cases_case,
+        'cases_user': cases_user,
     }
     #shared with ...
     if askbot_settings.GROUPS_ENABLED:
