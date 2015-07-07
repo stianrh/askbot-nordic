@@ -880,9 +880,10 @@ def report_spam(request, id):
     question = get_object_or_404(models.Post, post_type='question', id=id)
     if request.user.is_moderator():
         from spamfilter.models import SpamPost
-        from spamfilter.spam_checks import report_spam
-        report_spam(question, 'question')
-        SpamPost.objects.create_new(question, 'Q', True, True)
+        try:
+            SpamPost.objects.get(post = question).report_akismet()
+        except:
+            SpamPost.objects.report_spam(question)
         request.user.delete_post(question)
         question.author.set_status('b')
         response_dict = {

@@ -287,7 +287,7 @@ def ask(request):#view used to ask a new question
                         pass
                     if settings.USE_SPAMFILTER:
                         from spamfilter.models import SpamPost
-                        if SpamPost.objects.check_spam(question, request, 'text', 'Q'):
+                        if SpamPost.objects.check_spam(question, request):
                             request.user.delete_post(question)
                             request.user.set_status('b')
                             spam_message = _(
