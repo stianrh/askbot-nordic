@@ -39,6 +39,16 @@ TIMEZONE_STR = pytz.timezone(
                     datetime.datetime.now()
                 ).strftime('%z')
 
+from jinja2 import contextfunction
+@contextfunction
+@register.object
+def poll(context):
+    try:
+        from poll.templatetags.poll_tags import poll as poll_tag
+        return poll_tag(context)
+    except:
+        return ""
+
 @register.filter
 def add_tz_offset(datetime_object):
     return str(datetime_object) + ' ' + TIMEZONE_STR
