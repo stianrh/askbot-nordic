@@ -22,7 +22,7 @@ settings.register(
     livesettings.StringValue(
         FORUM_DATA_RULES,
         'EDITOR_TYPE',
-        default = 'markdown',
+        default = 'tinymce',
         choices = EDITOR_CHOICES,
         description = _('Editor for the posts')
     )
