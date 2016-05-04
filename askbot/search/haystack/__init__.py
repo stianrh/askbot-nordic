@@ -15,7 +15,7 @@ class ThreadIndex(CelerySearchIndex, indexes.Indexable):
     answer_count = indexes.IntegerField(model_attr='answer_count')
     view_count = indexes.IntegerField(model_attr='view_count')
     points = indexes.IntegerField(model_attr='points')
-    #tags = indexes.MultiValueField()
+    tags = indexes.MultiValueField()
     closed = indexes.BooleanField(model_attr='closed')
     deleted = indexes.BooleanField(model_attr='deleted')
     has_accepted_answer = indexes.BooleanField()
