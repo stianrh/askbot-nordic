@@ -1208,7 +1208,7 @@ class RevisionForm(forms.Form):
         rev_choices = list()
         for r in revisions:
             rev_details = u'%s - %s (%s) %s' % (
-                r[0], r[1], r[2].strftime(date_format), r[3]
+                r[0], r[1], r[2], r[3]
             )
             rev_choices.append((r[0], rev_details))
 
