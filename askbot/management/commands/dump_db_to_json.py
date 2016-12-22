@@ -94,7 +94,10 @@ class Command(BaseCommand):
     def create_case_dict(self, t, desc=False):
         if not desc:
             c = self.get_case_object(t)
-            self.relevant_users.add(c.assigned_to.user.id) if c else None
+            try:
+                self.relevant_users.add(c.assigned_to.user.id)
+            except:
+                pass
         else:
             c = True
         if c:
@@ -176,7 +179,6 @@ class Command(BaseCommand):
 
             j = json.dumps(ordered_dict, indent=2)
             print j
-            print self.relevant_users
 
         else:
             ordered_t_dict = OrderedDict(sorted(self.t_dict_desc.iteritems(), key=lambda (k,v): sort_order.index(k)))
