@@ -38,9 +38,20 @@ class Command(BaseCommand):
             #'password_hash': u.password,
             'is_nordic_employee': u.is_nordic_employee() if not desc else "bool",
             'is_moderator': u.is_moderator() if not desc else "bool",
+            'date_joined': format_datetime(u.date_joined) if not desc else "unix timestamp",
+            'last_seen': format_datetime(u.last_seen) if not desc else "unix timestamp",
+            'avatar_url': (u.get_avatar_url(128) if not 'nophoto' in u.get_avatar_url(128) else None) if not desc else "avatar url string, 128 can be changed to any size",
+            'company': (u.company if u.company else None) if not desc else "string",
+            'website': (u.website if u.website else None) if not desc else "url string",
+            'twitter': (u.twitter_handle if u.twitter_handle else None) if not desc else "string",
+            'linkedin': (u.linkedin_profile if u.linkedin_profile else None) if not desc else "url string",
+            'country': (u.country.code if u.show_country else None) if not desc else "country code string",
+            'city': (u.location if u.location else None) if not desc else "string",
+            'date_of_birth': format_datetime(u.date_of_birth) if not desc else "unix timestamp",
+            'about': (u.about if u.about else None) if not desc else "string"
 
         }
-        sort_order = ['u_id', 'username', 'screen_name', 'email', 'reputation', 'is_nordic_employee', 'is_moderator']
+        sort_order = ['u_id', 'username', 'screen_name', 'email', 'reputation', 'is_nordic_employee', 'is_moderator', 'date_joined', 'last_seen', 'avatar_url', 'company', 'website', 'twitter', 'linkedin', 'country', 'city', 'date_of_birth', 'about']
         self.t_dict['users'].append(OrderedDict(sorted(d.iteritems(), key=lambda (k,v): sort_order.index(k))))
 
     def create_close_reason_dict(self):
