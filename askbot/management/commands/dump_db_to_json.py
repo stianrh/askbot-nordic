@@ -4,6 +4,7 @@ from cases.models import Case
 import datetime
 import time
 import json
+import avatar
 from askbot.const import CLOSE_REASONS
 from collections import OrderedDict
 
@@ -29,6 +30,10 @@ class Command(BaseCommand):
         self.users = User.objects.all()
 
     def create_user_dict(self, u, desc=False):
+        av = avatar.util.get_primary_avatar(user=u)
+        av_url = None
+        if av:
+            av_url = av.avatar.url
         d = {
             'u_id': u.id if not desc else "this USER_DICT id",
             'username': u.username if not desc else "string",
@@ -40,7 +45,7 @@ class Command(BaseCommand):
             'is_moderator': u.is_moderator() if not desc else "bool",
             'date_joined': format_datetime(u.date_joined) if not desc else "unix timestamp",
             'last_seen': format_datetime(u.last_seen) if not desc else "unix timestamp",
-            'avatar_url': (u.get_avatar_url(128) if not 'nophoto' in u.get_avatar_url(128) else None) if not desc else "avatar url string, 128 can be changed to any size",
+            'avatar_url': av_url if not desc else "avatar url string",
             'company': (u.company if u.company else None) if not desc else "string",
             'website': (u.website if u.website else None) if not desc else "url string",
             'twitter': (u.twitter_handle if u.twitter_handle else None) if not desc else "string",
