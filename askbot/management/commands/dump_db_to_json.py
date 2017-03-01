@@ -30,10 +30,11 @@ class Command(BaseCommand):
         self.users = User.objects.all()
 
     def create_user_dict(self, u, desc=False):
-        av = avatar.util.get_primary_avatar(user=u)
-        av_url = None
-        if av:
+        try:
+            av = u.avatar_set.order_by("-primary", "-date_uploaded")[0]
             av_url = av.avatar.url
+        except IndexError:
+            av_url = None
         d = {
             'u_id': u.id if not desc else "this USER_DICT id",
             'username': u.username if not desc else "string",
