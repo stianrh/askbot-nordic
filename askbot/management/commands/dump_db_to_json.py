@@ -33,7 +33,7 @@ class Command(BaseCommand):
         try:
             av = u.avatar_set.order_by("-primary", "-date_uploaded")[0]
             av_url = av.avatar.url
-        except IndexError:
+        except:
             av_url = None
         d = {
             'u_id': u.id if not desc else "this USER_DICT id",
@@ -173,9 +173,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options): 
         sort_order = ['threads', 'users', 'close_reasons']
         desc = False
+        all_users = False
         try:
             if args[2] == "desc":
                 desc = True
+            if args[2] == "all":
+                all_users = True
         except:
             pass
 
@@ -184,11 +187,14 @@ class Command(BaseCommand):
             for t in self.threads:
                 self.create_thread_dict(t)
 
-            #self.get_users()
-            #for u in self.users:
-            #    self.create_user_dict(u)
-            for u in self.relevant_users:
-                self.create_user_dict(User.objects.get(id=u))
+
+            if all_users:
+                self.get_users()
+                for u in self.users:
+                    self.create_user_dict(u)
+            else:
+                for u in self.relevant_users:
+                    self.create_user_dict(User.objects.get(id=u))
 
             self.create_close_reason_dict()
 
