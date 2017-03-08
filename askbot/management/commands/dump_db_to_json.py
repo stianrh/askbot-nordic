@@ -41,9 +41,10 @@ class Command(BaseCommand):
             'email': u.email if not desc else "string",
             'reputation': u.reputation if not desc else "int",
             'screen_name': u.real_name if not desc else "string",
-            #'password_hash': u.password,
+            'password_hash': u.password,
             'is_nordic_employee': u.is_nordic_employee() if not desc else "bool",
             'is_moderator': u.is_moderator() if not desc else "bool",
+            'is_blocked': u.is_blocked() if not desc else "bool",
             'date_joined': format_datetime(u.date_joined) if not desc else "unix timestamp",
             'last_seen': format_datetime(u.last_seen) if not desc else "unix timestamp",
             'avatar_url': av_url if not desc else "avatar url string",
@@ -57,7 +58,7 @@ class Command(BaseCommand):
             'about': (u.about if u.about else None) if not desc else "string"
 
         }
-        sort_order = ['u_id', 'username', 'screen_name', 'email', 'reputation', 'is_nordic_employee', 'is_moderator', 'date_joined', 'last_seen', 'avatar_url', 'company', 'website', 'twitter', 'linkedin', 'country', 'city', 'date_of_birth', 'about']
+        sort_order = ['u_id', 'username', 'screen_name', 'email', 'password_hash', 'reputation', 'is_nordic_employee', 'is_moderator', 'is_blocked', 'date_joined', 'last_seen', 'avatar_url', 'company', 'website', 'twitter', 'linkedin', 'country', 'city', 'date_of_birth', 'about']
         self.t_dict['users'].append(OrderedDict(sorted(d.iteritems(), key=lambda (k,v): sort_order.index(k))))
 
     def create_close_reason_dict(self):
