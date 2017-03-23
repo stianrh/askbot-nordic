@@ -652,16 +652,19 @@ def question(request, id):#refactor - long subroutine. display question body, an
         from cases.models import CaseUser, Case
         if USE_CASES:
             cases_user = CaseUser.objects.get(user=request.user)
-            cases_case = Case.objects.get(thread=thread)
-            cases_case.following = cases_case.follow_caseuser.filter(id = cases_user.id).exists() or cases_case.follow_wait_caseuser.filter(id = cases_user.id).exists()
+            try:
+                cases_case = Case.objects.get(thread=thread)
+                cases_case.following = cases_case.follow_caseuser.filter(id = cases_user.id).exists() or cases_case.follow_wait_caseuser.filter(id = cases_user.id).exists()
+                cases_assigned = cases_case.assigned_to
+            except:
+                cases_case = None
+                cases_assigned = None
+            cases_use = True
     except:
         cases_use = False
         cases_assigned = None
         cases_case = None
         cases_user = None
-    else:
-        cases_use = True
-        cases_assigned = cases_case.assigned_to
 
     data = {
         'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
