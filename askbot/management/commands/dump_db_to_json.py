@@ -78,6 +78,13 @@ class Command(BaseCommand):
             c = Post.objects.get_comments().filter(parent=q)
             self.relevant_users.add(q.author_id)
             self.relevant_users.add(q.last_edited_by_id) if q.last_edited_by_id else None
+            vote_l = []
+            for vote in q.votes.all():
+                vote_l.append({
+                    'u_id': vote.user_id,
+                    'voted_at': format_datetime(vote.voted_at),
+                    'vote': vote.vote,
+                })
         d = {
             'p_id': q.id if not desc else "this POST_DICT id",
             'author': q.author_id if not desc else "USER_DICT id",
@@ -85,16 +92,17 @@ class Command(BaseCommand):
             'last_edited_at': (format_datetime(q.last_edited_at) if q.last_edited_at else None) if not desc else "unix timestamp",
             'last_edited_by': q.last_edited_by_id if not desc else "USER_DICT id",
             #'deleted': q.deleted,
-            'vote_up_count': q.vote_up_count if not desc else "int",
-            'vote_down_count': q.vote_down_count if not desc else "int",
-            'text': q.text if not desc else "post content markdown string"
+            #'vote_up_count': q.vote_up_count if not desc else "int",
+            #'vote_down_count': q.vote_down_count if not desc else "int",
+            'text': q.text if not desc else "post content markdown string",
+            'votes': vote_l if not desc else "list of VOTE_DICT",
         }
         if desc:
             d.update({'comments': "list of POST_DICT (not included if post is comment)"})
         elif not q.is_comment():
             d.update({'comments': ([self.create_post_dict(x) for x in c] if c else None) if not desc else "list of POST_DICT"})
 
-        sort_order = ['p_id', 'author', 'added_at', 'last_edited_at', 'last_edited_by', 'vote_up_count', 'vote_down_count', 'text', 'comments']
+        sort_order = ['p_id', 'author', 'added_at', 'last_edited_at', 'last_edited_by', 'votes', 'text', 'comments']
         ordered_dict = OrderedDict(sorted(d.iteritems(), key=lambda (k,v): sort_order.index(k)))
 
         return ordered_dict 
