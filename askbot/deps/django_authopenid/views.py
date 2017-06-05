@@ -94,7 +94,7 @@ from askbot.models.signals import user_logged_in, user_registered
 
 def create_authenticated_user_account(
     username=None, real_name=None, email=None, password=None,
-    user_identifier=None, login_provider_name=None
+    user_identifier=None, login_provider_name=None, is_spam=None
 ):
     """creates a user account, user association with
     the login method and the the default email subscriptions
@@ -118,6 +118,10 @@ def create_authenticated_user_account(
             provider_name = login_provider_name,
             last_used_timestamp = datetime.datetime.now()
         ).save()
+
+    if is_spam:
+        user.set_status('b')
+        user.save()
 
     subscribe_form = askbot_forms.SimpleEmailSubscribeForm({'subscribe': 'y'})
     subscribe_form.full_clean()
@@ -1119,6 +1123,7 @@ def verify_email_and_register(request):
             password = email_verifier.value.get('password', None)
             user_identifier = email_verifier.value.get('user_identifier', None)
             login_provider_name = email_verifier.value.get('login_provider_name', None)
+            is_spam = email_verifier.value.get('is_spam', None)
 
             if password:
                 user = create_authenticated_user_account(
@@ -1126,6 +1131,7 @@ def verify_email_and_register(request):
                     real_name=real_name,
                     email=email,
                     password=password,
+                    is_spam=is_spam,
                 )
             elif user_identifier and login_provider_name:
                 user = create_authenticated_user_account(
@@ -1133,6 +1139,7 @@ def verify_email_and_register(request):
                     email=email,
                     user_identifier=user_identifier,
                     login_provider_name=login_provider_name,
+                    is_spam=is_spam,
                 )
             else:
                 raise NotImplementedError()
@@ -1162,6 +1169,7 @@ def signup_with_password(request):
     """Create a password-protected account
     template: authopenid/signup_with_password.html
     """
+
 
     logging.debug(get_request_info(request))
     login_form = forms.LoginForm(initial = {'next': get_next_url(request)})
@@ -1193,6 +1201,22 @@ def signup_with_password(request):
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
 
+            is_spam = False
+            try:
+                from spamfilter.stopfs import spam_request
+                user_ip = request.META.get('REMOTE_ADDR')
+                if user_ip == '192.9.202.136' or user_ip == None:
+                    user_ip = request.META.get('HTTP_X_FORWARDED_FOR')
+                    if user_ip:
+                        user_ip = user_ip.split(', ')[0]
+                spam_confidence = spam_request(ip=user_ip, email=email, username=username)
+                if spam_confidence > 50:
+                    is_spam = True
+                    logging.info('Blocked by stopforumspam.org: %s, %s, %s'%(user_ip, email, username))
+            except Exception, e:
+                logging.error('something went wrong when checking for spammer: %s'%(e))
+
+
             if askbot_settings.REQUIRE_VALID_EMAIL_FOR == 'nothing':
                 user = create_authenticated_user_account(
                     username=username,
@@ -1208,7 +1232,7 @@ def signup_with_password(request):
                 email_verifier.value = {'username': username,
                                         'real_name': real_name,
                                         'login_provider_name': provider_name,
-                                        'email': email, 'password': password}
+                                        'email': email, 'password': password, 'is_spam': is_spam}
                 email_verifier.save()
                 send_email_key(email, email_verifier.key,
                                handler_url_name='verify_email_and_register')
